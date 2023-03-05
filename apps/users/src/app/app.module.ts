@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { ENV_FILE_PATH } from './app.constants';
-import databaseConfig from './config/database.config';
+import databaseConfig from '../config/database.config';
 
 @Module({
   imports: [
