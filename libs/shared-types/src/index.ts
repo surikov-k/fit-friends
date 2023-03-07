@@ -8,4 +8,7 @@ export * from './lib/gym-feature.enum';
 export * from './lib/purchase-type.enum';
 export * from './lib/payment-method.enum';
 export * from './lib/training-request-status.enum';
+export * from './lib/client-profile.interface';
+export * from './lib/coach-profile.interface';
 export * from './lib/profile.type';
+export * from './lib/user.interface';
