@@ -1,8 +1,8 @@
-import { RequestStatus, User } from '@fit-friends/shared-types';
+import { RequestStatus, UserInterface } from '@fit-friends/shared-types';
 
 export interface WorkoutRequestInterface {
-  initiator: User;
-  user: User;
+  initiator: UserInterface;
+  user: UserInterface;
   createdAt: Date;
   changedAt: Date;
   status: RequestStatus;

@@ -1,4 +1,9 @@
-import { Gender, Skill, Training, User } from '@fit-friends/shared-types';
+import {
+  Gender,
+  Skill,
+  Training,
+  UserInterface,
+} from '@fit-friends/shared-types';
 
 export interface WorkoutInterface {
   name: string;
@@ -11,6 +16,6 @@ export interface WorkoutInterface {
   gender: Gender;
   video: string;
   rating: number;
-  coach: User;
+  coach: UserInterface;
   isSpecialOffer: boolean;
 }

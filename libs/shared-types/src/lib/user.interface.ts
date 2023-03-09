@@ -1,6 +1,6 @@
 import { Gender, Profile, UserRole } from '@fit-friends/shared-types';
 
-export interface User {
+export interface UserInterface {
   _id?: string;
   name: string;
   email: string;

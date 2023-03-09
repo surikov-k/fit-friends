@@ -1,7 +1,7 @@
-import { User } from '@fit-friends/shared-types';
+import { UserInterface } from '@fit-friends/shared-types';
 
 export interface NotificationInterface {
   createdAt: Date;
-  user: User;
+  user: UserInterface;
   text: string;
 }

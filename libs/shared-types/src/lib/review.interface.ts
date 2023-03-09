@@ -1,7 +1,7 @@
-import { User } from '@fit-friends/shared-types';
+import { UserInterface } from '@fit-friends/shared-types';
 
 export interface ReviewInterface {
-  author: User;
+  author: UserInterface;
   workoutId: string;
   rating: number;
   text: string;
