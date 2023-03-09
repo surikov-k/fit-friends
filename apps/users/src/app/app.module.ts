@@ -7,6 +7,7 @@ import databaseConfig from '../config/database.config';
 import { getMongoDbConfig } from '../config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { validateEnvironments } from './auth/env.validation';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
       load: [databaseConfig],
+      validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
     UserModule,
