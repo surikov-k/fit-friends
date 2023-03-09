@@ -39,7 +39,7 @@ testem.log
 Thumbs.db
 
 # Environment Files
-.env
+*.env
 
 # MongoDB files
 db
