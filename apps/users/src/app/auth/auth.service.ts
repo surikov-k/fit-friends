@@ -1,4 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+
+import { UserRepository } from '../user/user.repository';
+import { LoginDto, RegisterDto } from './dto';
+import { UserEntity } from '../user/user.entity';
+import { AuthError } from './auth.contstants';
 
 @Injectable()
-export class AuthService {}
+export class AuthService {
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async register(dto: RegisterDto) {
+    const { name, email, password, gender, birthday, role, location } = dto;
+    const userData = {
+      name,
+      email,
+      gender,
+      role,
+      location,
+      birthday: new Date(birthday),
+      passwordHash: '',
+    };
+    const entity = await new UserEntity(userData).setPassword(password);
+    const user = await this.userRepository.create(entity);
+
+    return user;
+  }
+
+  async verify(dto: LoginDto) {
+    const { email, password } = dto;
+    const user = await this.userRepository.findByEmail(email);
+
+    if (!user) {
+      throw new UnauthorizedException(AuthError.WRONG_CREDENTIALS);
+    }
+
+    const entity = new UserEntity(user);
+
+    if (!(await entity.comparePasswords(password))) {
+      throw new UnauthorizedException(AuthError.WRONG_CREDENTIALS);
+    }
+
+    return entity.toObject();
+  }
+
+  async get(id) {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException(AuthError.NOT_FOUND);
+    }
+
+    return user;
+  }
+}

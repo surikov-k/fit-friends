@@ -1,6 +1,6 @@
-import { Gender, UserRole } from '@fit-friends/shared-types';
+import { Gender, Location, UserRole } from '@fit-friends/shared-types';
 
-export class CreateUserDto {
+export class RegisterDto {
   name: string;
   email: string;
   password: string;

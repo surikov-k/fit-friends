@@ -10,5 +10,5 @@ export interface UserInterface {
   birthday?: Date;
   role: UserRole;
   location: Location;
-  createdAt: Date;
+  createdAt?: Date;
 }
