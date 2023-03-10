@@ -1,11 +1,13 @@
+import { Prop, Schema } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+
 import {
   Gender,
+  Location,
   Profile,
   UserInterface,
   UserRole,
 } from '@fit-friends/shared-types';
-import { Prop, Schema } from '@nestjs/mongoose';
 
 @Schema({
   collection: 'users',

@@ -1,4 +1,4 @@
-import { Gender, Profile, UserRole } from '@fit-friends/shared-types';
+import { Gender, Location, Profile, UserRole } from '@fit-friends/shared-types';
 
 export interface UserInterface {
   _id?: string;
