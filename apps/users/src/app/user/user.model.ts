@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 import {
@@ -39,3 +39,5 @@ export class UserModel extends Document implements UserInterface {
   @Prop({ required: true })
   public createdAt: Date;
 }
+
+export const UserSchema = SchemaFactory.createForClass(UserModel);
