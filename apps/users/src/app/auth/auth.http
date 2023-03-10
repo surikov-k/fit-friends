@@ -1,0 +1,13 @@
+### Register a new user
+POST http://localhost:3333/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Оксана Русакова",
+  "email": "ana.donovan@example.com",
+  "password": "123456",
+  "gender": "Female",
+  "birthday": "1999-03-23",
+  "role": "Client",
+  "location": "Пионерская"
+}
