@@ -3,7 +3,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { fillObject } from '@fit-friends/core';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
-import { LoggedRdo, UserRdo } from './rdo';
+import { UserRdo } from './rdo';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +18,7 @@ export class AuthController {
   @Post('login')
   public async login(@Body() dto: LoginDto) {
     const user = await this.authService.verify(dto);
-    return fillObject(LoggedRdo, user);
+    return this.authService.login(user);
   }
 
   @Get('id')

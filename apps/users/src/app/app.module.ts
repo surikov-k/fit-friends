@@ -8,6 +8,7 @@ import { getMongoDbConfig } from '../config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { validateEnvironments } from './auth/env.validation';
+import { jwtOptions } from '../config/jwt.config';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { validateEnvironments } from './auth/env.validation';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig],
+      load: [databaseConfig, jwtOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
