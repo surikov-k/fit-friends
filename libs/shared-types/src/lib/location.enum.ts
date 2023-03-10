@@ -1,7 +1,7 @@
 export enum Location {
-  Pionerskaya = 'Pionerskaya',
-  Petrogradskaya = 'Petrogradskaya',
-  Udelnaya = 'Udelnaya',
-  Zvezdnaya = 'Zvezdnaya',
-  Sportivnaya = 'Sportivnaya',
+  Pionerskaya = 'Пионерская',
+  Petrogradskaya = 'Петроградская',
+  Udelnaya = 'Удельная',
+  Zvezdnaya = 'Звёздная',
+  Sportivnaya = 'Спортивная',
 }
