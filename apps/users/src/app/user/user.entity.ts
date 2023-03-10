@@ -1,10 +1,14 @@
+import { compare, genSalt, hash } from 'bcrypt';
+
 import {
   Gender,
+  Location,
   Profile,
   UserInterface,
   UserRole,
 } from '@fit-friends/shared-types';
 import { EntityInterface } from '@fit-friends/core';
+import { SALT_ROUNDS } from './user.constants';
 
 export class UserEntity
   implements UserInterface, EntityInterface<UserInterface>
@@ -23,6 +27,16 @@ export class UserEntity
 
   constructor(user: UserInterface) {
     this.fillEntity(user);
+  }
+
+  public async setPassword(password: string): Promise<UserEntity> {
+    const salt = await genSalt(SALT_ROUNDS);
+    this.passwordHash = await hash(password, salt);
+    return this;
+  }
+
+  public async comparePasswords(password: string): Promise<boolean> {
+    return compare(password, this.passwordHash);
   }
 
   fillEntity(user: UserInterface): void {
