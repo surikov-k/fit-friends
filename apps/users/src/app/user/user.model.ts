@@ -4,7 +4,6 @@ import { Document } from 'mongoose';
 import {
   Gender,
   Location,
-  Profile,
   UserInterface,
   UserRole,
 } from '@fit-friends/shared-types';
@@ -25,21 +24,18 @@ export class UserModel extends Document implements UserInterface {
   @Prop()
   public avatar?: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: String, enum: Gender })
   public gender: Gender;
 
   @Prop()
   public birthday?: Date;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: String, enum: UserRole })
   public role: UserRole;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: String, enum: Location })
   public location: Location;
 
   @Prop({ required: true })
   public createdAt: Date;
-
-  @Prop({ required: true })
-  public profile: Profile;
 }

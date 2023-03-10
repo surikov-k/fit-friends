@@ -3,7 +3,6 @@ import { compare, genSalt, hash } from 'bcrypt';
 import {
   Gender,
   Location,
-  Profile,
   UserInterface,
   UserRole,
 } from '@fit-friends/shared-types';
@@ -22,7 +21,6 @@ export class UserEntity
   location: Location;
   name: string;
   passwordHash: string;
-  profile: Profile;
   role: UserRole;
 
   constructor(user: UserInterface) {
@@ -49,7 +47,6 @@ export class UserEntity
     this.location = user.location;
     this.name = user.name;
     this.passwordHash = user.passwordHash;
-    this.profile = user.profile;
     this.role = user.role;
   }
 
