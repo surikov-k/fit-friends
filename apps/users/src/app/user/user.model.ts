@@ -36,7 +36,7 @@ export class UserModel extends Document implements UserInterface {
   @Prop({ required: true, type: String, enum: Location })
   public location: Location;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: new Date() })
   public createdAt: Date;
 }
 
