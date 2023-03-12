@@ -22,6 +22,7 @@ export class UserEntity
   name: string;
   passwordHash: string;
   role: UserRole;
+  rtHash: string;
 
   constructor(user: UserInterface) {
     this.fillEntity(user);
@@ -37,6 +38,21 @@ export class UserEntity
     return compare(password, this.passwordHash);
   }
 
+  public async setRefreshTokenHash(rtToken: string): Promise<UserEntity> {
+    const salt = await genSalt(SALT_ROUNDS);
+    this.rtHash = await hash(rtToken, salt);
+    return this;
+  }
+
+  public async compareRefreshToken(rtToken: string): Promise<boolean> {
+    return compare(rtToken, this.rtHash);
+  }
+
+  public clearRefreshTokenHash() {
+    this.rtHash = null;
+    return this;
+  }
+
   fillEntity(user: UserInterface): void {
     this._id = user._id;
     this.avatar = user.avatar;
@@ -47,6 +63,7 @@ export class UserEntity
     this.location = user.location;
     this.name = user.name;
     this.passwordHash = user.passwordHash;
+    this.rtHash = user.rtHash;
     this.role = user.role;
   }
 

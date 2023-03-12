@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 import { UserModule } from '../user/user.module';
 import { IsEmailUniqueConstraint } from '../../common/validators';
 import { getJwtConfig } from '../../config/jwt.config';
+import { AtStrategy, RtStrategy } from '../../common/strategies';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { getJwtConfig } from '../../config/jwt.config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, IsEmailUniqueConstraint],
+  providers: [AuthService, IsEmailUniqueConstraint, AtStrategy, RtStrategy],
 })
 export class AuthModule {}

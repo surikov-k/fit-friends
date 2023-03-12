@@ -11,4 +11,5 @@ export interface UserInterface {
   role: UserRole;
   location: Location;
   createdAt?: Date;
+  rtHash?: string;
 }

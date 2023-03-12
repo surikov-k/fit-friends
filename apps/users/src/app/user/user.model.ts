@@ -38,6 +38,9 @@ export class UserModel extends Document implements UserInterface {
 
   @Prop({ required: true, default: new Date() })
   public createdAt: Date;
+
+  @Prop()
+  public rtHash: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

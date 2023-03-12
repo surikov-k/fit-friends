@@ -17,3 +17,5 @@ export * from './lib/gym.interface';
 export * from './lib/review.interface';
 export * from './lib/order.interface';
 export * from './lib/workout-request.interface';
+export * from './lib/jwt-payload.type';
+export * from './lib/tokens.type';
