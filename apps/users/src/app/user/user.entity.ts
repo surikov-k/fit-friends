@@ -16,6 +16,7 @@ import { ClientDetailsDto, CoachDetailsDto } from './dto';
 export class UserEntity
   implements UserInterface, EntityInterface<UserInterface>
 {
+  _id?: string;
   avatar: string;
   birthday: Date;
   createdAt: Date;
@@ -81,7 +82,7 @@ export class UserEntity
   }
 
   fillEntity(user: UserInterface): void {
-    this.avatar = user.avatar;
+    this._id = user._id;
     this.birthday = user.birthday;
     this.createdAt = user.createdAt;
     this.email = user.email;

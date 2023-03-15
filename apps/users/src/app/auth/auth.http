@@ -30,12 +30,21 @@ Content-Type: application/json
 GET http://localhost:3333/api/auth/logout HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDBjZTJiNDM4ZTYzZjE2M2NhZjA3ZWMiLCJlbWFpbCI6ImxvbGEuZ2lsZXNAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQvdCw0YHRgtCw0YHQuNGPIiwicm9sZSI6IkNsaWVudCIsImlhdCI6MTY3ODU2NjA2OCwiZXhwIjoxNjc4NTY2MDY4fQ.Gz4gDwagH5YBFpBf9zyfqs5LNGLeAo10kF6mhNaqDWQ
 
-### Login a user
+### Login a client
 POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
   "email": "lola.giles@example.com",
+  "password": "123456"
+}
+
+### Login a coach
+POST http://localhost:3333/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "eddie.mcclure@example.com",
   "password": "123456"
 }
 
