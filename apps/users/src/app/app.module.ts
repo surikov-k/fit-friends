@@ -9,7 +9,6 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { validateEnvironments } from './auth/env.validation';
 import { jwtOptions } from '../config/jwt.config';
-import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { ProfileModule } from './profile/profile.module';
     MongooseModule.forRootAsync(getMongoDbConfig()),
     UserModule,
     AuthModule,
-    ProfileModule,
   ],
   controllers: [],
   providers: [],
