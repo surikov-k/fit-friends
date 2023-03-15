@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 import {
   Gender,
@@ -41,6 +41,13 @@ export class UserModel extends Document implements UserInterface {
 
   @Prop()
   public rtHash: string;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'profiles',
+    required: true,
+  })
+  public profile: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

@@ -67,7 +67,7 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException(AuthError.NOT_FOUND);
     }
-
+    console.log(user);
     return user;
   }
 

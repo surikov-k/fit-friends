@@ -1,4 +1,9 @@
-import { Expose, Transform } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
+import {
+  ClientProfileRdo,
+  CoachProfileRdo,
+  ProfileRdo,
+} from '../../profile/rdo';
 
 export class UserRdo {
   @Expose({ name: '_id' })
@@ -28,4 +33,16 @@ export class UserRdo {
 
   @Expose()
   public createdAt: string;
+
+  @Expose()
+  @Type(() => ProfileRdo, {
+    discriminator: {
+      property: '__type',
+      subTypes: [
+        { value: ClientProfileRdo, name: 'Client' },
+        { value: CoachProfileRdo, name: 'Coach' },
+      ],
+    },
+  })
+  public profile: ClientProfileRdo | CoachProfileRdo;
 }

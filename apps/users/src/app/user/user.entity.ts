@@ -23,6 +23,7 @@ export class UserEntity
   passwordHash: string;
   role: UserRole;
   rtHash: string;
+  profile: string;
 
   constructor(user: UserInterface) {
     this.fillEntity(user);
@@ -65,6 +66,7 @@ export class UserEntity
     this.passwordHash = user.passwordHash;
     this.rtHash = user.rtHash;
     this.role = user.role;
+    this.profile = user.profile;
   }
 
   toObject(): UserInterface {

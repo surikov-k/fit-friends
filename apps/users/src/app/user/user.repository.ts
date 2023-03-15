@@ -25,7 +25,7 @@ export class UserRepository
   }
 
   public async findById(id: string): Promise<UserInterface | null> {
-    return this.userModel.findOne({ id }).exec();
+    return this.userModel.findOne({ id }).populate('profile').exec();
   }
 
   public async findByEmail(email: string): Promise<UserInterface | null> {

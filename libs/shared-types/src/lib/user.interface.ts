@@ -12,4 +12,5 @@ export interface UserInterface {
   location: Location;
   createdAt?: Date;
   rtHash?: string;
+  profile?: string;
 }
