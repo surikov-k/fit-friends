@@ -3,16 +3,19 @@ import { compare, genSalt, hash } from 'bcrypt';
 import {
   Gender,
   Location,
+  Skill,
+  TimeSpan,
+  Training,
   UserInterface,
   UserRole,
 } from '@fit-friends/shared-types';
 import { EntityInterface } from '@fit-friends/core';
 import { SALT_ROUNDS } from './user.constants';
+import { ClientDetailsDto, CoachDetailsDto } from './dto';
 
 export class UserEntity
   implements UserInterface, EntityInterface<UserInterface>
 {
-  _id: string;
   avatar: string;
   birthday: Date;
   createdAt: Date;
@@ -22,11 +25,34 @@ export class UserEntity
   name: string;
   passwordHash: string;
   role: UserRole;
-  rtHash: string;
-  profile: string;
+  skill: Skill;
+  trainings: Training[];
+  duration: TimeSpan;
+  caloriesTarget: number;
+  caloriesPerDay: number;
+  readiness: boolean;
+  hasPersonalTrainings: boolean;
+  achievements: string;
+  refreshTokenHash: string;
 
   constructor(user: UserInterface) {
     this.fillEntity(user);
+  }
+
+  public setClientDetails(dto: ClientDetailsDto) {
+    this.skill = dto.skill;
+    this.trainings = dto.trainings;
+    this.duration = dto.duration;
+    this.caloriesTarget = dto.caloriesTarget;
+    this.caloriesPerDay = dto.caloriesPerDay;
+    this.readiness = dto.readiness;
+  }
+
+  public setCoachDetails(dto: CoachDetailsDto) {
+    this.skill = dto.skill;
+    this.trainings = dto.trainings;
+    this.hasPersonalTrainings = dto.hasPersonalTrainings;
+    this.achievements = dto.achievements;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {
@@ -41,21 +67,20 @@ export class UserEntity
 
   public async setRefreshTokenHash(rtToken: string): Promise<UserEntity> {
     const salt = await genSalt(SALT_ROUNDS);
-    this.rtHash = await hash(rtToken, salt);
+    this.refreshTokenHash = await hash(rtToken, salt);
     return this;
   }
 
   public async compareRefreshToken(rtToken: string): Promise<boolean> {
-    return compare(rtToken, this.rtHash);
+    return compare(rtToken, this.refreshTokenHash);
   }
 
   public clearRefreshTokenHash() {
-    this.rtHash = null;
+    this.refreshTokenHash = null;
     return this;
   }
 
   fillEntity(user: UserInterface): void {
-    this._id = user._id;
     this.avatar = user.avatar;
     this.birthday = user.birthday;
     this.createdAt = user.createdAt;
@@ -64,9 +89,8 @@ export class UserEntity
     this.location = user.location;
     this.name = user.name;
     this.passwordHash = user.passwordHash;
-    this.rtHash = user.rtHash;
+    this.refreshTokenHash = user.refreshTokenHash;
     this.role = user.role;
-    this.profile = user.profile;
   }
 
   toObject(): UserInterface {

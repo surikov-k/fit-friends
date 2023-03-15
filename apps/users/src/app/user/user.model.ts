@@ -1,9 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 
 import {
   Gender,
   Location,
+  Skill,
+  TimeSpan,
+  Training,
   UserInterface,
   UserRole,
 } from '@fit-friends/shared-types';
@@ -39,15 +42,35 @@ export class UserModel extends Document implements UserInterface {
   @Prop({ required: true, default: new Date() })
   public createdAt: Date;
 
-  @Prop()
-  public rtHash: string;
+  @Prop({ type: String, enum: Skill })
+  public skill: Skill;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'profiles',
-    required: true,
-  })
-  public profile: string;
+  @Prop({ type: [String], enum: Training })
+  public trainings: Training[];
+
+  @Prop({ type: String, enum: TimeSpan })
+  public duration: TimeSpan;
+
+  @Prop()
+  public caloriesTarget: number;
+
+  @Prop()
+  public caloriesPerDay: number;
+
+  @Prop()
+  public readiness: boolean;
+
+  @Prop()
+  public refreshTokenHash: string;
+
+  @Prop()
+  public certificate: string;
+
+  @Prop()
+  public hasPersonalTrainings: boolean;
+
+  @Prop()
+  public achievements: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);
