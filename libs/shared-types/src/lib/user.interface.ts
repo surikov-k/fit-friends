@@ -1,4 +1,10 @@
-import { Gender, Location, UserRole } from '@fit-friends/shared-types';
+import {
+  Gender,
+  Location,
+  Skill,
+  Training,
+  UserRole,
+} from '@fit-friends/shared-types';
 
 export interface UserInterface {
   _id?: string;
@@ -10,7 +16,10 @@ export interface UserInterface {
   birthday?: Date;
   role: UserRole;
   location: Location;
+
+  skill?: Skill;
+  trainings?: Training[];
+
   createdAt?: Date;
-  rtHash?: string;
-  profile?: string;
+  refreshTokenHash?: string;
 }
