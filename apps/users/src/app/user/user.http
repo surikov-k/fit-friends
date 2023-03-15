@@ -1,0 +1,27 @@
+### Get a detail user unformation
+GET http://localhost:3333/api/user/6411b0cf332c6121f8682a0f HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDBjZTJiNDM4ZTYzZjE2M2NhZjA3ZWMiLCJlbWFpbCI6ImxvbGEuZ2lsZXNAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQvdCw0YHRgtCw0YHQuNGPIiwicm9sZSI6IkNsaWVudCIsImlhdCI6MTY3ODg3MjM0OSwiZXhwIjoxNjc4ODczMjQ5fQ.QaVlHe6s4Lp9sUzXylOhTBD2fuMjPBITP8rwqI_FbqY
+
+### Update client details
+PATCH http://localhost:3333/api/user/client HTTP/1.1
+Content-Type: application/json
+
+{
+  "skill":  "Beginner",
+  "trainings": ["Йога", "Кроссфит", "Аэробика"],
+  "duration":  "10-30 min",
+  "caloriesTarget": 4000,
+  "caloriesPerDay":  1200,
+  "readiness": true
+}
+
+### Update coach details
+PATCH http://localhost:3333/api/user/coach HTTP/1.1
+Content-Type: application/json
+
+{
+  "skill":  "Professional",
+  "trainings": ["Йога", "Бокс", "Кроссфит"],
+  "hasPersonalTrainings": true,
+  "achievements":  "Can somebody just let me out of here? If I die in a cage I lose a bet."
+}

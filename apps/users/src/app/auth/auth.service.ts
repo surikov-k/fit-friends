@@ -1,7 +1,6 @@
 import {
   ForbiddenException,
   Injectable,
-  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -61,16 +60,6 @@ export class AuthService {
     return entity.toObject();
   }
 
-  async get(id) {
-    const user = await this.userRepository.findById(id);
-
-    if (!user) {
-      throw new NotFoundException(AuthError.NOT_FOUND);
-    }
-    console.log(user);
-    return user;
-  }
-
   public async login(user: UserInterface) {
     const entity = new UserEntity(user);
     const tokens = await this.getTokens(this.getJwtPayload(user));
@@ -110,7 +99,7 @@ export class AuthService {
     const user = await this.userRepository.findById(userId);
     const entity = new UserEntity(user);
 
-    if (!user || !user.rtHash) {
+    if (!user || !user.refreshTokenHash) {
       throw new ForbiddenException('Access Denied');
     }
 

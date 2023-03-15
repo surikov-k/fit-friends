@@ -1,18 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
-
-import { fillObject } from '@fit-friends/core';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
-import { UserRdo } from './rdo';
 import { AccessTokenGuard, RefreshTokenGuard } from '../../common/guards';
 
 @Controller('auth')
@@ -43,12 +32,5 @@ export class AuthController {
     const refreshToken = req.user['refreshToken'];
 
     return this.authService.refreshTokens(userId, refreshToken);
-  }
-
-  @UseGuards(AccessTokenGuard)
-  @Get('/:id')
-  public async get(@Param('id') id: string) {
-    const user = await this.authService.get(id);
-    return fillObject(UserRdo, user);
   }
 }
