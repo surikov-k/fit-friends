@@ -29,6 +29,7 @@ export class UserRdo {
   @Expose()
   public createdAt: string;
 
+  @Expose()
   public skill: string;
 
   @Expose()
