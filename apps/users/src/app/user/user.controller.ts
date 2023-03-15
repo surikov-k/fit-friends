@@ -4,6 +4,7 @@ import { fillObject } from '@fit-friends/core';
 import { UserService } from './user.service';
 import { ClientDetailsDto, CoachDetailsDto } from './dto';
 import { UserRdo } from './rdo';
+import { CurrentUserId } from '../../common/decorators';
 
 @Controller('user')
 export class UserController {
@@ -16,17 +17,23 @@ export class UserController {
     return fillObject(UserRdo, user);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch('/client')
-  public async updateClientDetails(@Body() dto: ClientDetailsDto) {
-    const userId = '641197d25b4b28f44ff4b6bc';
+  public async updateClientDetails(
+    @Body() dto: ClientDetailsDto,
+    @CurrentUserId() userId: string
+  ) {
     const user = this.userService.updateClientDetails(userId, dto);
 
     return fillObject(UserRdo, user);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch('/coach')
-  public async updateCoachDetails(@Body() dto: CoachDetailsDto) {
-    const userId = '6411b0cf332c6121f8682a0f';
+  public async updateCoachDetails(
+    @Body() dto: CoachDetailsDto,
+    @CurrentUserId() userId: string
+  ) {
     const user = this.userService.updateCoachDetails(userId, dto);
 
     return fillObject(UserRdo, user);
