@@ -22,7 +22,7 @@ export class AtStrategy extends PassportStrategy(Strategy) {
   public async validate(payload: JwtPayload) {
     const user = await this.userRepository.findById(payload.sub);
 
-    if (!user || !user.rtHash) {
+    if (!user || !user.refreshTokenHash) {
       return false;
     }
 
