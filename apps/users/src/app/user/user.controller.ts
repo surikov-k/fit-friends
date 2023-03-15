@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
-import { AccessTokenGuard } from '../../common/guards';
+
+import { AccessTokenGuard, CoachGuard } from '../../common/guards';
 import { fillObject } from '@fit-friends/core';
 import { UserService } from './user.service';
 import { ClientDetailsDto, CoachDetailsDto } from './dto';
@@ -29,6 +30,7 @@ export class UserController {
   }
 
   @UseGuards(AccessTokenGuard)
+  @UseGuards(CoachGuard)
   @Patch('/coach')
   public async updateCoachDetails(
     @Body() dto: CoachDetailsDto,
