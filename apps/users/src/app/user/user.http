@@ -1,4 +1,4 @@
-### Get a detail user unformation
+### Get a detailed user unformation
 GET http://localhost:3333/api/user/6411b0cf332c6121f8682a0f HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDBjZTJiNDM4ZTYzZjE2M2NhZjA3ZWMiLCJlbWFpbCI6ImxvbGEuZ2lsZXNAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQvdCw0YHRgtCw0YHQuNGPIiwicm9sZSI6IkNsaWVudCIsImlhdCI6MTY3ODg3MjM0OSwiZXhwIjoxNjc4ODczMjQ5fQ.QaVlHe6s4Lp9sUzXylOhTBD2fuMjPBITP8rwqI_FbqY
 
@@ -25,5 +25,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExYjBjZ
   "skill":  "Professional",
   "trainings": ["Йога", "Бокс", "Кроссфит"],
   "hasPersonalTrainings": false,
-  "achievements":  "Can somebody just let me out of here? If I die in a cage I lose a bet."
+  "achievements":  "Привет! Меня зовут Иванова Валерия, мне 34 года. Я профессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и силовыми тренировками."
 }

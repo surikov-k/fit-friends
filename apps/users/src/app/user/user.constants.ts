@@ -15,7 +15,7 @@ export enum CaloriesPerDay {
 
 export enum CoachAchievements {
   MIN = 10,
-  MAX = 140,
+  MAX = 350, // В ТЗ 140, в Фигме текст длиннее
 }
 
 export enum UserError {
