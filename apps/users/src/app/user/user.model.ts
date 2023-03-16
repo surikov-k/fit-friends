@@ -71,6 +71,9 @@ export class UserModel extends Document implements UserInterface {
 
   @Prop()
   public achievements: string;
+
+  @Prop()
+  public info: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

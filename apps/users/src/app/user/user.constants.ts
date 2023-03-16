@@ -18,6 +18,11 @@ export enum CoachAchievements {
   MAX = 350, // В ТЗ 140, в Фигме текст длиннее
 }
 
+export enum ClientInfo {
+  MIN = 10,
+  MAX = 350,
+}
+
 export enum UserError {
   CALORIES_TARGET_TOO_SMALL = 'Calories target is too small',
   CALORIES_TARGET_TOO_BIG = 'Calories target is too big',
@@ -25,5 +30,7 @@ export enum UserError {
   DAILY_CALORIES_TOO_BIG = 'Calories per day is too big',
   ACHIEVEMENTS_TOO_SMALL = 'Coach achievements length is too small',
   ACHIEVEMENTS_TOO_BIG = 'Coach achievements length is too big',
+  CLIENT_INGO_TOO_SMALL = 'Client info length is too small',
+  CLIENT_INGO_TOO_BIG = 'Client info length is too big',
   INCORRECT_MONGOID = 'The MongoDB ID is not valid',
 }

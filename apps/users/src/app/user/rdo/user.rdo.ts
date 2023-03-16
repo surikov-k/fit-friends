@@ -55,4 +55,7 @@ export class UserRdo {
 
   @Expose()
   public achievements: string;
+
+  @Expose()
+  public info: string;
 }

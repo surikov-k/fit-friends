@@ -3,14 +3,18 @@ import {
   IsBoolean,
   IsEnum,
   IsInt,
+  IsString,
   Max,
+  MaxLength,
   Min,
+  MinLength,
 } from 'class-validator';
 
 import { Skill, TimeSpan, Training } from '@fit-friends/shared-types';
 import {
   CaloriesPerDay,
   CaloriesTarget,
+  ClientInfo,
   MAX_TRAININGS_FOR_CLIENT,
   UserError,
 } from '../user.constants';
@@ -71,4 +75,18 @@ export class ClientDetailsDto {
   })
   @IsBoolean()
   readiness: boolean;
+
+  @ApiProperty({
+    description: 'Client info',
+    example:
+      'Привет! Я Катерина и мне 27 лет. Обожаю спорт и все, что с ним связанно. Регулярно хожу на тренировки по кроссфиту, также занимаюсь йогой, рястяжкой и пилатесом. Занимаюсь как с тренером индивидуально, так и на групповых занятиях. Люблю соревнования и челленджи, так что присоединяйтесь, давайте объединяться и заниматься вместе!)',
+  })
+  @IsString()
+  @MinLength(ClientInfo.MIN, {
+    message: UserError.CLIENT_INGO_TOO_SMALL,
+  })
+  @MaxLength(ClientInfo.MAX, {
+    message: UserError.CLIENT_INGO_TOO_BIG,
+  })
+  info: string;
 }

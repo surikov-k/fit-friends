@@ -2,6 +2,7 @@ import {
   Gender,
   Location,
   Skill,
+  TimeSpan,
   Training,
   UserRole,
 } from '@fit-friends/shared-types';
@@ -19,6 +20,14 @@ export interface UserInterface {
 
   skill?: Skill;
   trainings?: Training[];
+
+  duration?: TimeSpan;
+  caloriesTarget?: number;
+  caloriesPerDay?: number;
+  readiness?: boolean;
+  hasPersonalTrainings?: boolean;
+  achievements?: string;
+  info?: string;
 
   createdAt?: Date;
   refreshTokenHash?: string;

@@ -34,6 +34,7 @@ export class UserEntity
   readiness: boolean;
   hasPersonalTrainings: boolean;
   achievements: string;
+  info: string;
   refreshTokenHash: string;
 
   constructor(user: UserInterface) {
@@ -47,6 +48,7 @@ export class UserEntity
     this.caloriesTarget = dto.caloriesTarget;
     this.caloriesPerDay = dto.caloriesPerDay;
     this.readiness = dto.readiness;
+    this.info = dto.info;
   }
 
   public setCoachDetails(dto: CoachDetailsDto) {
@@ -92,6 +94,15 @@ export class UserEntity
     this.passwordHash = user.passwordHash;
     this.refreshTokenHash = user.refreshTokenHash;
     this.role = user.role;
+    this.skill = user.skill;
+    this.trainings = user.trainings;
+    this.duration = user.duration;
+    this.caloriesTarget = user.caloriesTarget;
+    this.caloriesPerDay = user.caloriesPerDay;
+    this.readiness = user.readiness;
+    this.hasPersonalTrainings = user.hasPersonalTrainings;
+    this.achievements = user.achievements;
+    this.info = user.info;
   }
 
   toObject(): UserInterface {
