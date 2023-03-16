@@ -25,4 +25,5 @@ export enum UserError {
   DAILY_CALORIES_TOO_BIG = 'Calories per day is too big',
   ACHIEVEMENTS_TOO_SMALL = 'Coach achievements length is too small',
   ACHIEVEMENTS_TOO_BIG = 'Coach achievements length is too big',
+  INCORRECT_MONGOID = 'The MongoDB ID is not valid',
 }

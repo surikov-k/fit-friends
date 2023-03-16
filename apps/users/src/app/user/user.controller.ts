@@ -9,13 +9,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { AccessTokenGuard, CoachGuard } from '../../common/guards';
+import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { fillObject } from '@fit-friends/core';
 import { UserService } from './user.service';
 import { ClientDetailsDto, CoachDetailsDto } from './dto';
 import { UserRdo } from './rdo';
 import { CurrentUserId } from '../../common/decorators';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CheckMongoId } from '../../common/pipes';
 
 @ApiTags('auth')
 @Controller('user')
@@ -34,12 +35,13 @@ export class UserController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized',
   })
-  public async get(@Param('id') id: string) {
+  public async get(@Param('id', CheckMongoId) id: string) {
     const user = await this.userService.get(id);
     return fillObject(UserRdo, user);
   }
 
   @UseGuards(AccessTokenGuard)
+  @UseGuards(ClientGuard)
   @Patch('/client')
   @ApiResponse({
     type: UserRdo,
