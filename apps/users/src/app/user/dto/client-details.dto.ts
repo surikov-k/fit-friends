@@ -70,7 +70,7 @@ export class ClientDetailsDto {
   caloriesPerDay: number;
 
   @ApiProperty({
-    description: 'Готовность к тренировке',
+    description: 'Ready for training',
     example: true,
   })
   @IsBoolean()

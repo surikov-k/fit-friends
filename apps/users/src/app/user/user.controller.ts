@@ -8,6 +8,7 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { fillObject } from '@fit-friends/core';
@@ -15,10 +16,9 @@ import { UserService } from './user.service';
 import { ClientDetailsDto, CoachDetailsDto } from './dto';
 import { UserRdo } from './rdo';
 import { CurrentUserId } from '../../common/decorators';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CheckMongoId } from '../../common/pipes';
 
-@ApiTags('auth')
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
