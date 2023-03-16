@@ -1,12 +1,25 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UploadModule } from './upload/upload.module';
+import { ENV_FILE_PATH } from './app.constants';
+import { validateEnvironment } from './upload/env.validation';
+import { getMongoDbConfig, mongoDbOptions } from '../../config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [UploadModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    UploadModule,
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+      envFilePath: ENV_FILE_PATH,
+      load: [mongoDbOptions],
+      validate: validateEnvironment,
+    }),
+    MongooseModule.forRootAsync(getMongoDbConfig()),
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
