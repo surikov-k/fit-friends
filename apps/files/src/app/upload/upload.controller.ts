@@ -11,6 +11,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { UploadService } from './upload.service';
 import { UploadFile } from './upload.constants';
+import { fillObject } from '@fit-friends/core';
+import { SaveFileRdo } from './rdo';
 
 @Controller('upload')
 export class UploadController {
@@ -24,7 +26,8 @@ export class UploadController {
     @UploadedFile(new ParseFilePipe(UploadController.parseAvatarPipeOptions))
     { filename }: Express.Multer.File
   ) {
-    return this.uploadService.save({ filename });
+    const file = await this.uploadService.save({ filename });
+    return fillObject(SaveFileRdo, file);
   }
 
   private static parseAvatarPipeOptions = {
