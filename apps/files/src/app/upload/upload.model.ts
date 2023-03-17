@@ -11,7 +11,7 @@ export class UploadModel extends Document implements FileInterface {
   @Prop({ required: true })
   filename: string;
 
-  @Prop({ required: true })
+  @Prop()
   uploaderId: string;
 }
 
