@@ -52,6 +52,11 @@ class EnvironmentsConfig {
     message: EnvValidationMessage.JwtATSecretRequired,
   })
   public JWT_AT_SECRET: string;
+
+  @IsString({
+    message: EnvValidationMessage.UploadDirRequired,
+  })
+  public UPLOADS_DIR: string;
 }
 
 export const validateEnvironment = (config: Record<string, unknown>) => {

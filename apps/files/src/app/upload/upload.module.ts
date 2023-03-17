@@ -4,6 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UploadController } from './upload.controller';
 import { UploadService } from './upload.service';
 import { UploadModel, UploadSchema } from './upload.model';
+import { UploadRepository } from './upload.repository';
+import { MulterModule } from '@nestjs/platform-express';
+import { getMulterConfig } from '../../../config';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -13,8 +17,12 @@ import { UploadModel, UploadSchema } from './upload.model';
         schema: UploadSchema,
       },
     ]),
+    MulterModule.registerAsync({
+      useFactory: getMulterConfig,
+      inject: [ConfigService],
+    }),
   ],
   controllers: [UploadController],
-  providers: [UploadService],
+  providers: [UploadService, UploadRepository],
 })
 export class UploadModule {}

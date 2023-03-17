@@ -12,4 +12,5 @@ export enum EnvValidationMessage {
   DBPasswordRequired = 'MongoDB password is required',
   DBBaseAuthRequired = 'MongoDB authentication base is required',
   JwtATSecretRequired = 'Jwt Access token secret is required',
+  UploadDirRequired = 'Path to uploads directory is required',
 }

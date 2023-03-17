@@ -43,3 +43,6 @@ Thumbs.db
 
 # MongoDB files
 db
+
+# User uploads
+uploads/
