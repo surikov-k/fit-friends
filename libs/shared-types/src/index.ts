@@ -18,3 +18,4 @@ export * from './lib/order.interface';
 export * from './lib/workout-request.interface';
 export * from './lib/jwt-payload.type';
 export * from './lib/tokens.type';
+export * from './lib/file.interface';
