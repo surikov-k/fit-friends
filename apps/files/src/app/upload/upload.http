@@ -8,3 +8,6 @@ Content-Type: image/jpeg
 
 < /Users/sk/Desktop/tmp/avatar.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get a file
+GET http://localhost:3331/uploads/1679060336551.avatar.png

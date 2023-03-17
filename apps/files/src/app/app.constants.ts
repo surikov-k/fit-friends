@@ -3,6 +3,8 @@ export const ENV_FILE_PATH = 'environments/.files.env';
 export const MIN_PORT = 0;
 export const MAX_PORT = 65535;
 
+export const SERVE_ROOT = '/uploads/';
+
 export enum EnvValidationMessage {
   PortRequired = 'Server port is required',
   DBHostRequired = 'MongoDB host is required',

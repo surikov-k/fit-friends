@@ -16,8 +16,6 @@ import { SaveFileRdo } from './rdo';
 
 @Controller('upload')
 export class UploadController {
-  uploadPath = '';
-
   constructor(private readonly uploadService: UploadService) {}
 
   @Post('avatar')
