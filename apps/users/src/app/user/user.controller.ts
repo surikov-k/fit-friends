@@ -13,10 +13,10 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { fillObject } from '@fit-friends/core';
 import { UserService } from './user.service';
-import { ClientDetailsDto, CoachDetailsDto } from './dto';
+import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { UserRdo } from './rdo';
 import { CurrentUserId } from '../../common/decorators';
-import { CheckMongoId } from '../../common/pipes';
+import { CheckMongoId, ValidateProfileUpdate } from '../../common/pipes';
 
 @ApiTags('user')
 @Controller('user')
@@ -78,6 +78,26 @@ export class UserController {
     @CurrentUserId() userId: string
   ) {
     const user = this.userService.saveCoachDetails(userId, dto);
+
+    return fillObject(UserRdo, user);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'Update user profile',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
+  @Patch('/profile')
+  public async updateProfile(
+    @Body(ValidateProfileUpdate) dto: UpdateProfileDto,
+    @CurrentUserId() userId: string
+  ) {
+    const user = await this.userService.updateProfile(userId, dto);
 
     return fillObject(UserRdo, user);
   }
