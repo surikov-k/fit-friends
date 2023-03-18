@@ -85,6 +85,7 @@ export class UserEntity
 
   fillEntity(user: UserInterface): void {
     this._id = user._id;
+    this.avatar = user.avatar;
     this.birthday = user.birthday;
     this.createdAt = user.createdAt;
     this.email = user.email;

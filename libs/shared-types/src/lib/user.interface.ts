@@ -12,7 +12,7 @@ export interface UserInterface {
   name: string;
   email: string;
   passwordHash: string;
-  avatar?: string;
+  avatar: string;
   gender: Gender;
   birthday?: Date;
   role: UserRole;

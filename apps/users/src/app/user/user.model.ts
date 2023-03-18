@@ -25,7 +25,7 @@ export class UserModel extends Document implements UserInterface {
   public passwordHash: string;
 
   @Prop()
-  public avatar?: string;
+  public avatar: string;
 
   @Prop({ required: true, type: String, enum: Gender })
   public gender: Gender;

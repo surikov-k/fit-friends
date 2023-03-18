@@ -31,6 +31,13 @@ export class UserRdo {
   public password: string;
 
   @ApiProperty({
+    description: 'User avatar',
+    example: '1679060336551.avatar.png',
+  })
+  @Expose()
+  public avatar: string;
+
+  @ApiProperty({
     description: 'User gender',
     example: 'Female',
   })

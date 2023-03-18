@@ -1,7 +1,10 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEmail,
   IsEnum,
+  IsOptional,
+  IsString,
   Matches,
   MaxLength,
   MinLength,
@@ -15,7 +18,6 @@ import {
   USERNAME_PATTERN,
   UsernameLength,
 } from '../auth.contstants';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
   @ApiProperty({
@@ -68,6 +70,7 @@ export class RegisterDto {
     example: '1988-04-11',
   })
   @IsDateString({}, { always: true })
+  @IsOptional()
   birthday?: Date;
 
   @ApiProperty({
@@ -83,4 +86,12 @@ export class RegisterDto {
   })
   @IsEnum(Location, { always: true })
   location: Location;
+
+  @ApiProperty({
+    description: 'User location',
+    example: 'Удельная',
+  })
+  @IsString({ always: true })
+  @IsOptional()
+  avatar: string;
 }
