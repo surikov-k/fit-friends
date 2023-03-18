@@ -7,7 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-import { Skill, Training } from '@fit-friends/shared-types';
+import { Skill, Training, UserRole } from '@fit-friends/shared-types';
 import {
   CoachAchievements,
   MAX_TRAININGS_FOR_COACH,
@@ -20,15 +20,17 @@ export class CoachDetailsDto {
     description: 'User skill',
     example: 'Amateur',
   })
-  @IsEnum(Skill)
+  @IsEnum(Skill, { groups: [UserRole.Coach, UserRole.Client] })
   skill: Skill;
 
   @ApiProperty({
     description: 'Workout type',
     example: 'Кроссфит',
   })
-  @IsEnum(Training, { each: true })
-  @ArrayMaxSize(MAX_TRAININGS_FOR_COACH)
+  @IsEnum(Training, { each: true, groups: [UserRole.Coach, UserRole.Client] })
+  @ArrayMaxSize(MAX_TRAININGS_FOR_COACH, {
+    groups: [UserRole.Coach, UserRole.Client],
+  })
   trainings: Training[];
 
   @ApiProperty({
@@ -43,12 +45,14 @@ export class CoachDetailsDto {
     example:
       'Привет! Меня зовут Иванова Валерия, мне 34 года. Я профессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и силовыми тренировками.',
   })
-  @IsString()
+  @IsString({ groups: [UserRole.Coach] })
   @MinLength(CoachAchievements.MIN, {
     message: UserError.ACHIEVEMENTS_TOO_SMALL,
+    // groups: [UserRole.Coach],
   })
   @MaxLength(CoachAchievements.MAX, {
     message: UserError.ACHIEVEMENTS_TOO_BIG,
+    // groups: [UserRole.Coach],
   })
   achievements: string;
 }

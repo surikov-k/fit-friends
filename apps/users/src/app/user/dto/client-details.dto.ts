@@ -10,7 +10,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-import { Skill, TimeSpan, Training } from '@fit-friends/shared-types';
+import { Skill, TimeSpan, Training, UserRole } from '@fit-friends/shared-types';
 import {
   CaloriesPerDay,
   CaloriesTarget,
@@ -25,22 +25,22 @@ export class ClientDetailsDto {
     description: 'User skill',
     example: 'Beginner',
   })
-  @IsEnum(Skill)
+  @IsEnum(Skill, { groups: [UserRole.Client, UserRole.Coach] })
   skill: Skill;
 
   @ApiProperty({
     description: 'Workout type',
     example: 'Йога',
   })
-  @IsEnum(Training, { each: true })
-  @ArrayMaxSize(MAX_TRAININGS_FOR_CLIENT)
+  @IsEnum(Training, { each: true, groups: [UserRole.Client, UserRole.Coach] })
+  @ArrayMaxSize(MAX_TRAININGS_FOR_CLIENT, { groups: [UserRole.Client] })
   trainings: Training[];
 
   @ApiProperty({
     description: 'Workout duration',
     example: '10-30 min',
   })
-  @IsEnum(TimeSpan)
+  @IsEnum(TimeSpan, { groups: [UserRole.Client] })
   duration: TimeSpan;
 
   @ApiProperty({
@@ -50,9 +50,11 @@ export class ClientDetailsDto {
   @IsInt()
   @Min(CaloriesTarget.MIN, {
     message: UserError.CALORIES_TARGET_TOO_SMALL,
+    groups: [UserRole.Client],
   })
   @Max(CaloriesTarget.MAX, {
     message: UserError.CALORIES_TARGET_TOO_BIG,
+    groups: [UserRole.Client],
   })
   caloriesTarget: number;
 
@@ -60,12 +62,14 @@ export class ClientDetailsDto {
     description: 'Number of calories to lose per day',
     example: 1500,
   })
-  @IsInt()
+  @IsInt({ groups: [UserRole.Client] })
   @Min(CaloriesPerDay.MIN, {
     message: UserError.DAILY_CALORIES_TOO_SMALL,
+    groups: [UserRole.Client],
   })
   @Max(CaloriesPerDay.MAX, {
     message: UserError.DAILY_CALORIES_TOO_BIG,
+    groups: [UserRole.Client],
   })
   caloriesPerDay: number;
 
@@ -73,7 +77,7 @@ export class ClientDetailsDto {
     description: 'Ready for training',
     example: true,
   })
-  @IsBoolean()
+  @IsBoolean({ groups: [UserRole.Client] })
   readiness: boolean;
 
   @ApiProperty({
@@ -81,12 +85,14 @@ export class ClientDetailsDto {
     example:
       'Привет! Я Катерина и мне 27 лет. Обожаю спорт и все, что с ним связанно. Регулярно хожу на тренировки по кроссфиту, также занимаюсь йогой, рястяжкой и пилатесом. Занимаюсь как с тренером индивидуально, так и на групповых занятиях. Люблю соревнования и челленджи, так что присоединяйтесь, давайте объединяться и заниматься вместе!)',
   })
-  @IsString()
+  @IsString({ groups: [UserRole.Client] })
   @MinLength(ClientInfo.MIN, {
     message: UserError.CLIENT_INGO_TOO_SMALL,
+    groups: [UserRole.Client],
   })
   @MaxLength(ClientInfo.MAX, {
     message: UserError.CLIENT_INGO_TOO_BIG,
+    groups: [UserRole.Client],
   })
   info: string;
 }

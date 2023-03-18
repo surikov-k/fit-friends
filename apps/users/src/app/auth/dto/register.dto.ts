@@ -24,6 +24,7 @@ export class RegisterDto {
   })
   @MinLength(UsernameLength.MIN, {
     message: AuthError.NAME_TOO_SHORT,
+    always: true,
   })
   @MaxLength(UsernameLength.MAX, {
     message: AuthError.NAME_TOO_LONG,
@@ -59,14 +60,14 @@ export class RegisterDto {
     description: 'User gender',
     example: 'Female',
   })
-  @IsEnum(Gender)
+  @IsEnum(Gender, { always: true })
   gender: Gender;
 
   @ApiProperty({
     description: 'User birthday',
     example: '1988-04-11',
   })
-  @IsDateString()
+  @IsDateString({}, { always: true })
   birthday?: Date;
 
   @ApiProperty({
@@ -80,6 +81,6 @@ export class RegisterDto {
     description: 'User location',
     example: 'Удельная',
   })
-  @IsEnum(Location)
+  @IsEnum(Location, { always: true })
   location: Location;
 }
