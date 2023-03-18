@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { AuthError } from '../auth/auth.contstants';
 import { UserRepository } from './user.repository';
-import { ClientDetailsDto, CoachDetailsDto } from './dto';
+import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { UserEntity } from './user.entity';
 
 @Injectable()
@@ -30,6 +30,12 @@ export class UserService {
     const entity = new UserEntity(user);
     entity.setCoachDetails(dto);
 
+    return this.userRepository.update(userId, entity);
+  }
+
+  async updateProfile(userId, dto: UpdateProfileDto) {
+    const user = await this.userRepository.findById(userId);
+    const entity = new UserEntity({ ...user, ...dto });
     return this.userRepository.update(userId, entity);
   }
 }
