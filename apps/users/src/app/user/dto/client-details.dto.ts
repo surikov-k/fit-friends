@@ -1,5 +1,6 @@
 import {
   ArrayMaxSize,
+  ArrayUnique,
   IsBoolean,
   IsEnum,
   IsInt,
@@ -34,6 +35,7 @@ export class ClientDetailsDto {
   })
   @IsEnum(Training, { each: true, groups: [UserRole.Client, UserRole.Coach] })
   @ArrayMaxSize(MAX_TRAININGS_FOR_CLIENT, { groups: [UserRole.Client] })
+  @ArrayUnique()
   trainings: Training[];
 
   @ApiProperty({

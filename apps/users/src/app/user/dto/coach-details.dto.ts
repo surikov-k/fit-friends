@@ -1,5 +1,6 @@
 import {
   ArrayMaxSize,
+  ArrayUnique,
   IsBoolean,
   IsEnum,
   IsString,
@@ -31,6 +32,7 @@ export class CoachDetailsDto {
   @ArrayMaxSize(MAX_TRAININGS_FOR_COACH, {
     groups: [UserRole.Coach, UserRole.Client],
   })
+  @ArrayUnique()
   trainings: Training[];
 
   @ApiProperty({
@@ -48,11 +50,9 @@ export class CoachDetailsDto {
   @IsString({ groups: [UserRole.Coach] })
   @MinLength(CoachAchievements.MIN, {
     message: UserError.ACHIEVEMENTS_TOO_SMALL,
-    // groups: [UserRole.Coach],
   })
   @MaxLength(CoachAchievements.MAX, {
     message: UserError.ACHIEVEMENTS_TOO_BIG,
-    // groups: [UserRole.Coach],
   })
   achievements: string;
 }
