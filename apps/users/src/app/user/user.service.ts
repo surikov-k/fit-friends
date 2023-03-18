@@ -17,7 +17,7 @@ export class UserService {
     return user;
   }
 
-  async updateClientDetails(userId, dto: ClientDetailsDto) {
+  async saveClientDetails(userId, dto: ClientDetailsDto) {
     const user = await this.userRepository.findById(userId);
     const entity = new UserEntity(user);
     entity.setClientDetails(dto);
@@ -25,7 +25,7 @@ export class UserService {
     return this.userRepository.update(userId, entity);
   }
 
-  async updateCoachDetails(userId, dto: CoachDetailsDto) {
+  async saveCoachDetails(userId, dto: CoachDetailsDto) {
     const user = await this.userRepository.findById(userId);
     const entity = new UserEntity(user);
     entity.setCoachDetails(dto);

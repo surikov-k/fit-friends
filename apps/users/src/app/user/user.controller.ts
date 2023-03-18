@@ -52,11 +52,11 @@ export class UserController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized',
   })
-  public async updateClientDetails(
+  public async saveClientDetails(
     @Body() dto: ClientDetailsDto,
     @CurrentUserId() userId: string
   ) {
-    const user = this.userService.updateClientDetails(userId, dto);
+    const user = this.userService.saveClientDetails(userId, dto);
 
     return fillObject(UserRdo, user);
   }
@@ -73,11 +73,11 @@ export class UserController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized',
   })
-  public async updateCoachDetails(
+  public async saveCoachDetails(
     @Body() dto: CoachDetailsDto,
     @CurrentUserId() userId: string
   ) {
-    const user = this.userService.updateCoachDetails(userId, dto);
+    const user = this.userService.saveCoachDetails(userId, dto);
 
     return fillObject(UserRdo, user);
   }
