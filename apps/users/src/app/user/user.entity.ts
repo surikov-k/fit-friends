@@ -18,7 +18,7 @@ export class UserEntity
 {
   _id?: string;
   avatar: string;
-  birthday: Date;
+  birthday?: Date;
   createdAt: Date;
   email: string;
   gender: Gender;

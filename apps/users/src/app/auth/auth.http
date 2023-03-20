@@ -3,10 +3,10 @@ POST http://localhost:3333/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Алина",
-  "email": "lidia.cash@example.com",
+  "name": "Игорь",
+  "email": "ronnie.lloyd@example.com",
   "password": "123456",
-  "gender": "Female",
+  "gender": "Male",
   "role": "Client",
   "location": "Пионерская"
 }
@@ -16,10 +16,10 @@ POST http://localhost:3333/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Игорь",
-  "email": "eddie.mcclure@example.com",
+  "name": "Ангелина",
+  "email": "darius.howard@example.com",
   "password": "123456",
-  "gender": "Male",
+  "gender": "Female",
   "birthday": "1980-04-22",
   "role": "Coach",
   "location": "Удельная"

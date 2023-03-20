@@ -21,16 +21,26 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
-    const { name, email, password, gender, birthday, role, location } = dto;
+    const {
+      name,
+      email,
+      password,
+      gender,
+      birthday,
+      role,
+      location,
+      avatar = '',
+    } = dto;
     const userData = {
       name,
       email,
       gender,
       role,
       location,
-      birthday: new Date(birthday),
+      birthday: birthday ? new Date(birthday) : undefined,
       passwordHash: '',
       rtHash: '',
+      avatar,
     };
 
     const entity = new UserEntity(userData);
