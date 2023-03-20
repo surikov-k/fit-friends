@@ -24,4 +24,5 @@ model Workout {
   rating         Decimal
   coachId        String
   isSpecialOffer Boolean
+  duration       String
 }

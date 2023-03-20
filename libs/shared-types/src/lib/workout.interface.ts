@@ -1,6 +1,7 @@
 import {
   Gender,
   Skill,
+  TimeSpan,
   Training,
   UserInterface,
 } from '@fit-friends/shared-types';
@@ -18,4 +19,5 @@ export interface WorkoutInterface {
   rating: number;
   coach: UserInterface;
   isSpecialOffer: boolean;
+  duration: TimeSpan;
 }
