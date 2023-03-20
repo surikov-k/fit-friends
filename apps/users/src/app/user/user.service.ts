@@ -17,6 +17,10 @@ export class UserService {
     return user;
   }
 
+  async getAll() {
+    return this.userRepository.findAll();
+  }
+
   async saveClientDetails(userId, dto: ClientDetailsDto) {
     const user = await this.userRepository.findById(userId);
     const entity = new UserEntity(user);

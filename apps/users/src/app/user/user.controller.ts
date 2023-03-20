@@ -101,4 +101,20 @@ export class UserController {
 
     return fillObject(UserRdo, user);
   }
+
+  @UseGuards(ClientGuard)
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: 'All users',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
+  @Get()
+  public async getAll() {
+    const all = await this.userService.getAll();
+    return all.map((user) => fillObject(UserRdo, user));
+  }
 }

@@ -37,4 +37,8 @@ export class UserRepository
       .findByIdAndUpdate(id, entity.toObject(), { new: true })
       .exec();
   }
+
+  public async findAll(): Promise<UserInterface[] | null> {
+    return this.userModel.find().exec();
+  }
 }
