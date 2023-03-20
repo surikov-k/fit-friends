@@ -14,6 +14,7 @@ async function fillDb() {
     update: {},
     create: {
       name: 'Energy',
+      background: 'background.jpg',
       skill: Skill.Beginner,
       type: Training.Pilates,
       price: 800,
