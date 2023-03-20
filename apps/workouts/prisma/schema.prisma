@@ -9,3 +9,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Workout {
+  id             Int     @id @default(autoincrement())
+  name           String
+  skill          String
+  type           String
+  price          Decimal
+  calories       Int
+  description    String
+  gender         String
+  video          String
+  rating         Decimal
+  coachId        String
+  isSpecialOffer Boolean
+}
