@@ -1,23 +1,24 @@
 import {
   Gender,
+  ReviewInterface,
   Skill,
   TimeSpan,
-  Training,
-  UserInterface,
+  WorkoutType,
 } from '@fit-friends/shared-types';
 
 export interface WorkoutInterface {
-  name: string;
+  title: string;
   background: string;
   skill: Skill;
-  type: Training;
+  type: WorkoutType;
   price: number;
   calories: number;
   description: string;
   gender: Gender;
   video: string;
   rating: number;
-  coach: UserInterface;
+  coachId: string;
   isSpecialOffer: boolean;
   duration: TimeSpan;
+  reviews: ReviewInterface[];
 }

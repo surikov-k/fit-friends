@@ -6,9 +6,9 @@ import {
   Location,
   Skill,
   TimeSpan,
-  Training,
   UserInterface,
   UserRole,
+  WorkoutType,
 } from '@fit-friends/shared-types';
 
 @Schema({
@@ -45,8 +45,8 @@ export class UserModel extends Document implements UserInterface {
   @Prop({ type: String, enum: Skill })
   public skill: Skill;
 
-  @Prop({ type: [String], enum: Training })
-  public trainings: Training[];
+  @Prop({ type: [String], enum: WorkoutType })
+  public trainings: WorkoutType[];
 
   @Prop({ type: String, enum: TimeSpan })
   public duration: TimeSpan;

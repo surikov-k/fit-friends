@@ -3,9 +3,8 @@ import {
   Gender,
   Skill,
   TimeSpan,
-  Training,
-  UserInterface,
   WorkoutInterface,
+  WorkoutType,
 } from '@fit-friends/shared-types';
 
 export class WorkoutEntity
@@ -13,16 +12,16 @@ export class WorkoutEntity
 {
   background: string;
   calories: number;
-  coach: UserInterface;
+  coachId: string;
   description: string;
   duration: TimeSpan;
   gender: Gender;
   isSpecialOffer: boolean;
-  name: string;
+  title: string;
   price: number;
   rating: number;
   skill: Skill;
-  type: Training;
+  type: WorkoutType;
   video: string;
 
   constructor(workout: WorkoutInterface) {
@@ -32,12 +31,12 @@ export class WorkoutEntity
   fillEntity(workout: WorkoutInterface): void {
     this.background = workout.background;
     this.calories = workout.calories;
-    this.coach = workout.coach;
+    this.coachId = workout.coachId;
     this.description = workout.description;
     this.duration = workout.duration;
     this.gender = workout.gender;
     this.isSpecialOffer = workout.isSpecialOffer;
-    this.name = workout.name;
+    this.title = workout.title;
     this.price = workout.price;
     this.rating = workout.rating;
     this.skill = workout.skill;

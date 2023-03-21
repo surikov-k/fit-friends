@@ -8,7 +8,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-import { Skill, Training, UserRole } from '@fit-friends/shared-types';
+import { Skill, UserRole, WorkoutType } from '@fit-friends/shared-types';
 import {
   CoachAchievements,
   MAX_TRAININGS_FOR_COACH,
@@ -28,12 +28,15 @@ export class CoachDetailsDto {
     description: 'Workout type',
     example: 'Кроссфит',
   })
-  @IsEnum(Training, { each: true, groups: [UserRole.Coach, UserRole.Client] })
+  @IsEnum(WorkoutType, {
+    each: true,
+    groups: [UserRole.Coach, UserRole.Client],
+  })
   @ArrayMaxSize(MAX_TRAININGS_FOR_COACH, {
     groups: [UserRole.Coach, UserRole.Client],
   })
   @ArrayUnique()
-  trainings: Training[];
+  trainings: WorkoutType[];
 
   @ApiProperty({
     description: 'Ready for personal training',

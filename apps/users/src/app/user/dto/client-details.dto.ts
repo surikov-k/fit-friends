@@ -11,7 +11,12 @@ import {
   MinLength,
 } from 'class-validator';
 
-import { Skill, TimeSpan, Training, UserRole } from '@fit-friends/shared-types';
+import {
+  Skill,
+  TimeSpan,
+  UserRole,
+  WorkoutType,
+} from '@fit-friends/shared-types';
 import {
   CaloriesPerDay,
   CaloriesTarget,
@@ -33,10 +38,13 @@ export class ClientDetailsDto {
     description: 'Workout type',
     example: 'Йога',
   })
-  @IsEnum(Training, { each: true, groups: [UserRole.Client, UserRole.Coach] })
+  @IsEnum(WorkoutType, {
+    each: true,
+    groups: [UserRole.Client, UserRole.Coach],
+  })
   @ArrayMaxSize(MAX_TRAININGS_FOR_CLIENT, { groups: [UserRole.Client] })
   @ArrayUnique()
-  trainings: Training[];
+  trainings: WorkoutType[];
 
   @ApiProperty({
     description: 'Workout duration',

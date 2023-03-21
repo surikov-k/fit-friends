@@ -3,7 +3,7 @@ import {
   Gender,
   Skill,
   TimeSpan,
-  Training,
+  WorkoutType,
 } from '../../../libs/shared-types/src';
 
 const prisma = new PrismaClient();
@@ -13,10 +13,10 @@ async function fillDb() {
     where: { id: 1 },
     update: {},
     create: {
-      name: 'Energy',
+      title: 'Energy',
       background: 'background.jpg',
       skill: Skill.Beginner,
-      type: Training.Pilates,
+      type: WorkoutType.Pilates,
       price: 800,
       calories: 320,
       description:
@@ -27,6 +27,15 @@ async function fillDb() {
       coachId: '6411b0cf332c6121f8682a0f',
       isSpecialOffer: false,
       duration: TimeSpan.Short,
+      reviews: {
+        create: [
+          {
+            clientId: '641846e23516c5a2e008e22b',
+            rating: 5,
+            text: 'Спасибо, классная тренировка! Понятная и интересная, с акцентом на правильную технику, как я люблю.',
+          },
+        ],
+      },
     },
   });
 

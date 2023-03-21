@@ -5,9 +5,9 @@ import {
   Location,
   Skill,
   TimeSpan,
-  Training,
   UserInterface,
   UserRole,
+  WorkoutType,
 } from '@fit-friends/shared-types';
 import { EntityInterface } from '@fit-friends/core';
 import { SALT_ROUNDS } from './user.constants';
@@ -27,7 +27,7 @@ export class UserEntity
   passwordHash: string;
   role: UserRole;
   skill: Skill;
-  trainings: Training[];
+  trainings: WorkoutType[];
   duration: TimeSpan;
   caloriesTarget: number;
   caloriesPerDay: number;

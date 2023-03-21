@@ -3,8 +3,8 @@ import {
   Location,
   Skill,
   TimeSpan,
-  Training,
   UserRole,
+  WorkoutType,
 } from '@fit-friends/shared-types';
 
 export interface UserInterface {
@@ -19,7 +19,7 @@ export interface UserInterface {
   location: Location;
 
   skill?: Skill;
-  trainings?: Training[];
+  trainings?: WorkoutType[];
 
   duration?: TimeSpan;
   caloriesTarget?: number;

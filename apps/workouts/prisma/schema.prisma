@@ -11,19 +11,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Skill {
+  Beginner
+  Amateur
+  Professional
+}
+
+enum WorkoutType {
+  Yoga
+  Running
+  Boxing
+  Stretching
+  Crossfit
+  Aerobics
+  Pilates
+}
+
+enum Gender {
+  Male
+  Female
+  Common
+}
+
+enum TimeSpan {
+  Short
+  Normal
+  Long
+  Longest
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  clientId  String
+  rating    Int
+  text      String
+  createdAt DateTime @default(now())
+  Workout   Workout  @relation(fields: [workoutId], references: [id])
+  workoutId Int
+}
+
 model Workout {
-  id             Int     @id @default(autoincrement())
+  id             Int         @id @default(autoincrement())
   background     String
-  name           String
-  skill          String
-  type           String
-  price          Decimal
+  title          String
+  skill          Skill
+  type           WorkoutType
+  price          Int
   calories       Int
   description    String
-  gender         String
+  gender         Gender
   video          String
-  rating         Decimal
+  rating         Float
   coachId        String
   isSpecialOffer Boolean
-  duration       String
+  duration       TimeSpan
+  createdAt      DateTime    @default(now())
+  reviews        Review[]
 }
