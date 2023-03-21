@@ -1,5 +1,5 @@
-import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, HttpStatus, Post, UseGuards } from '@nestjs/common';
 
 import { CoachGuard, CurrentUserId, fillObject } from '@fit-friends/core';
 import { WorkoutService } from './workout.service';
@@ -13,6 +13,15 @@ export class WorkoutController {
 
   @Post()
   @UseGuards(CoachGuard)
+  @ApiResponse({
+    type: CreateWorkoutDto,
+    status: HttpStatus.OK,
+    description: 'A workout successfully created',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Only a coach can create workouts',
+  })
   public async create(
     @Body() dto: CreateWorkoutDto,
     @CurrentUserId() coachId: string
