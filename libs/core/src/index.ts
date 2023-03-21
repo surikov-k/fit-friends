@@ -3,3 +3,4 @@ export * from './lib/crud-repository.interface';
 export * from './lib/entity.interface';
 export * from './strategies';
 export * from './guards';
+export * from './decorators';
