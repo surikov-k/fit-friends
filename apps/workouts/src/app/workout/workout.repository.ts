@@ -17,16 +17,29 @@ export class WorkoutRepository
     return this.prisma.workout.create({
       data: {
         ...entity,
+        reviews: {
+          connect: [],
+        },
+      },
+      include: {
+        reviews: true,
       },
     });
   }
 
   public async destroy(id: number): Promise<void> {
-    return Promise.resolve(undefined);
+    await this.prisma.workout.delete({
+      where: { id },
+    });
   }
 
   public async findById(id: number): Promise<WorkoutInterface | null> {
-    return Promise.resolve(undefined);
+    return this.prisma.workout.findFirst({
+      where: { id },
+      include: {
+        reviews: true,
+      },
+    });
   }
 
   public async update(
