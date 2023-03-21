@@ -7,8 +7,8 @@ import databaseConfig from '../config/database.config';
 import { getMongoDbConfig } from '../config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { validateEnvironments } from './auth/env.validation';
 import { jwtOptions } from '../config/jwt.config';
+import { validateEnvironments } from './env.validation';
 
 @Module({
   imports: [

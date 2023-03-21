@@ -1,7 +1,7 @@
 import { IsNumber, IsString, Max, Min, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
-import { EnvValidationMessage } from '../app.constants';
+import { EnvValidationMessage } from './app.constants';
 
 const MIN_PORT = 0;
 const MAX_PORT = 65535;
