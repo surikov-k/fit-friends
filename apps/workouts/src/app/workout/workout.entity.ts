@@ -1,6 +1,7 @@
 import { EntityInterface } from '@fit-friends/core';
 import {
   Gender,
+  ReviewInterface,
   Skill,
   TimeSpan,
   WorkoutInterface,
@@ -23,6 +24,7 @@ export class WorkoutEntity
   skill: Skill;
   type: WorkoutType;
   video: string;
+  reviews: ReviewInterface[];
 
   constructor(workout: WorkoutInterface) {
     this.fillEntity(workout);
@@ -42,9 +44,13 @@ export class WorkoutEntity
     this.skill = workout.skill;
     this.type = workout.type;
     this.video = workout.video;
+    this.reviews = [];
   }
 
   toObject(): WorkoutEntity {
-    return { ...this };
+    return {
+      ...this,
+      reviews: this.reviews.map(({ id }) => ({ id })),
+    };
   }
 }
