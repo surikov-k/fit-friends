@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { WorkoutModule } from './workout/workout.module';
 import { ENV_FILE_PATH } from './app.constants';
 import { validateEnvironment } from './env.validation';
+import { jwtOptions } from '../config';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { validateEnvironment } from './env.validation';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
+      load: [jwtOptions],
       validate: validateEnvironment,
     }),
   ],

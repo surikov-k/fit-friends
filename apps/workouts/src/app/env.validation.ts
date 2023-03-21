@@ -1,4 +1,4 @@
-import { IsNumber, Max, Min, validateSync } from 'class-validator';
+import { IsNumber, IsString, Max, Min, validateSync } from 'class-validator';
 import { EnvValidationMessage } from './app.constants';
 import { plainToInstance } from 'class-transformer';
 
@@ -15,6 +15,11 @@ class EnvironmentConfig {
   @Min(MIN_PORT)
   @Max(MAX_PORT)
   public PORT: number;
+
+  @IsString({
+    message: EnvValidationMessage.JwtATSecretRequired,
+  })
+  public JWT_AT_SECRET: string;
 }
 
 export function validateEnvironment(config: Record<string, unknown>) {
