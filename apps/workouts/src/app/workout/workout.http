@@ -4,12 +4,12 @@ Content-Type: application/json
 
 {
   "background": "background.jpg",
-  "calories": 320,
+  "calories": 1320,
   "description":  "Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и координацию.",
   "duration": "Short",
   "gender":  "Common",
   "isSpecialOffer": false,
-  "price":  800,
+  "price":  0,
   "skill": "Beginner",
   "title":  "Energy",
   "type": "Pilates",

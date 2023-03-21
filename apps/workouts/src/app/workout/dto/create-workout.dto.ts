@@ -1,4 +1,13 @@
-import { IsBoolean, IsEnum, IsInt, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsInt,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
 import {
   Gender,
   Skill,
@@ -6,15 +15,20 @@ import {
   WorkoutInterface,
   WorkoutType,
 } from '@fit-friends/shared-types';
+import { Calories, DescriptionLength, Price } from './workout.constants';
 
 export class CreateWorkoutDto
   implements
     Omit<WorkoutInterface, 'rating' | 'coachId' | 'reviews' | 'background'>
 {
   @IsInt()
+  @Min(Calories.MIN)
+  @Max(Calories.MAX)
   calories: number;
 
   @IsString()
+  @MinLength(DescriptionLength.MIN)
+  @MaxLength(DescriptionLength.MAX)
   description: string;
 
   @IsEnum(TimeSpan)
@@ -27,6 +41,7 @@ export class CreateWorkoutDto
   isSpecialOffer: boolean;
 
   @IsInt()
+  @Min(Price.MIN)
   price: number;
 
   @IsEnum(Skill)
