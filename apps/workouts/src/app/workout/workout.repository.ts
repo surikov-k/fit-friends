@@ -44,8 +44,20 @@ export class WorkoutRepository
 
   public async update(
     id: number,
-    item: WorkoutEntity
+    entity: WorkoutEntity
   ): Promise<WorkoutInterface> {
-    return Promise.resolve(undefined);
+    const entityData = entity.toObject();
+    return this.prisma.workout.update({
+      where: { id },
+      data: {
+        ...entityData,
+        reviews: {
+          connect: [...entityData.reviews],
+        },
+      },
+      include: {
+        reviews: true,
+      },
+    });
   }
 }
