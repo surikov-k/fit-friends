@@ -15,8 +15,8 @@ import {
   WorkoutInterface,
   WorkoutType,
 } from '@fit-friends/shared-types';
-import { Calories, DescriptionLength, Price } from './workout.constants';
 import { ApiProperty } from '@nestjs/swagger';
+import { Calories, DescriptionLength, Price } from '../workout.constants';
 
 export class CreateWorkoutDto
   implements
