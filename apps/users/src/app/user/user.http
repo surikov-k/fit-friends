@@ -13,8 +13,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzM
 
 {
   "skill":  "Amateur",
-  "trainings": ["Йога", "Кроссфит", "Аэробика"],
-  "duration":  "10-30 min",
+  "trainings": ["Yoga", "Crossfit", "Aerobics"],
+  "duration":  "Normal",
   "caloriesTarget": 4000,
   "caloriesPerDay":  1200,
   "readiness": true,
@@ -28,7 +28,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExYjBjZ
 
 {
   "skill":  "Professional",
-  "trainings": ["Йога", "Бокс", "Кроссфит"],
+  "trainings": ["Yoga", "Boxing", "Crossfit"],
   "hasPersonalTrainings": false,
   "achievements":  "Привет! Меня зовут Иванова Валерия, мне 34 года. Я профессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и силовыми тренировками."
 }
@@ -42,9 +42,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzM
 {
   "name": "Жанна",
   "skill":  "Professional",
-  "trainings": ["Йога", "Бокс"],
+  "trainings": ["Yoga", "Boxing"],
   "readiness": false,
-  "duration":  "10-30 min"
+  "duration":  "Long"
 }
 
 ### Update a coach profile
@@ -56,6 +56,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExYjBjZ
   "avatar": "1679060336551.avatar.png",
   "name": "Игнатий",
   "skill":  "Professional",
-  "trainings": ["Йога", "Кроссфит", "Аэробика"],
+  "trainings": ["Yoga", "Crossfit", "Aerobics"],
   "hasPersonalTrainings": true
 }
