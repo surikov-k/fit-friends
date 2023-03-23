@@ -15,7 +15,7 @@ const CANT_TOUCH_THIS =
   'You have to be the creator of this workout to update it';
 
 @Injectable({ scope: Scope.REQUEST })
-export class WorkoutIdValidationPipe implements PipeTransform {
+export class CheckCoachId implements PipeTransform {
   constructor(
     @Inject(REQUEST) private readonly request: Request,
     private readonly workoutRepository: WorkoutRepository

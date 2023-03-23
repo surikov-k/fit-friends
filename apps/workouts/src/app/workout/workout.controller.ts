@@ -53,7 +53,7 @@ export class WorkoutController {
       'Only the coach and creator of the workout can update this workout',
   })
   public async update(
-    @Param('id', WorkoutIdValidationPipe) id: number,
+    @Param('id', CheckCoachId) id: number,
     @Body() dto: UpdateWorkoutRdo
   ) {
     const workout = await this.workoutService.update(id, dto);

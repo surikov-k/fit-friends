@@ -1,1 +1,1 @@
-export * from './workout-id-validation.pipe';
+export * from './check-coach-id.pipe';
