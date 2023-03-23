@@ -16,3 +16,13 @@ export enum TitleLength {
   MIN = 1,
   MAX = 15,
 }
+
+export enum Rating {
+  MIN = 1,
+  MAX = 5,
+}
+
+export enum WorkoutIndexQueryDefault {
+  ITEMS_PER_PAGE = 6,
+  PAGE = 1,
+}

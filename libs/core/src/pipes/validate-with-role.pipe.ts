@@ -17,7 +17,7 @@ export class ValidateWithRole implements PipeTransform {
     const validationPipe = new ValidationPipe({
       whitelist: true,
       skipMissingProperties: true,
-      groups: [role ?? role],
+      groups: [role],
     });
 
     return validationPipe.transform(value, metadata);
