@@ -16,7 +16,12 @@ import {
   WorkoutType,
 } from '@fit-friends/shared-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { Calories, DescriptionLength, Price } from '../workout.constants';
+import {
+  Calories,
+  DescriptionLength,
+  Price,
+  TitleLength,
+} from '../workout.constants';
 
 export class CreateWorkoutDto
   implements
@@ -81,6 +86,8 @@ export class CreateWorkoutDto
     example: 'Energy',
   })
   @IsString()
+  @MinLength(TitleLength.MIN)
+  @MaxLength(TitleLength.MAX)
   title: string;
 
   @ApiProperty({
