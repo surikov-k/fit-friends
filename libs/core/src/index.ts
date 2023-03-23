@@ -4,3 +4,4 @@ export * from './lib/entity.interface';
 export * from './strategies';
 export * from './guards';
 export * from './decorators';
+export * from './pipes';

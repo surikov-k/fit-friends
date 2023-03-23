@@ -11,12 +11,12 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
-import { fillObject } from '@fit-friends/core';
+import { fillObject, ValidateWithRole } from '@fit-friends/core';
 import { UserService } from './user.service';
 import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { UserRdo } from './rdo';
 import { CurrentUserId } from '../../common/decorators';
-import { CheckMongoId, ValidateProfileUpdate } from '../../common/pipes';
+import { CheckMongoId } from '../../common/pipes';
 
 @ApiTags('user')
 @Controller('user')
@@ -94,7 +94,7 @@ export class UserController {
   })
   @Patch('/profile')
   public async updateProfile(
-    @Body(ValidateProfileUpdate) dto: UpdateProfileDto,
+    @Body(ValidateWithRole) dto: UpdateProfileDto,
     @CurrentUserId() userId: string
   ) {
     const user = await this.userService.updateProfile(userId, dto);
