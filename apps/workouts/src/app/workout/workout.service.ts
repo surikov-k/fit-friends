@@ -9,6 +9,10 @@ import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 export class WorkoutService {
   constructor(private readonly workoutRepository: WorkoutRepository) {}
 
+  public async get(id: number) {
+    return this.workoutRepository.findById(id);
+  }
+
   public async create(
     coachId: string,
     dto: CreateWorkoutDto

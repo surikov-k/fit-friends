@@ -2,6 +2,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Param,
   Patch,
@@ -9,16 +10,37 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { CoachGuard, CurrentUserId, fillObject } from '@fit-friends/core';
+import {
+  AccessTokenGuard,
+  CoachGuard,
+  CurrentUserId,
+  fillObject,
+} from '@fit-friends/core';
 import { WorkoutService } from './workout.service';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 import { WorkoutRdo } from './rdo';
-import { WorkoutIdValidationPipe } from '../common/pipes';
+import { CheckCoachId, ValidateId } from '../common/pipes';
 
 @ApiTags('workout')
 @Controller('workout')
 export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
+
+  @Get('/:id')
+  @ApiResponse({
+    type: WorkoutRdo,
+    status: HttpStatus.OK,
+    description: 'Detailed workout information',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Only an authorized user can request the workout information',
+  })
+  @UseGuards(AccessTokenGuard)
+  public async get(@Param('id', ValidateId) id: number) {
+    const workout = await this.workoutService.get(id);
+    return fillObject(WorkoutRdo, workout);
+  }
 
   @Post()
   @UseGuards(CoachGuard)
