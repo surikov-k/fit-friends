@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -64,7 +65,7 @@ export class WorkoutController {
     description: 'Only an authorized user can request the workout information',
   })
   @UseGuards(AccessTokenGuard)
-  public async get(@Param('id', ValidateId) id: number) {
+  public async get(@Param('id', ParseIntPipe, ValidateId) id: number) {
     const workout = await this.workoutService.get(id);
     return fillObject(WorkoutRdo, workout);
   }
@@ -102,7 +103,7 @@ export class WorkoutController {
       'Only the coach and creator of the workout can update this workout',
   })
   public async update(
-    @Param('id', CheckCoachId) id: number,
+    @Param('id', ParseIntPipe, CheckCoachId) id: number,
     @Body() dto: UpdateWorkoutRdo
   ) {
     const workout = await this.workoutService.update(id, dto);
