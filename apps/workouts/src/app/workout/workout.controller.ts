@@ -33,6 +33,15 @@ export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
 
   @Get()
+  @ApiResponse({
+    type: [WorkoutRdo],
+    status: HttpStatus.OK,
+    description: 'List of workouts',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Only an authorized user can request the list of workouts',
+  })
   @UseGuards(AccessTokenGuard)
   public async index(
     @CurrentUserRole() role: string,
