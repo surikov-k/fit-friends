@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@prisma/orders-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PurchaseType {
+  Membership
+  Workout
+}
+
+enum PaymentMethod {
+  Visa
+  Mir
+  Umoney
+}
+
+model Order {
+  id           Int           @id @default(autoincrement())
+  userId       String
+  purchaseType PurchaseType
+  serviceId    Int
+  price        Int
+  quantity     Int
+  total        Int
+  payment      PaymentMethod
+  createdAt    DateTime      @default(now())
+}
