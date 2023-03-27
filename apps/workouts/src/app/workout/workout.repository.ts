@@ -4,7 +4,6 @@ import { CrudRepositoryInterface } from '@fit-friends/core';
 import { WorkoutInterface } from '@fit-friends/shared-types';
 import { WorkoutEntity } from './workout.entity';
 import { PrismaService } from '../prisma/prisma.service';
-import { WorkoutQuery } from './query';
 
 @Injectable()
 export class WorkoutRepository
@@ -12,7 +11,7 @@ export class WorkoutRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async find(coachId: string, query: WorkoutQuery) {
+  public async find(coachId: string, query) {
     const {
       limit,
       caloriesMin,

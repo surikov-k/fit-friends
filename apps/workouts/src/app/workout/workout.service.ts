@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { WorkoutInterface } from '@fit-friends/shared-types';
 import { WorkoutRepository } from './workout.repository';
 import { WorkoutEntity } from './workout.entity';
-import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 
 @Injectable()
 export class WorkoutService {
@@ -17,10 +16,7 @@ export class WorkoutService {
     return this.workoutRepository.findById(id);
   }
 
-  public async create(
-    coachId: string,
-    dto: CreateWorkoutDto
-  ): Promise<WorkoutInterface> {
+  public async create(coachId: string, dto): Promise<WorkoutInterface> {
     const entity = new WorkoutEntity({
       ...dto,
       coachId,
@@ -32,7 +28,7 @@ export class WorkoutService {
     return this.workoutRepository.create(entity);
   }
 
-  public async update(id: number, dto: UpdateWorkoutRdo) {
+  public async update(id: number, dto) {
     const workout = await this.workoutRepository.findById(id);
     const entity = new WorkoutEntity({
       ...workout,
