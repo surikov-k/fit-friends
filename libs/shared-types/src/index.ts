@@ -20,3 +20,4 @@ export * from './lib/jwt-payload.type';
 export * from './lib/tokens.type';
 export * from './lib/file.interface';
 export * from './lib/orders-events.enum';
+export * from './lib/workouts-events.enum';
