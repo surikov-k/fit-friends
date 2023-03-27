@@ -5,3 +5,5 @@ export * from './strategies';
 export * from './guards';
 export * from './decorators';
 export * from './pipes';
+export * from './modules';
+export * from './services';
