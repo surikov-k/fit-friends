@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OrderEntity } from './order.entity';
 import { OrderRepository } from './order.repository';
-import { CreateWorkoutOrderDto } from './dto';
 import { OrderInterface } from '@fit-friends/shared-types';
 
 @Injectable()
@@ -12,7 +11,7 @@ export class OrderService {
     return this.orderRepository.findById(id);
   }
 
-  public async create(userId: string, dto: CreateWorkoutOrderDto) {
+  public async create(userId: string, dto) {
     const entity = new OrderEntity({
       userId,
       ...dto,

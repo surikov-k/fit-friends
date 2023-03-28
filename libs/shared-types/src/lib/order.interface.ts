@@ -1,4 +1,8 @@
-import { PaymentMethod, PurchaseType } from '@fit-friends/shared-types';
+import {
+  PaymentMethod,
+  PurchaseType,
+  WorkoutInterface,
+} from '@fit-friends/shared-types';
 
 export interface OrderInterface {
   id?: number;
@@ -6,6 +10,7 @@ export interface OrderInterface {
   coachId?: string;
   purchaseType: PurchaseType;
   serviceId: number;
+  workout?: WorkoutInterface;
   price: number;
   quantity: number;
   total?: number;

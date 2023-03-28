@@ -1,27 +1,52 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
+import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
+
+import { OrdersEvent, WorkoutsEvents } from '@fit-friends/shared-types';
 import { OrderService } from './order.service';
-import { EventPattern, Payload } from '@nestjs/microservices';
-import { OrdersEvent } from '@fit-friends/shared-types';
+import { lastValueFrom } from 'rxjs';
 
 @Controller('order')
 export class OrderController {
-  constructor(public readonly orderService: OrderService) {}
+  constructor(
+    public readonly orderService: OrderService,
+    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
+  ) {}
 
   @EventPattern({ cmd: OrdersEvent.GetMyOrders })
   public async getByUserId(@Payload() { userId }) {
-    userId = '64131f325d6cbe769dc46ebd';
-    return this.orderService.findByUserId(userId);
+    const orders = await this.orderService.findByUserId(userId);
+
+    for (let order of orders) {
+      const workout = await lastValueFrom(
+        this.workoutsService.send(
+          { cmd: WorkoutsEvents.GetWorkout },
+          { id: order.serviceId }
+        )
+      );
+      order.workout = workout;
+    }
+
+    return orders;
   }
 
   @EventPattern({ cmd: OrdersEvent.GetOrder })
   public async get(@Payload() { id }) {
-    return this.orderService.get(id);
+    const order = await this.orderService.get(id);
+    const workout = await lastValueFrom(
+      this.workoutsService.send(
+        { cmd: WorkoutsEvents.GetWorkout },
+        { id: order.serviceId }
+      )
+    );
+
+    return {
+      ...order,
+      service: workout,
+    };
   }
 
   @EventPattern({ cmd: OrdersEvent.CreateWorkoutOrder })
-  @Post('/workout')
   public async create(@Payload() { userId, dto }) {
-    userId = 'userid';
     return this.orderService.create(userId, dto);
   }
 }

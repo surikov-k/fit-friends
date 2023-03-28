@@ -1,5 +1,9 @@
 import { Expose } from 'class-transformer';
-import { PaymentMethod, PurchaseType } from '@fit-friends/shared-types';
+import {
+  PaymentMethod,
+  PurchaseType,
+  WorkoutInterface,
+} from '@fit-friends/shared-types';
 
 export class WorkoutOrderRdo {
   @Expose()
@@ -15,7 +19,7 @@ export class WorkoutOrderRdo {
   purchaseType: PurchaseType;
 
   @Expose()
-  serviceId: number;
+  workout: WorkoutInterface;
 
   @Expose()
   price: number;

@@ -6,13 +6,15 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
+
+import { AccessTokenGuard, CurrentUserId, fillObject } from '@fit-friends/core';
 import { OrderInterface, OrdersEvent } from '@fit-friends/shared-types';
-import { CurrentUserId, fillObject } from '@fit-friends/core';
 import { CreateWorkoutOrderDto } from './dto';
 import { WorkoutOrderRdo } from './rdo';
-import { firstValueFrom } from 'rxjs';
 
 @Controller('order')
 export class OrderController {
@@ -20,6 +22,7 @@ export class OrderController {
     @Inject('ORDER_SERVICE') private readonly orderService: ClientProxy
   ) {}
 
+  @UseGuards(AccessTokenGuard)
   @Get('/:id')
   public async get(@Param('id', ParseIntPipe) id: number) {
     const order = await firstValueFrom(
@@ -32,12 +35,22 @@ export class OrderController {
     return fillObject(WorkoutOrderRdo, order);
   }
 
+  @UseGuards(AccessTokenGuard)
+  @Get()
+  public async getMy(@CurrentUserId() userId: string) {
+    const orders = await firstValueFrom(
+      this.orderService.send({ cmd: OrdersEvent.GetMyOrders }, { userId })
+    );
+
+    return orders.map((order) => fillObject(WorkoutOrderRdo, order));
+  }
+
+  @UseGuards(AccessTokenGuard)
   @Post('workout')
   public async create(
     @Body() dto: CreateWorkoutOrderDto,
     @CurrentUserId() userId: string
   ) {
-    userId = 'userid';
     const order = await firstValueFrom(
       this.orderService.send(
         { cmd: OrdersEvent.CreateWorkoutOrder },
