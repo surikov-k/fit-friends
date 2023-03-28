@@ -1,25 +1,20 @@
 import { Expose } from 'class-transformer';
 import {
+  GymInterface,
   PaymentMethod,
   PurchaseType,
   WorkoutInterface,
 } from '@fit-friends/shared-types';
 
-export class WorkoutOrderRdo {
+export class OrderRdo {
   @Expose()
   id: number;
-
-  @Expose()
-  userId: string;
-
-  @Expose()
-  coachId: string;
 
   @Expose()
   purchaseType: PurchaseType;
 
   @Expose()
-  workout: WorkoutInterface;
+  service?: WorkoutInterface | GymInterface;
 
   @Expose()
   price: number;

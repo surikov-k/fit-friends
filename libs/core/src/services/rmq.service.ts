@@ -15,7 +15,7 @@ export class RmqService {
       transport: Transport.RMQ,
       options: {
         urls: [`amqp://${USER}:${PASSWORD}@${HOST}`],
-        noAck: false,
+        noAck: true,
         queue,
         queueOptions: {
           durable: true,

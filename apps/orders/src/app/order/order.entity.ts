@@ -16,7 +16,6 @@ export class OrderEntity
   serviceId: number;
   total: number;
   userId: string;
-  coachId?: string;
 
   constructor(order: OrderInterface) {
     this.fillEntity(order);
@@ -30,7 +29,6 @@ export class OrderEntity
     this.serviceId = entity.serviceId;
     this.total = entity.price * entity.quantity;
     this.userId = entity.userId;
-    this.coachId = entity.coachId;
   }
 
   toObject(): OrderEntity {

@@ -23,7 +23,7 @@ export class OrderRepository
     return Promise.resolve(undefined);
   }
 
-  public async findById(id: number): Promise<OrderInterface | null> {
+  public async findById(id: number): Promise<OrderInterface> {
     return this.prisma.order.findFirst({
       where: { id },
     });
@@ -33,9 +33,14 @@ export class OrderRepository
     return Promise.resolve(undefined);
   }
 
-  public async findByUserId(userId: string): Promise<OrderInterface[] | null> {
+  public async findByUserId(userId: string): Promise<OrderInterface[]> {
     return this.prisma.order.findMany({
       where: { userId },
+    });
+  }
+  public async findByServiceId(serviceId: number): Promise<OrderInterface[]> {
+    return this.prisma.order.findMany({
+      where: { serviceId },
     });
   }
 }

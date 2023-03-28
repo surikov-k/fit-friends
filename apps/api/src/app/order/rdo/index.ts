@@ -1,1 +1,1 @@
-export * from './workout-order.rdo';
+export * from './order.rdo';

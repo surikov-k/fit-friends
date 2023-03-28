@@ -2,62 +2,59 @@ import {
   Body,
   Controller,
   Get,
-  Inject,
   Param,
   ParseIntPipe,
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
 
-import { AccessTokenGuard, CurrentUserId, fillObject } from '@fit-friends/core';
-import { OrderInterface, OrdersEvent } from '@fit-friends/shared-types';
+import {
+  AccessTokenGuard,
+  CurrentUserId,
+  CurrentUserRole,
+  fillObject,
+} from '@fit-friends/core';
+import { UserRole } from '@fit-friends/shared-types';
 import { CreateWorkoutOrderDto } from './dto';
-import { WorkoutOrderRdo } from './rdo';
+import { OrderRdo } from './rdo';
+import { OrderService } from './order.service';
 
 @Controller('order')
 export class OrderController {
-  constructor(
-    @Inject('ORDER_SERVICE') private readonly orderService: ClientProxy
-  ) {}
+  constructor(private readonly orderService: OrderService) {}
+
+  @UseGuards(AccessTokenGuard)
+  @Get('/my')
+  public async getMy(
+    @CurrentUserId() userId: string,
+    @CurrentUserRole() role: UserRole
+  ) {
+    if (role === UserRole.Client) {
+      const orders = await this.orderService.getClientOrders(userId);
+      return orders.map((order) => fillObject(OrderRdo, order));
+    }
+
+    if (role === UserRole.Coach) {
+      const orders = await this.orderService.getCoachOrders(userId);
+      return orders;
+    }
+  }
 
   @UseGuards(AccessTokenGuard)
   @Get('/:id')
   public async get(@Param('id', ParseIntPipe) id: number) {
-    const order = await firstValueFrom(
-      this.orderService.send<OrderInterface>(
-        { cmd: OrdersEvent.GetOrder },
-        { id }
-      )
-    );
-
-    return fillObject(WorkoutOrderRdo, order);
+    const order = await this.orderService.get(id);
+    return fillObject(OrderRdo, order);
   }
 
   @UseGuards(AccessTokenGuard)
-  @Get()
-  public async getMy(@CurrentUserId() userId: string) {
-    const orders = await firstValueFrom(
-      this.orderService.send({ cmd: OrdersEvent.GetMyOrders }, { userId })
-    );
-
-    return orders.map((order) => fillObject(WorkoutOrderRdo, order));
-  }
-
-  @UseGuards(AccessTokenGuard)
-  @Post('workout')
+  @Post()
   public async create(
     @Body() dto: CreateWorkoutOrderDto,
     @CurrentUserId() userId: string
   ) {
-    const order = await firstValueFrom(
-      this.orderService.send(
-        { cmd: OrdersEvent.CreateWorkoutOrder },
-        { userId, dto }
-      )
-    );
+    const order = await this.orderService.create(userId, dto);
 
-    return fillObject(WorkoutOrderRdo, order);
+    return fillObject(OrderRdo, order);
   }
 }

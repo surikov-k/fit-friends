@@ -31,4 +31,9 @@ export class WorkoutController {
   public async update(@Payload() { dto, id }) {
     return this.workoutService.update(id, dto);
   }
+
+  @EventPattern({ cmd: WorkoutsEvents.GetCoachWorkouts })
+  public async getCoachWorkouts(@Payload() { coachId }) {
+    return this.workoutService.getCoachWorkouts(coachId);
+  }
 }

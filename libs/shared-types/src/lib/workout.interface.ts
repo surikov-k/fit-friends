@@ -7,6 +7,7 @@ import {
 } from '@fit-friends/shared-types';
 
 export interface WorkoutInterface {
+  id?: number;
   title: string;
   background: string;
   skill: Skill;

@@ -3,4 +3,5 @@ export enum WorkoutsEvents {
   GetWorkouts = 'GetWorkouts',
   CreateWorkout = 'CreateWorkout',
   UpdateWorkout = 'UpdateWorkout',
+  GetCoachWorkouts = 'GetCoachWorkouts',
 }

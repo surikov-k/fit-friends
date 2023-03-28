@@ -1,4 +1,5 @@
 import {
+  GymInterface,
   PaymentMethod,
   PurchaseType,
   WorkoutInterface,
@@ -7,10 +8,9 @@ import {
 export interface OrderInterface {
   id?: number;
   userId: string;
-  coachId?: string;
   purchaseType: PurchaseType;
   serviceId: number;
-  workout?: WorkoutInterface;
+  service?: WorkoutInterface | GymInterface;
   price: number;
   quantity: number;
   total?: number;

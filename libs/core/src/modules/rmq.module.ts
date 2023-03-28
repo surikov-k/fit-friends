@@ -31,7 +31,7 @@ export class RmqModule {
                 transport: Transport.RMQ,
                 options: {
                   urls: [`amqp://${USER}:${PASSWORD}@${HOST}`],
-                  noAck: false,
+                  noAck: true,
                   queue: QUEUE,
                 },
               };
