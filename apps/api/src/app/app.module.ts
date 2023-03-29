@@ -6,6 +6,7 @@ import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { WorkoutsModule } from './workouts/workouts.module';
 import { jwtOptions } from '@fit-friends/core';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from './user/user.module';
     OrderModule,
     WorkoutsModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
