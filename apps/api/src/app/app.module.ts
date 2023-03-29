@@ -5,6 +5,7 @@ import { validateEnvironment } from './app.env-vaidation';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { WorkoutsModule } from './workouts/workouts.module';
 import { jwtOptions } from '@fit-friends/core';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { jwtOptions } from '@fit-friends/core';
     }),
     OrderModule,
     WorkoutsModule,
+    UserModule,
   ],
 })
 export class AppModule {}
