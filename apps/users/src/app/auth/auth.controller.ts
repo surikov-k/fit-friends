@@ -1,81 +1,49 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-import { Request } from 'express';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
 
+import { UserEvent } from '@fit-friends/shared-types';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from './dto';
-import { AccessTokenGuard, RefreshTokenGuard } from '../../common/guards';
+import { LoginDto, RegisterDto } from '@fit-friends/core';
 
-@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('register')
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    type: RegisterDto,
-    description: 'A new user is successfully created',
-  })
-  public async register(@Body() dto: RegisterDto) {
+  @EventPattern({ cmd: UserEvent.Register })
+  public async register(@Payload() { dto }: { dto: RegisterDto }) {
     return await this.authService.register(dto);
   }
 
-  @Post('login')
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({
-    type: LoginDto,
-    status: HttpStatus.OK,
-    description: 'A user successfully logged in',
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Incorrect login credentials',
-  })
-  public async login(@Body() dto: LoginDto) {
+  @EventPattern({ cmd: UserEvent.Login })
+  public async login(@Payload() { dto }: { dto: LoginDto }) {
+    return this.authService.login(dto);
+  }
+
+  @EventPattern({ cmd: UserEvent.Verify })
+  public async verify(@Payload() { dto }: { dto: LoginDto }) {
     const user = await this.authService.verify(dto);
+
     return this.authService.login(user);
   }
 
-  @UseGuards(AccessTokenGuard)
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'A user successfully logged out',
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'The user is not logged in',
-  })
-  @Get('logout')
-  logout(@Req() req: Request) {
-    return this.authService.logout(req.user['sub']);
+  @EventPattern({ cmd: UserEvent.Logout })
+  logout(@Payload() { userId }: { userId: string }) {
+    return this.authService.logout(userId);
   }
 
-  @UseGuards(RefreshTokenGuard)
-  @Get('refresh')
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Get a new access/refresh tokens',
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Incorrect refresh token',
-  })
-  refreshToken(@Req() req: Request) {
-    const userId = req.user['sub'];
-    const refreshToken = req.user['refreshToken'];
-
+  @EventPattern({ cmd: UserEvent.Refresh })
+  refreshToken(
+    @Payload()
+    { userId, refreshToken }: { userId: string; refreshToken: string }
+  ) {
     return this.authService.refreshTokens(userId, refreshToken);
+  }
+
+  @EventPattern({ cmd: UserEvent.CheckEmail })
+  checkEmail(
+    @Payload()
+    { email }: { email: string }
+  ) {
+    return this.authService.checkEmail(email);
   }
 }

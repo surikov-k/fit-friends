@@ -4,9 +4,9 @@ import { OrderModule } from './order/order.module';
 import { validateEnvironment } from './app.env-vaidation';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { WorkoutsModule } from './workouts/workouts.module';
-import { jwtOptions } from '@fit-friends/core';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { jwtOptions } from '../config';
 
 @Module({
   imports: [
@@ -22,5 +22,6 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     AuthModule,
   ],
+  providers: [],
 })
 export class AppModule {}

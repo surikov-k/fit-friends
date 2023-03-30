@@ -11,13 +11,13 @@ import {
 } from 'class-validator';
 
 import { Gender, Location, UserRole } from '@fit-friends/shared-types';
-import { IsEmailUnique } from '../../../common/validators';
 import {
   AuthError,
   PasswordLength,
   USERNAME_PATTERN,
   UsernameLength,
-} from '../auth.contstants';
+} from '../../constants';
+import { IsEmailUnique } from '../../../../../apps/api/src/common';
 
 export class RegisterDto {
   @ApiProperty({

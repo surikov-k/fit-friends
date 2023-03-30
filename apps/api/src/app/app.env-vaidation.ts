@@ -1,7 +1,8 @@
-import { IsNumber, Max, Min, validateSync } from 'class-validator';
+import { IsNumber, IsString, Max, Min, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
 import { EnvValidationError } from './app.constants';
+import { EnvValidationMessage } from '../../../users/src/app/app.constants';
 
 enum Port {
   MIN = 0,
@@ -18,6 +19,16 @@ class EnvironmentConfig {
   @Min(Port.MIN)
   @Max(Port.MAX)
   public PORT: number;
+
+  @IsString({
+    message: EnvValidationMessage.JwtATSecretRequired,
+  })
+  public JWT_AT_SECRET: string;
+
+  @IsString({
+    message: EnvValidationMessage.JwtATSecretRequired,
+  })
+  public JWT_RT_SECRET: string;
 }
 
 export function validateEnvironment(config: Record<string, unknown>) {

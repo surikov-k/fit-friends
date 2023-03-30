@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { AuthError } from '../auth/auth.contstants';
+import { AuthError } from '@fit-friends/core';
 import { UserRepository } from './user.repository';
 import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { UserEntity } from './user.entity';

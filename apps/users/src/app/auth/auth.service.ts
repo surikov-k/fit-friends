@@ -6,11 +6,10 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { UserRepository } from '../user/user.repository';
-import { LoginDto, RegisterDto } from './dto';
-import { UserEntity } from '../user/user.entity';
-import { AuthError } from './auth.contstants';
 import { JwtPayload, Tokens, UserInterface } from '@fit-friends/shared-types';
+import { AuthError, LoginDto, RegisterDto } from '@fit-friends/core';
+import { UserRepository } from '../user/user.repository';
+import { UserEntity } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -70,7 +69,8 @@ export class AuthService {
     return entity.toObject();
   }
 
-  public async login(user: UserInterface) {
+  public async login(dto: LoginDto) {
+    const user = await this.verify(dto);
     const entity = new UserEntity(user);
     const tokens = await this.getTokens(this.getJwtPayload(user));
     await entity.setRefreshTokenHash(tokens.refreshToken);
@@ -81,6 +81,9 @@ export class AuthService {
 
   async logout(userId: string) {
     const user = await this.userRepository.findById(userId);
+    if (!user) {
+      return;
+    }
     const entity = new UserEntity(user);
     entity.clearRefreshTokenHash();
 
@@ -125,11 +128,16 @@ export class AuthService {
   }
 
   getJwtPayload({ _id, email, name, role }: UserInterface): JwtPayload {
+    console.log(_id, email, name, role);
     return {
       sub: _id.toString(),
       email,
       name,
       role,
     };
+  }
+
+  async checkEmail(email: string) {
+    return this.userRepository.findByEmail(email);
   }
 }

@@ -1,20 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import {
   registerDecorator,
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-
-import { UserRepository } from '../../app/user/user.repository';
+import { firstValueFrom } from 'rxjs';
+import { UserEvent } from '@fit-friends/shared-types';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class IsEmailUniqueConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @Inject('USER_SERVICE') private readonly userService: ClientProxy
+  ) {}
 
   public async validate(email: string): Promise<boolean> {
-    const user = await this.userRepository.findByEmail(email);
+    const user = await firstValueFrom(
+      this.userService.send({ cmd: UserEvent.CheckEmail }, { email })
+    );
+
     return !user;
   }
 }

@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import {
   OrderInterface,
   OrdersEvent,
+  PurchaseType,
   WorkoutInterface,
   WorkoutsEvents,
 } from '@fit-friends/shared-types';
@@ -42,12 +43,7 @@ export class OrderService {
     );
 
     for (const order of orders) {
-      order.service = await firstValueFrom(
-        this.workoutsService.send<WorkoutInterface>(
-          { cmd: WorkoutsEvents.GetWorkout },
-          { id: order.serviceId }
-        )
-      );
+      order.service = await this.getService(order);
     }
 
     return orders;
@@ -90,5 +86,25 @@ export class OrderService {
     );
 
     return order;
+  }
+
+  private async getService({ purchaseType, serviceId }: OrderInterface) {
+    if (purchaseType === PurchaseType.Workout) {
+      return firstValueFrom(
+        this.workoutsService.send<WorkoutInterface>(
+          { cmd: WorkoutsEvents.GetWorkout },
+          { id: serviceId }
+        )
+      );
+    }
+
+    // TODO: Membership purchase
+    if (purchaseType === PurchaseType.Membership) {
+      // return firstValueFrom(
+      //   this.gymService.send<GymInterface>(
+      //     { cmd: GymEvents.GetGym },
+      //     { id: serviceId }
+      //   ))
+    }
   }
 }

@@ -5,13 +5,12 @@ import { UserRepository } from './user.repository';
 import { UserModel, UserSchema } from './user.model';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { ClientStrategy, CoachStrategy } from '../../common/strategies';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: UserModel.name, schema: UserSchema }]),
   ],
-  providers: [UserRepository, UserService, CoachStrategy, ClientStrategy],
+  providers: [UserRepository, UserService],
   exports: [UserRepository],
   controllers: [UserController],
 })

@@ -7,4 +7,5 @@ export * from './decorators';
 export * from './pipes';
 export * from './modules';
 export * from './services';
-export * from './config';
+export * from './dto';
+export * from './constants';

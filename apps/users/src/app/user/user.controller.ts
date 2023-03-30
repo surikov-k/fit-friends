@@ -10,13 +10,19 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
-import { fillObject, ValidateWithRole } from '@fit-friends/core';
+import {
+  AccessTokenGuard,
+  CheckMongoId,
+  ClientGuard,
+  CoachGuard,
+  CurrentUserId,
+  fillObject,
+  ValidateWithRole,
+} from '@fit-friends/core';
+
 import { UserService } from './user.service';
 import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { UserRdo } from './rdo';
-import { CurrentUserId } from '../../common/decorators';
-import { CheckMongoId } from '../../common/pipes';
 
 @ApiTags('user')
 @Controller('user')
