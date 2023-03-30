@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   Patch,
-  Post,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -28,6 +27,24 @@ import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('/friend')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: 'Get a list of users friends',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AccessTokenGuard)
+  public async getFriends(@CurrentUserId() userId: string) {
+    const friends = await this.userService.getFriends(userId);
+
+    return friends.map((friend) => fillObject(UserRdo, friend));
+  }
 
   @UseGuards(AccessTokenGuard)
   @Get('/:id')
@@ -128,7 +145,16 @@ export class UserController {
     return all.map((user) => fillObject(UserRdo, user));
   }
 
-  @Post('friend/:id')
+  @Patch('friend/:id')
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'Toggle a friend',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
   @UseGuards(AccessTokenGuard)
   public async toggleFriend(
     @Param('id', CheckMongoId) friendId,

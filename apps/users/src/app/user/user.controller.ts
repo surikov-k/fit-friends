@@ -46,10 +46,16 @@ export class UserController {
   public async getAll() {
     return this.userService.getAll();
   }
+
   @MessagePattern({ cmd: UserEvent.ToggleFriend })
   public async toggleFriend(
     @Payload() { friendId, userId }: { friendId: string; userId: string }
   ) {
     return this.userService.toggleFriend(friendId, userId);
+  }
+
+  @MessagePattern({ cmd: UserEvent.GetFriends })
+  public async getFriends(@Payload() { userId }: { userId: string }) {
+    return this.userService.getFriends(userId);
   }
 }

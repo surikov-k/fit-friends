@@ -64,4 +64,13 @@ export class UserService {
       )
     );
   }
+
+  async getFriends(userId: string) {
+    return firstValueFrom(
+      this.userService.send<UserInterface[]>(
+        { cmd: UserEvent.GetFriends },
+        { userId }
+      )
+    );
+  }
 }

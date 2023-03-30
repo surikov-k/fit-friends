@@ -41,4 +41,12 @@ export class UserRepository
   public async findAll(): Promise<UserInterface[] | null> {
     return this.userModel.find().exec();
   }
+
+  public async findMany(ids): Promise<UserInterface[]> {
+    return this.userModel
+      .find({
+        _id: { $in: ids },
+      })
+      .exec();
+  }
 }

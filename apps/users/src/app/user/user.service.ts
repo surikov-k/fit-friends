@@ -57,4 +57,10 @@ export class UserService {
     entity.toggleFriend(friendId);
     return this.userRepository.update(userId, entity);
   }
+
+  async getFriends(userId) {
+    const user = await this.userRepository.findById(userId);
+
+    return this.userRepository.findMany(user.friends);
+  }
 }
