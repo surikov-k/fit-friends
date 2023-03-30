@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
+
+import { RmqModule } from '@fit-friends/core';
 import { WorkoutsController } from './workouts.controller';
-import { AtStrategy, CoachStrategy, RmqModule } from '@fit-friends/core';
+import { AtStrategy, CoachStrategy } from '../../common';
 
 @Module({
   controllers: [WorkoutsController],
@@ -8,6 +10,9 @@ import { AtStrategy, CoachStrategy, RmqModule } from '@fit-friends/core';
   imports: [
     RmqModule.registerRmq({
       name: 'WORKOUTS_SERVICE',
+    }),
+    RmqModule.registerRmq({
+      name: 'USER_SERVICE',
     }),
   ],
 })

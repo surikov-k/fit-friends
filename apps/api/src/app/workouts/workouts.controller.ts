@@ -16,8 +16,6 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 import {
-  AccessTokenGuard,
-  CoachGuard,
   CurrentUserId,
   CurrentUserRole,
   fillObject,
@@ -31,6 +29,7 @@ import {
 import { WorkoutRdo } from './rdo';
 import { WorkoutQuery } from './query';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
+import { AccessTokenGuard, CoachGuard } from '../../common';
 
 @ApiTags('workout')
 @Controller('workout')

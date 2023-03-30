@@ -3,26 +3,24 @@ import {
   Controller,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Post,
   Req,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
-import {
-  AccessTokenGuard,
-  CurrentUserId,
-  LoginDto,
-  RefreshTokenGuard,
-  RegisterDto,
-} from '@fit-friends/core';
+import { CurrentUserId, LoginDto, RegisterDto } from '@fit-friends/core';
 
 import { AuthService } from './auth.service';
+import { AccessTokenGuard, RefreshTokenGuard } from '../../common';
 
 @ApiTags('auth')
 @Controller('auth')
+@UseFilters()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -48,7 +46,11 @@ export class AuthController {
     description: 'Incorrect login credentials',
   })
   public async login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
+    try {
+      return await this.authService.login(dto);
+    } catch ({ message, status }) {
+      throw new HttpException(message, status);
+    }
   }
 
   @UseGuards(AccessTokenGuard)

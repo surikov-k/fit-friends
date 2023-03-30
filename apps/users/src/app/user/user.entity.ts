@@ -9,9 +9,12 @@ import {
   UserRole,
   WorkoutType,
 } from '@fit-friends/shared-types';
-import { EntityInterface } from '@fit-friends/core';
-import { SALT_ROUNDS } from './user.constants';
-import { ClientDetailsDto, CoachDetailsDto } from './dto';
+import {
+  ClientDetailsDto,
+  CoachDetailsDto,
+  EntityInterface,
+  SALT_ROUNDS,
+} from '@fit-friends/core';
 
 export class UserEntity
   implements UserInterface, EntityInterface<UserInterface>

@@ -1,7 +1,7 @@
 import { IntersectionType, OmitType, PartialType } from '@nestjs/swagger';
 import { ClientDetailsDto } from './client-details.dto';
 import { CoachDetailsDto } from './coach-details.dto';
-import { RegisterDto } from '@fit-friends/core';
+import { RegisterDto } from '../auth';
 
 class CommonProfile extends OmitType(RegisterDto, [
   'email',

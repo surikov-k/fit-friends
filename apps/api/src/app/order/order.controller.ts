@@ -8,16 +8,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import {
-  AccessTokenGuard,
-  CurrentUserId,
-  CurrentUserRole,
-  fillObject,
-} from '@fit-friends/core';
+import { CurrentUserId, CurrentUserRole, fillObject } from '@fit-friends/core';
 import { UserRole } from '@fit-friends/shared-types';
 import { CreateWorkoutOrderDto } from './dto';
 import { OrderRdo } from './rdo';
 import { OrderService } from './order.service';
+import { AccessTokenGuard } from '../../common';
 
 @Controller('order')
 export class OrderController {

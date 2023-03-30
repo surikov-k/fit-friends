@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { UserEvent } from '@fit-friends/shared-types';
 import { AuthService } from './auth.service';
@@ -9,29 +9,27 @@ import { LoginDto, RegisterDto } from '@fit-friends/core';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @EventPattern({ cmd: UserEvent.Register })
+  @MessagePattern({ cmd: UserEvent.Register })
   public async register(@Payload() { dto }: { dto: RegisterDto }) {
     return await this.authService.register(dto);
   }
 
-  @EventPattern({ cmd: UserEvent.Login })
+  @MessagePattern({ cmd: UserEvent.Login })
   public async login(@Payload() { dto }: { dto: LoginDto }) {
     return this.authService.login(dto);
   }
 
-  @EventPattern({ cmd: UserEvent.Verify })
+  @MessagePattern({ cmd: UserEvent.Verify })
   public async verify(@Payload() { dto }: { dto: LoginDto }) {
-    const user = await this.authService.verify(dto);
-
-    return this.authService.login(user);
+    return this.authService.verify(dto);
   }
 
-  @EventPattern({ cmd: UserEvent.Logout })
+  @MessagePattern({ cmd: UserEvent.Logout })
   logout(@Payload() { userId }: { userId: string }) {
     return this.authService.logout(userId);
   }
 
-  @EventPattern({ cmd: UserEvent.Refresh })
+  @MessagePattern({ cmd: UserEvent.Refresh })
   refreshToken(
     @Payload()
     { userId, refreshToken }: { userId: string; refreshToken: string }
@@ -39,11 +37,19 @@ export class AuthController {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 
-  @EventPattern({ cmd: UserEvent.CheckEmail })
+  @MessagePattern({ cmd: UserEvent.CheckEmail })
   checkEmail(
     @Payload()
     { email }: { email: string }
   ) {
     return this.authService.checkEmail(email);
+  }
+
+  @MessagePattern({ cmd: UserEvent.GetUser })
+  getUser(
+    @Payload()
+    { userId }: { userId: string }
+  ) {
+    return this.authService.getUser(userId);
   }
 }

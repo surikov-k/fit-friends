@@ -1,8 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
@@ -10,6 +6,7 @@ import { JwtPayload, Tokens, UserInterface } from '@fit-friends/shared-types';
 import { AuthError, LoginDto, RegisterDto } from '@fit-friends/core';
 import { UserRepository } from '../user/user.repository';
 import { UserEntity } from '../user/user.entity';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
@@ -57,13 +54,19 @@ export class AuthService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException(AuthError.WRONG_CREDENTIALS);
+      throw new RpcException({
+        status: HttpStatus.UNAUTHORIZED,
+        message: AuthError.WRONG_CREDENTIALS,
+      });
     }
 
     const entity = new UserEntity(user);
 
     if (!(await entity.comparePasswords(password))) {
-      throw new UnauthorizedException(AuthError.WRONG_CREDENTIALS);
+      throw new RpcException({
+        status: HttpStatus.UNAUTHORIZED,
+        message: AuthError.WRONG_CREDENTIALS,
+      });
     }
 
     return entity.toObject();
@@ -71,6 +74,7 @@ export class AuthService {
 
   public async login(dto: LoginDto) {
     const user = await this.verify(dto);
+
     const entity = new UserEntity(user);
     const tokens = await this.getTokens(this.getJwtPayload(user));
     await entity.setRefreshTokenHash(tokens.refreshToken);
@@ -81,6 +85,7 @@ export class AuthService {
 
   async logout(userId: string) {
     const user = await this.userRepository.findById(userId);
+    console.log(user);
     if (!user) {
       return;
     }
@@ -113,11 +118,17 @@ export class AuthService {
     const entity = new UserEntity(user);
 
     if (!user || !user.refreshTokenHash) {
-      throw new ForbiddenException('Access Denied');
+      throw new RpcException({
+        status: HttpStatus.UNAUTHORIZED,
+        message: AuthError.WRONG_CREDENTIALS,
+      });
     }
 
     if (!(await entity.compareRefreshToken(refreshToken))) {
-      throw new ForbiddenException('Access Denied');
+      throw new RpcException({
+        status: HttpStatus.UNAUTHORIZED,
+        message: AuthError.WRONG_CREDENTIALS,
+      });
     }
 
     const tokens = await this.getTokens(this.getJwtPayload(user));
@@ -128,7 +139,6 @@ export class AuthService {
   }
 
   getJwtPayload({ _id, email, name, role }: UserInterface): JwtPayload {
-    console.log(_id, email, name, role);
     return {
       sub: _id.toString(),
       email,
@@ -139,5 +149,9 @@ export class AuthService {
 
   async checkEmail(email: string) {
     return this.userRepository.findByEmail(email);
+  }
+
+  async getUser(userId: string) {
+    return this.userRepository.findById(userId);
   }
 }

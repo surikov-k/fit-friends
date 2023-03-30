@@ -9,12 +9,13 @@ import {
 } from 'class-validator';
 
 import { Skill, UserRole, WorkoutType } from '@fit-friends/shared-types';
+
+import { ApiProperty } from '@nestjs/swagger';
 import {
   CoachAchievements,
   MAX_TRAININGS_FOR_COACH,
   UserError,
-} from '../user.constants';
-import { ApiProperty } from '@nestjs/swagger';
+} from '../../constants';
 
 export class CoachDetailsDto {
   @ApiProperty({

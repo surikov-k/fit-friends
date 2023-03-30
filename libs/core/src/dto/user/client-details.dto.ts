@@ -17,14 +17,15 @@ import {
   UserRole,
   WorkoutType,
 } from '@fit-friends/shared-types';
+
+import { ApiProperty } from '@nestjs/swagger';
 import {
   CaloriesPerDay,
   CaloriesTarget,
   ClientInfo,
   MAX_TRAININGS_FOR_CLIENT,
   UserError,
-} from '../user.constants';
-import { ApiProperty } from '@nestjs/swagger';
+} from '../../constants';
 
 export class ClientDetailsDto {
   @ApiProperty({

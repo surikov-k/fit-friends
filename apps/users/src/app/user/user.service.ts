@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
+import { HttpStatus, Injectable } from '@nestjs/common';
 
-import { AuthError } from '@fit-friends/core';
+import {
+  AuthError,
+  ClientDetailsDto,
+  CoachDetailsDto,
+  UpdateProfileDto,
+} from '@fit-friends/core';
 import { UserRepository } from './user.repository';
-import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { UserEntity } from './user.entity';
 
 @Injectable()
@@ -12,7 +17,10 @@ export class UserService {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
-      throw new NotFoundException(AuthError.NOT_FOUND);
+      throw new RpcException({
+        status: HttpStatus.NOT_FOUND,
+        message: AuthError.NOT_FOUND,
+      });
     }
     return user;
   }

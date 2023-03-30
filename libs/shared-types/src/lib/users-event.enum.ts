@@ -5,4 +5,9 @@ export enum UserEvent {
   Refresh = 'Refresh',
   Verify = 'Verify',
   CheckEmail = 'CheckEmail',
+  GetUser = 'GetUser',
+  GetAll = 'GetAll',
+  SaveClientDetails = 'SaveClientDetails',
+  SaveCoachDetails = 'SaveCoachDetails',
+  UpdateProfile = 'UpdateProfile',
 }

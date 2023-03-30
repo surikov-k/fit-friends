@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { AtStrategy, RmqModule, RtStrategy } from '@fit-friends/core';
+import { RmqModule } from '@fit-friends/core';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { IsEmailUniqueConstraint } from '../../common';
+import { AtStrategy, IsEmailUniqueConstraint, RtStrategy } from '../../common';
 
 @Module({
   imports: [
