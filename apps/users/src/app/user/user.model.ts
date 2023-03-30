@@ -18,7 +18,10 @@ export class UserModel extends Document implements UserInterface {
   @Prop({ required: true })
   public name: string;
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    unique: true,
+  })
   public email: string;
 
   @Prop({ required: true })
@@ -74,6 +77,9 @@ export class UserModel extends Document implements UserInterface {
 
   @Prop()
   public info: string;
+
+  @Prop()
+  public friends: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

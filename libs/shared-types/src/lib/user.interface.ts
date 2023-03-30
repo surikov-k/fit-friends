@@ -31,4 +31,5 @@ export interface UserInterface {
 
   createdAt?: Date;
   refreshTokenHash?: string;
+  friends?: string[];
 }

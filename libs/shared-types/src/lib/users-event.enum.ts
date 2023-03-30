@@ -10,4 +10,6 @@ export enum UserEvent {
   SaveClientDetails = 'SaveClientDetails',
   SaveCoachDetails = 'SaveCoachDetails',
   UpdateProfile = 'UpdateProfile',
+  ToggleFriend = 'ToggleFriend',
+  GetFriends = 'GetFriends',
 }

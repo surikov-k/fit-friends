@@ -39,6 +39,7 @@ export class UserEntity
   achievements: string;
   info: string;
   refreshTokenHash: string;
+  friends?: string[] = [];
 
   constructor(user: UserInterface) {
     this.fillEntity(user);
@@ -86,6 +87,20 @@ export class UserEntity
     return this;
   }
 
+  public toggleFriend(toggleFriendId: string) {
+    const alreadyFriendId = this.friends.find(
+      (friendId) => friendId === toggleFriendId
+    );
+
+    if (alreadyFriendId) {
+      this.friends = this.friends.filter(
+        (friendId) => friendId !== alreadyFriendId
+      );
+    } else {
+      this.friends.push(toggleFriendId);
+    }
+  }
+
   fillEntity(user: UserInterface): void {
     this._id = user._id;
     this.avatar = user.avatar;
@@ -107,6 +122,7 @@ export class UserEntity
     this.hasPersonalTrainings = user.hasPersonalTrainings;
     this.achievements = user.achievements;
     this.info = user.info;
+    this.friends = user.friends;
   }
 
   toObject(): UserInterface {

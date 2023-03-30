@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -125,5 +126,15 @@ export class UserController {
   public async getAll() {
     const all = await this.userService.getAll();
     return all.map((user) => fillObject(UserRdo, user));
+  }
+
+  @Post('friend/:id')
+  @UseGuards(AccessTokenGuard)
+  public async toggleFriend(
+    @Param('id', CheckMongoId) friendId,
+    @CurrentUserId() userId: string
+  ) {
+    const user = await this.userService.toggleFriend(friendId, userId);
+    return fillObject(UserRdo, user);
   }
 }

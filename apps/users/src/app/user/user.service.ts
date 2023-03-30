@@ -50,4 +50,11 @@ export class UserService {
     const entity = new UserEntity({ ...user, ...dto });
     return this.userRepository.update(userId, entity);
   }
+
+  async toggleFriend(friendId, userId) {
+    const user = await this.userRepository.findById(userId);
+    const entity = new UserEntity(user);
+    entity.toggleFriend(friendId);
+    return this.userRepository.update(userId, entity);
+  }
 }

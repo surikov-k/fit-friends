@@ -55,4 +55,13 @@ export class UserService {
       )
     );
   }
+
+  async toggleFriend(friendId: string, userId: string) {
+    return firstValueFrom(
+      this.userService.send<UserInterface>(
+        { cmd: UserEvent.ToggleFriend },
+        { friendId, userId }
+      )
+    );
+  }
 }

@@ -87,6 +87,13 @@ export class UserRdo {
   public trainings: string[];
 
   @ApiProperty({
+    description: 'User friends',
+    example: ['64243f41dd61db961a087722'],
+  })
+  @Expose()
+  public friends: string[];
+
+  @ApiProperty({
     description: 'Workout duration',
     example: '10-30 min',
   })
