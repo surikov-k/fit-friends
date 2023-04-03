@@ -1,7 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { ServeStaticModuleAsyncOptions } from '@nestjs/serve-static';
-
-import { SERVE_ROOT } from '../src/app/app.constants';
+import { SERVE_ROOT } from '../app.constants';
 
 export function getServeStaticConfig(): ServeStaticModuleAsyncOptions {
   return {

@@ -11,7 +11,7 @@ import {
   getServeStaticConfig,
   mongoDbOptions,
   multerEnvOptions,
-} from '../../config';
+} from './config';
 
 @Module({
   imports: [

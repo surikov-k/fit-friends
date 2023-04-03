@@ -6,8 +6,8 @@ import { UploadService } from './upload.service';
 import { UploadModel, UploadSchema } from './upload.model';
 import { UploadRepository } from './upload.repository';
 import { MulterModule } from '@nestjs/platform-express';
-import { getMulterConfig } from '../../../config';
 import { ConfigService } from '@nestjs/config';
+import { getMulterConfig } from '../config';
 
 @Module({
   imports: [
