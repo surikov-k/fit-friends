@@ -22,3 +22,6 @@ export * from './lib/file.interface';
 export * from './lib/orders-events.enum';
 export * from './lib/workouts-events.enum';
 export * from './lib/users-event.enum';
+export * from './lib/meal-type.enum';
+export * from './lib/meal-log-entry.interface';
+export * from './lib/workout-log-entry.interface';
