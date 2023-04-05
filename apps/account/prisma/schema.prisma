@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@prisma/accounts-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MealType {
+  Breakfast
+  Launch
+  Dinner
+  Snack
+}
+
+model Meal {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  type      MealType
+  calories  Int
+  createdAt DateTime
+}
