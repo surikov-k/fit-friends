@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import { validateEnvironment } from './env.validation';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
+import { NutritionLogModule } from './nutrition-log/nutrition-log.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
       validate: validateEnvironment,
     }),
     RmqModule,
+    NutritionLogModule,
+    PrismaModule,
   ],
 })
 export class AppModule {}

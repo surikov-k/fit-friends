@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { MealType } from '@fit-friends/shared-types';
+import { Meal } from '@fit-friends/shared-types';
 
 export class MealLogEntryRdo {
   @Expose()
@@ -9,7 +9,7 @@ export class MealLogEntryRdo {
   calories: number;
 
   @Expose()
-  type: MealType;
+  type: Meal;
 
   @Expose()
   createdAt: Date;
