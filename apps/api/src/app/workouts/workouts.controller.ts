@@ -24,7 +24,7 @@ import {
 import {
   UserRole,
   WorkoutInterface,
-  WorkoutsEvents,
+  WorkoutsEvent,
 } from '@fit-friends/shared-types';
 import { WorkoutRdo } from './rdo';
 import { WorkoutQuery } from './query';
@@ -58,7 +58,7 @@ export class WorkoutsController {
 
     const workouts = await firstValueFrom<WorkoutInterface[]>(
       this.workoutsService.send(
-        { cmd: WorkoutsEvents.GetWorkouts },
+        { cmd: WorkoutsEvent.GetWorkouts },
         {
           coachId,
           query,
@@ -83,7 +83,7 @@ export class WorkoutsController {
   @UseGuards(AccessTokenGuard)
   public async get(@Param('id', ParseIntPipe) id: number) {
     const workout = await lastValueFrom(
-      this.workoutsService.send({ cmd: WorkoutsEvents.GetWorkout }, { id })
+      this.workoutsService.send({ cmd: WorkoutsEvent.GetWorkout }, { id })
     );
 
     return fillObject(WorkoutRdo, workout);
@@ -106,7 +106,7 @@ export class WorkoutsController {
   ) {
     const workout = await firstValueFrom(
       this.workoutsService.send(
-        { cmd: WorkoutsEvents.CreateWorkout },
+        { cmd: WorkoutsEvent.CreateWorkout },
         {
           coachId,
           dto,
@@ -135,7 +135,7 @@ export class WorkoutsController {
   ) {
     const workout = await firstValueFrom(
       this.workoutsService.send(
-        { cmd: WorkoutsEvents.UpdateWorkout },
+        { cmd: WorkoutsEvent.UpdateWorkout },
         { id, dto }
       )
     );

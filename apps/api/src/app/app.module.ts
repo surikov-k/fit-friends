@@ -7,6 +7,7 @@ import { WorkoutsModule } from './workouts/workouts.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { jwtOptions } from '../config';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { jwtOptions } from '../config';
     WorkoutsModule,
     UserModule,
     AuthModule,
+    AccountModule,
   ],
   providers: [],
 })

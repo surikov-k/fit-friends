@@ -1,4 +1,4 @@
-export enum WorkoutsEvents {
+export enum WorkoutsEvent {
   GetWorkout = 'GetWorkout',
   GetWorkouts = 'GetWorkouts',
   CreateWorkout = 'CreateWorkout',

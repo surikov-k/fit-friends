@@ -1,0 +1,10 @@
+### Add a meal log entry
+POST http://localhost:4000/api/account/meal
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
+
+{
+  "calories": 810,
+  "type": "Breakfast",
+  "createdAt":  "2023-04-05T08:16:00.737Z"
+}

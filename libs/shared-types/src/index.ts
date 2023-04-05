@@ -25,3 +25,4 @@ export * from './lib/users-event.enum';
 export * from './lib/meal-type.enum';
 export * from './lib/meal-log-entry.interface';
 export * from './lib/workout-log-entry.interface';
+export * from './lib/account-events.enum';
