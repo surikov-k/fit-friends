@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { RABBITMQ_ENV_FILE_PATH, RmqModule } from '@fit-friends/core';
-import { ENV_FILE_PATH } from './app.constants';
+import { RmqModule } from '@fit-friends/core';
+import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import databaseConfig from '../config/database.config';
 import { getMongoDbConfig, jwtOptions } from '../config';
 import { UserModule } from './user/user.module';

@@ -27,6 +27,8 @@ export class RmqModule {
               const HOST = configService.get('RABBITMQ_HOST');
               const QUEUE = configService.get(`RABBITMQ_${name}_QUEUE`);
 
+              console.log(`amqp://${USER}:${PASSWORD}@${HOST}`);
+
               return {
                 transport: Transport.RMQ,
                 options: {

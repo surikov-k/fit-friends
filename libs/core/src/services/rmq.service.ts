@@ -8,7 +8,7 @@ export class RmqService {
 
   getOptions(queue: string): RmqOptions {
     const USER = this.configService.get('RABBITMQ_USER');
-    const PASSWORD = this.configService.get('RABBITMQ_PASS');
+    const PASSWORD = this.configService.get('RABBITMQ_PASSWORD');
     const HOST = this.configService.get('RABBITMQ_HOST');
 
     return {
