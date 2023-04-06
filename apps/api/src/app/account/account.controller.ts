@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   ParseArrayPipe,
   Post,
   UseGuards,
@@ -18,7 +19,7 @@ export class AccountController {
 
   @Post('/meal')
   @UseGuards(ClientGuard)
-  public async createMeal(
+  public async create(
     @Body() dto: CreateMealDto,
     @CurrentUserId() userId: string
   ) {
@@ -32,12 +33,20 @@ export class AccountController {
 
   @Post('/meals')
   @UseGuards(ClientGuard)
-  public async createMealLogEntry(
+  public async createMany(
     @Body(new ParseArrayPipe({ items: CreateMealDto }))
     dtos: CreateMealDto[],
     @CurrentUserId() userId: string
   ) {
     const meals = await this.accountService.createMany(userId, dtos);
+
+    return meals.map((meal) => fillObject(MealRdo, meal));
+  }
+
+  @Get('/meals')
+  @UseGuards(ClientGuard)
+  public async getForWeek(@CurrentUserId() userId: string) {
+    const meals = await this.accountService.getForWeek(userId);
 
     return meals.map((meal) => fillObject(MealRdo, meal));
   }

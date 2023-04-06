@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { MealRepository } from './meal.repository';
+
+import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
 import { MealInterface } from '@fit-friends/shared-types';
+import { MealRepository } from './meal.repository';
 import { MealEntity } from './meal.entity';
+
+dayjs.extend(weekday);
 
 @Injectable()
 export class MealService {
@@ -31,5 +36,12 @@ export class MealService {
 
   public async getByUserId(userId: string) {
     return this.mealRepository.findByUserid(userId);
+  }
+
+  public async getForWeek(userId: string) {
+    const lastMonday = dayjs().weekday(-7).toDate();
+    const nextMonday = dayjs().weekday(7).toDate();
+
+    return this.mealRepository.getForWeek(userId, lastMonday, nextMonday);
   }
 }

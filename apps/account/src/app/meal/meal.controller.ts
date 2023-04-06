@@ -24,4 +24,9 @@ export class MealController {
   public async get(@Payload() { id }: { id: number }) {
     return this.mealService.get(id);
   }
+
+  @EventPattern({ cmd: AccountEvent.GetMeals })
+  public async getForWeek(@Payload() { userId }: { userId: string }) {
+    return this.mealService.getForWeek(userId);
+  }
 }

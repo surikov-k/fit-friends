@@ -50,4 +50,18 @@ export class MealRepository
       data,
     });
   }
+
+  public async getForWeek(userId: string, lastMonday: Date, nextMonday: Date) {
+    return this.prisma.meal.findMany({
+      where: {
+        AND: {
+          userId,
+          createdAt: {
+            lt: nextMonday,
+            gte: lastMonday,
+          },
+        },
+      },
+    });
+  }
 }

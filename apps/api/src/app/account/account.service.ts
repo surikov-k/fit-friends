@@ -27,4 +27,13 @@ export class AccountService {
       )
     );
   }
+
+  public async getForWeek(userId: string) {
+    return firstValueFrom(
+      this.accountService.send<MealInterface[]>(
+        { cmd: AccountEvent.GetMeals },
+        { userId }
+      )
+    );
+  }
 }
