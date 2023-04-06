@@ -1,4 +1,10 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  ParseArrayPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 
 import { CurrentUserId, fillObject } from '@fit-friends/core';
 import { ClientGuard } from '../../common';
@@ -12,7 +18,7 @@ export class AccountController {
 
   @Post('/meal')
   @UseGuards(ClientGuard)
-  public async createMealLogEntry(
+  public async createMeal(
     @Body() dto: CreateMealDto,
     @CurrentUserId() userId: string
   ) {
@@ -22,5 +28,17 @@ export class AccountController {
     });
 
     return fillObject(MealRdo, meal);
+  }
+
+  @Post('/meals')
+  @UseGuards(ClientGuard)
+  public async createMealLogEntry(
+    @Body(new ParseArrayPipe({ items: CreateMealDto }))
+    dtos: CreateMealDto[],
+    @CurrentUserId() userId: string
+  ) {
+    const meals = await this.accountService.createMany(userId, dtos);
+
+    return meals.map((meal) => fillObject(MealRdo, meal));
   }
 }

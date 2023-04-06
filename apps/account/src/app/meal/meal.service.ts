@@ -17,6 +17,14 @@ export class MealService {
     return this.mealRepository.upsert(entity);
   }
 
+  public async upsertMany(userId: string, dtos: MealInterface[]) {
+    const promises = dtos.map((item) =>
+      this.mealRepository.upsert(new MealEntity({ userId, ...item }))
+    );
+
+    return Promise.all(promises);
+  }
+
   public async findByUserId(userId: string): Promise<MealInterface[]> {
     return this.mealRepository.findByUserid(userId);
   }
