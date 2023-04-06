@@ -7,7 +7,7 @@ import {
   OrdersEvent,
   PurchaseType,
   WorkoutInterface,
-  WorkoutsEvents,
+  WorkoutsEvent,
 } from '@fit-friends/shared-types';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class OrderService {
     );
     order.service = await firstValueFrom(
       this.workoutsService.send(
-        { cmd: WorkoutsEvents.GetWorkout },
+        { cmd: WorkoutsEvent.GetWorkout },
         { id: order.serviceId }
       )
     );
@@ -52,7 +52,7 @@ export class OrderService {
   public async getCoachOrders(coachId: string) {
     const coachWorkouts = await firstValueFrom(
       this.workoutsService.send<WorkoutInterface[]>(
-        { cmd: WorkoutsEvents.GetCoachWorkouts },
+        { cmd: WorkoutsEvent.GetCoachWorkouts },
         { coachId }
       )
     );
@@ -80,7 +80,7 @@ export class OrderService {
     );
     order.service = await firstValueFrom(
       this.workoutsService.send<WorkoutInterface>(
-        { cmd: WorkoutsEvents.GetWorkout },
+        { cmd: WorkoutsEvent.GetWorkout },
         { id: order.serviceId }
       )
     );
@@ -92,7 +92,7 @@ export class OrderService {
     if (purchaseType === PurchaseType.Workout) {
       return firstValueFrom(
         this.workoutsService.send<WorkoutInterface>(
-          { cmd: WorkoutsEvents.GetWorkout },
+          { cmd: WorkoutsEvent.GetWorkout },
           { id: serviceId }
         )
       );

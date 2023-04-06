@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { Meal } from '@fit-friends/shared-types';
 
-export class MealLogEntryRdo {
+export class MealRdo {
   @Expose()
   id: number;
 
@@ -13,4 +13,7 @@ export class MealLogEntryRdo {
 
   @Expose()
   createdAt: Date;
+
+  @Expose()
+  userId: string;
 }

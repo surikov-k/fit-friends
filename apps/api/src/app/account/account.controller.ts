@@ -1,35 +1,26 @@
-import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 
 import { CurrentUserId, fillObject } from '@fit-friends/core';
 import { ClientGuard } from '../../common';
-import { CreateMealLogEntryDto } from './dto';
-import { firstValueFrom } from 'rxjs';
-import { AccountEvent } from '@fit-friends/shared-types';
-import { MealLogEntryRdo } from './rdo';
+import { CreateMealDto } from './dto';
+import { MealRdo } from './rdo';
+import { AccountService } from './account.service';
 
 @Controller('account')
 export class AccountController {
-  constructor(
-    @Inject('ACCOUNT_SERVICE') private readonly accountService: ClientProxy
-  ) {}
+  constructor(private readonly accountService: AccountService) {}
 
   @Post('/meal')
   @UseGuards(ClientGuard)
   public async createMealLogEntry(
-    @Body() dto: CreateMealLogEntryDto,
-    @CurrentUserId() clientId: string
+    @Body() dto: CreateMealDto,
+    @CurrentUserId() userId: string
   ) {
-    const mealLogEntry = await firstValueFrom(
-      this.accountService.send(
-        { cmd: AccountEvent.CreateMealLogEntry },
-        {
-          clientId,
-          dto,
-        }
-      )
-    );
+    const meal = await this.accountService.create({
+      ...dto,
+      userId,
+    });
 
-    return fillObject(MealLogEntryRdo, mealLogEntry);
+    return fillObject(MealRdo, meal);
   }
 }

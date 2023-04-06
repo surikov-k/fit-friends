@@ -1,10 +1,11 @@
 import { Transform } from 'class-transformer';
-import { IsDate, IsEnum, IsInt } from 'class-validator';
+import { IsDate, IsEnum, IsInt, Min } from 'class-validator';
 
 import { Meal, MealInterface } from '@fit-friends/shared-types';
 
-export class CreateMealLogEntryDto implements MealInterface {
+export class CreateMealDto implements Omit<MealInterface, 'userId'> {
   @IsInt()
+  @Min(0)
   calories: number;
 
   @IsEnum(Meal)

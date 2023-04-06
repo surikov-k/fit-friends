@@ -24,4 +24,6 @@ model Meal {
   type      MealType
   calories  Int
   createdAt DateTime
+
+  @@unique([userId, type, createdAt])
 }

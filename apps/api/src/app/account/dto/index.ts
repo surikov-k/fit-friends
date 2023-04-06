@@ -1,1 +1,1 @@
-export * from './create-meal-log-entry.dto';
+export * from './create-meal.dto';

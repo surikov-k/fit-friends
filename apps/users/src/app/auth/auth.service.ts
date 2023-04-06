@@ -85,7 +85,7 @@ export class AuthService {
 
   async logout(userId: string) {
     const user = await this.userRepository.findById(userId);
-    console.log(user);
+
     if (!user) {
       return;
     }

@@ -1,1 +1,1 @@
-export * from './meal-log-entry.rdo';
+export * from './meal.rdo';
