@@ -11,11 +11,11 @@ import { CurrentUserId, fillObject } from '@fit-friends/core';
 import { ClientGuard } from '../../common';
 import { CreateMealDto } from './dto';
 import { MealRdo } from './rdo';
-import { AccountService } from './account.service';
+import { NutritionService } from './nutrition.service';
 
-@Controller('account')
-export class AccountController {
-  constructor(private readonly accountService: AccountService) {}
+@Controller('nutrition')
+export class NutritionController {
+  constructor(private readonly accountService: NutritionService) {}
 
   @Post('/meal')
   @UseGuards(ClientGuard)
@@ -31,7 +31,7 @@ export class AccountController {
     return fillObject(MealRdo, meal);
   }
 
-  @Post('/meals')
+  @Post('/')
   @UseGuards(ClientGuard)
   public async createMany(
     @Body(new ParseArrayPipe({ items: CreateMealDto }))
@@ -43,7 +43,7 @@ export class AccountController {
     return meals.map((meal) => fillObject(MealRdo, meal));
   }
 
-  @Get('/meals')
+  @Get('/')
   @UseGuards(ClientGuard)
   public async getForWeek(@CurrentUserId() userId: string) {
     const meals = await this.accountService.getForWeek(userId);

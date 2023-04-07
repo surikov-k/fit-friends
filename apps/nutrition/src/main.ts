@@ -14,7 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const rmqService = app.get<RmqService>(RmqService);
   const configService = app.get<ConfigService>(ConfigService);
-  const queue = configService.get('RABBITMQ_ACCOUNT_SERVICE_QUEUE');
+  const queue = configService.get('RABBITMQ_NUTRITION_SERVICE_QUEUE');
 
   app.connectMicroservice(rmqService.getOptions(queue));
   await app.startAllMicroservices();

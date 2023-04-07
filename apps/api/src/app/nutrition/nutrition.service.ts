@@ -1,19 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { AccountEvent, MealInterface } from '@fit-friends/shared-types';
+import { MealInterface, NutritionEvent } from '@fit-friends/shared-types';
 import { firstValueFrom } from 'rxjs';
 import { CreateMealDto } from './dto';
 
 @Injectable()
-export class AccountService {
+export class NutritionService {
   constructor(
-    @Inject('ACCOUNT_SERVICE') private readonly accountService: ClientProxy
+    @Inject('NUTRITION_SERVICE') private readonly accountService: ClientProxy
   ) {}
 
   public async create(data: MealInterface) {
     return firstValueFrom(
       this.accountService.send<MealInterface>(
-        { cmd: AccountEvent.CreateMealLogEntry },
+        { cmd: NutritionEvent.CreateMeal },
         data
       )
     );
@@ -22,7 +22,7 @@ export class AccountService {
   public async createMany(userId: string, dtos: CreateMealDto[]) {
     return firstValueFrom(
       this.accountService.send<MealInterface[]>(
-        { cmd: AccountEvent.CreateMealLog },
+        { cmd: NutritionEvent.CreateMeals },
         { userId, dtos }
       )
     );
@@ -31,7 +31,7 @@ export class AccountService {
   public async getForWeek(userId: string) {
     return firstValueFrom(
       this.accountService.send<MealInterface[]>(
-        { cmd: AccountEvent.GetMeals },
+        { cmd: NutritionEvent.GetMeals },
         { userId }
       )
     );

@@ -11,7 +11,7 @@ class EnvironmentConfig extends RmgEnvironmentConfig {
   @IsString({
     message: EnvValidationError.RABBITMQ_QUEUE,
   })
-  public RABBITMQ_ACCOUNT_SERVICE_QUEUE: string;
+  public RABBITMQ_NUTRITION_SERVICE_QUEUE: string;
 }
 
 export function validateEnvironment(config: Record<string, unknown>) {

@@ -1,7 +1,7 @@
 {
-  "name": "account",
+  "name": "nutrition",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/account/src",
+  "sourceRoot": "apps/nutrition/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,12 +10,12 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/account",
-        "main": "apps/account/src/main.ts",
-        "tsConfig": "apps/account/tsconfig.app.json",
-        "assets": ["apps/account/src/assets"],
+        "outputPath": "dist/apps/nutrition",
+        "main": "apps/nutrition/src/main.ts",
+        "tsConfig": "apps/nutrition/tsconfig.app.json",
+        "assets": ["apps/nutrition/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/account/webpack.config.js"
+        "webpackConfig": "apps/nutrition/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -28,11 +28,11 @@
     "serve": {
       "executor": "@nrwl/js:node",
       "options": {
-        "buildTarget": "account:build"
+        "buildTarget": "nutrition:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "account:build:production"
+          "buildTarget": "nutrition:build:production"
         }
       }
     },
@@ -40,14 +40,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/account/**/*.ts"]
+        "lintFilePatterns": ["apps/nutrition/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/account/jest.config.ts",
+        "jestConfig": "apps/nutrition/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -61,35 +61,35 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma validate --schema ./prisma/schema.prisma",
-        "cwd": "apps/account"
+        "cwd": "apps/nutrition"
       }
     },
     "db-migrate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma migrate dev --schema ./prisma/schema.prisma --name initial --skip-generate --skip-seed",
-        "cwd": "apps/account"
+        "cwd": "apps/nutrition"
       }
     },
     "db-reset": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma migrate reset --schema ./prisma/schema.prisma --force --skip-generate --skip-seed",
-        "cwd": "apps/account"
+        "cwd": "apps/nutrition"
       }
     },
     "db-generate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma generate --schema ./prisma/schema.prisma",
-        "cwd": "apps/account"
+        "cwd": "apps/nutrition"
       }
     },
     "db-fill": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma db seed",
-        "cwd": "apps/account"
+        "cwd": "apps/nutrition"
       }
     }
   },
