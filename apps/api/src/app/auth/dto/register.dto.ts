@@ -16,8 +16,8 @@ import {
   PasswordLength,
   USERNAME_PATTERN,
   UsernameLength,
-} from '../../constants';
-import { IsEmailUnique } from '../../../../../apps/api/src/common';
+} from '../auth.constants';
+import { IsEmailUnique } from '../../../common/validators';
 
 export class RegisterDto {
   @ApiProperty({

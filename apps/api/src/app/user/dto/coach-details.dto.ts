@@ -15,7 +15,7 @@ import {
   CoachAchievements,
   MAX_TRAININGS_FOR_COACH,
   UserError,
-} from '../../constants';
+} from '../user.constants';
 
 export class CoachDetailsDto {
   @ApiProperty({

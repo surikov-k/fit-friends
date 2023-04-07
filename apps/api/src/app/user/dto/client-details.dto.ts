@@ -25,7 +25,7 @@ import {
   ClientInfo,
   MAX_TRAININGS_FOR_CLIENT,
   UserError,
-} from '../../constants';
+} from '../user.constants';
 
 export class ClientDetailsDto {
   @ApiProperty({

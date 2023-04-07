@@ -3,7 +3,8 @@ import { Module } from '@nestjs/common';
 import { RmqModule } from '@fit-friends/core';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { AtStrategy, IsEmailUniqueConstraint, RtStrategy } from '../../common';
+import { AtStrategy, RtStrategy } from '../../common/strategies';
+import { IsEmailUniqueConstraint } from '../../common/validators';
 
 @Module({
   imports: [

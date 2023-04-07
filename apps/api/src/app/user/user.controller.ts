@@ -9,20 +9,15 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
-import {
-  CheckMongoId,
-  ClientDetailsDto,
-  CoachDetailsDto,
-  CurrentUserId,
-  fillObject,
-  UpdateProfileDto,
-  UserRdo,
-  ValidateWithRole,
-} from '@fit-friends/core';
+import { fillObject } from '@fit-friends/core';
 import { ApiResponse } from '@nestjs/swagger';
 
+import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { UserService } from './user.service';
-import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common';
+import { UserRdo } from './rdo';
+import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
+import { CurrentUserId } from '../../common/decorators';
+import { CheckMongoId, ValidateWithRole } from '../../common/pipes';
 
 @Controller('user')
 export class UserController {

@@ -2,17 +2,21 @@ import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 
 import { WorkoutService } from './workout.service';
-import { UserRole, WorkoutsEvent } from '@fit-friends/shared-types';
+import {
+  WorkoutsEvent,
+  WorkoutsListQueryInterface,
+} from '@fit-friends/shared-types';
 
-@Controller('workout')
+@Controller()
 export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
 
   @EventPattern({ cmd: WorkoutsEvent.GetWorkouts })
-  public async index(@Payload() { role, query, userId }) {
-    const coachId = role === UserRole.Coach ? userId : undefined;
-
-    return this.workoutService.getAll(coachId, query);
+  public async index(
+    @Payload()
+    { query, coachId }: { query: WorkoutsListQueryInterface; coachId: string }
+  ) {
+    return this.workoutService.findByCoach(coachId, query);
   }
 
   @EventPattern({ cmd: WorkoutsEvent.GetWorkout })

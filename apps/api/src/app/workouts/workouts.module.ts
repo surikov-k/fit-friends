@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { RmqModule } from '@fit-friends/core';
 import { WorkoutsController } from './workouts.controller';
-import { AtStrategy, CoachStrategy } from '../../common';
+import { AtStrategy, CoachStrategy } from '../../common/strategies';
 
 @Module({
   controllers: [WorkoutsController],

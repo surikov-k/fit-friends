@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 import { UserEvent, UserInterface } from '@fit-friends/shared-types';
-import { LoginDto, RegisterDto } from '@fit-friends/core';
+import { LoginDto, RegisterDto } from './dto';
 
 @Injectable()
 export class AuthService {

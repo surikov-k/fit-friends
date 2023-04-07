@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { jwtOptions } from '../config';
 import { NutritionModule } from './nutrition/nutrition.module';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { NutritionModule } from './nutrition/nutrition.module';
     UserModule,
     AuthModule,
     NutritionModule,
+    AccountModule,
   ],
   providers: [],
 })

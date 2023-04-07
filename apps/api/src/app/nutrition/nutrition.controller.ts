@@ -7,8 +7,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { CurrentUserId, fillObject } from '@fit-friends/core';
-import { ClientGuard } from '../../common';
+import { fillObject } from '@fit-friends/core';
+import { ClientGuard } from '../../common/guards';
+import { CurrentUserId } from '../../common/decorators';
 import { CreateMealDto } from './dto';
 import { MealRdo } from './rdo';
 import { NutritionService } from './nutrition.service';

@@ -11,7 +11,7 @@ export class WorkoutRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async find(coachId: string, query) {
+  public async findByCoach(coachId: string, query) {
     const {
       limit,
       caloriesMin,

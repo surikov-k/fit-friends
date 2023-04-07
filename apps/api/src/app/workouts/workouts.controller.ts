@@ -8,28 +8,18 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 
-import {
-  CurrentUserId,
-  CurrentUserRole,
-  fillObject,
-  ValidateWithRole,
-} from '@fit-friends/core';
-import {
-  UserRole,
-  WorkoutInterface,
-  WorkoutsEvent,
-} from '@fit-friends/shared-types';
+import { fillObject } from '@fit-friends/core';
+import { WorkoutsEvent } from '@fit-friends/shared-types';
+import { AccessTokenGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from './rdo';
-import { WorkoutQuery } from './query';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
-import { AccessTokenGuard, CoachGuard } from '../../common';
+import { CurrentUserId } from '../../common/decorators';
 
 @ApiTags('workout')
 @Controller('workout')
@@ -37,38 +27,6 @@ export class WorkoutsController {
   constructor(
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
   ) {}
-
-  @Get()
-  @ApiResponse({
-    type: [WorkoutRdo],
-    status: HttpStatus.OK,
-    description: 'List of workouts',
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Only an authorized user can request the list of workouts',
-  })
-  @UseGuards(AccessTokenGuard)
-  public async index(
-    @CurrentUserRole() role: string,
-    @Query(ValidateWithRole) query: WorkoutQuery,
-    @CurrentUserId() userId: string
-  ) {
-    const coachId = role === UserRole.Coach ? userId : undefined;
-
-    const workouts = await firstValueFrom<WorkoutInterface[]>(
-      this.workoutsService.send(
-        { cmd: WorkoutsEvent.GetWorkouts },
-        {
-          coachId,
-          query,
-          userId,
-        }
-      )
-    );
-
-    return workouts.map((workout) => fillObject(WorkoutRdo, workout));
-  }
 
   @Get('/:id')
   @ApiResponse({

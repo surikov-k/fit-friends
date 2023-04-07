@@ -7,7 +7,12 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { TimeSpan, UserRole, WorkoutType } from '@fit-friends/shared-types';
+import {
+  TimeSpan,
+  UserRole,
+  WorkoutsListQueryInterface,
+  WorkoutType,
+} from '@fit-friends/shared-types';
 import {
   Calories,
   Price,
@@ -17,7 +22,7 @@ import {
 import { Transform } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class WorkoutQuery {
+export class WorkoutQuery implements WorkoutsListQueryInterface {
   @ApiPropertyOptional({
     description: 'A limit of the workouts per page',
     default: WorkoutIndexQueryDefault.ITEMS_PER_PAGE,

@@ -13,10 +13,10 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
-import { CurrentUserId, LoginDto, RegisterDto } from '@fit-friends/core';
-
 import { AuthService } from './auth.service';
-import { AccessTokenGuard, RefreshTokenGuard } from '../../common';
+import { AccessTokenGuard, RefreshTokenGuard } from '../../common/guards';
+import { LoginDto, RegisterDto } from './dto';
+import { CurrentUserId } from '../../common/decorators';
 
 @ApiTags('auth')
 @Controller('auth')

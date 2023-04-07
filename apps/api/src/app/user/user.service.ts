@@ -1,12 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  ClientDetailsDto,
-  CoachDetailsDto,
-  UpdateProfileDto,
-} from '@fit-friends/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+
 import { UserEvent, UserInterface } from '@fit-friends/shared-types';
+import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 
 @Injectable()
 export class UserService {
