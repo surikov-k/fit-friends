@@ -8,7 +8,7 @@ import { OrderService } from './order.service';
   controllers: [OrderController],
   imports: [
     RmqModule.registerRmq({
-      name: 'ORDER_SERVICE',
+      name: 'ORDERS_SERVICE',
     }),
     RmqModule.registerRmq({
       name: 'WORKOUTS_SERVICE',

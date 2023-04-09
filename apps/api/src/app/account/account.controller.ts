@@ -9,58 +9,60 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { firstValueFrom } from 'rxjs';
 
 import {
   MealInterface,
   NutritionEvent,
-  WorkoutInterface,
-  WorkoutsEvent,
+  UserRole,
 } from '@fit-friends/shared-types';
 import { fillObject } from '@fit-friends/core';
-import { ClientGuard, CoachGuard } from '../../common/guards';
+import { AccessTokenGuard, ClientGuard } from '../../common/guards';
 import { WorkoutRdo } from '../workouts/rdo';
 import { CoachWorkoutsListQuery } from '../workouts/query';
-import { CurrentUserId } from '../../common/decorators';
+import { CurrentUserId, CurrentUserRole } from '../../common/decorators';
 import { MealRdo } from '../nutrition/rdo';
 import { CreateMealDto } from '../nutrition/dto';
+import { ClientProxy } from '@nestjs/microservices';
+import { AccountService } from './account.service';
 
 @ApiTags('account')
 @Controller('account')
 export class AccountController {
   constructor(
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy,
-    @Inject('NUTRITION_SERVICE') private readonly nutritionService: ClientProxy
+    @Inject('NUTRITION_SERVICE') private readonly nutritionService: ClientProxy,
+    private readonly accountService: AccountService
   ) {}
 
   @Get('/workouts')
   @ApiResponse({
     type: [WorkoutRdo],
     status: HttpStatus.OK,
-    description: 'List of workouts of a coach',
+    description: 'List of workouts of a user',
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: 'Only an authorized coach can request the list of workouts',
+    description: 'Only an authorized user can request the list of workouts',
   })
-  @UseGuards(CoachGuard)
-  public async index(
+  @UseGuards(AccessTokenGuard)
+  public async getWorkouts(
     @Query() query: CoachWorkoutsListQuery,
-    @CurrentUserId() coachId: string
+    @CurrentUserId() userId: string,
+    @CurrentUserRole() role: UserRole
   ) {
-    const workouts = await firstValueFrom<WorkoutInterface[]>(
-      this.workoutsService.send(
-        { cmd: WorkoutsEvent.GetWorkouts },
-        {
-          coachId,
-          query,
-        }
-      )
-    );
+    let workouts;
 
-    return workouts.map((workout) => fillObject(WorkoutRdo, workout));
+    if (role === UserRole.Coach) {
+      workouts = await this.accountService.getCoachWorkouts(userId, query);
+      return workouts.map((workout) => fillObject(WorkoutRdo, workout));
+    }
+
+    if (role === UserRole.Client) {
+      workouts = await this.accountService.getClientWorkouts(userId);
+      return workouts.map((workout) => fillObject(WorkoutRdo, workout));
+    }
   }
 
   @Get('/nutrition')

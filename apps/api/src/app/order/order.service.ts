@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 import {
@@ -9,17 +8,18 @@ import {
   WorkoutInterface,
   WorkoutsEvent,
 } from '@fit-friends/shared-types';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class OrderService {
   constructor(
-    @Inject('ORDER_SERVICE') private readonly orderService: ClientProxy,
+    @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy,
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
   ) {}
 
   public async get(userId) {
     const order = await firstValueFrom(
-      this.orderService.send<OrderInterface>(
+      this.ordersService.send<OrderInterface>(
         { cmd: OrdersEvent.GetOrder },
         { userId }
       )
@@ -36,7 +36,7 @@ export class OrderService {
 
   public async getClientOrders(userId: string) {
     const orders = await firstValueFrom(
-      this.orderService.send<OrderInterface[]>(
+      this.ordersService.send<OrderInterface[]>(
         { cmd: OrdersEvent.GetMyOrders },
         { userId }
       )
@@ -60,7 +60,7 @@ export class OrderService {
     const coachOrders = await Promise.all(
       coachWorkouts.map((workout) => {
         return firstValueFrom(
-          this.orderService.send<OrderInterface[]>(
+          this.ordersService.send<OrderInterface[]>(
             { cmd: OrdersEvent.GetOrderByServiceId },
             { serviceId: workout.id }
           )
@@ -73,7 +73,7 @@ export class OrderService {
 
   public async create(userId, dto) {
     const order = await firstValueFrom(
-      this.orderService.send<OrderInterface>(
+      this.ordersService.send<OrderInterface>(
         { cmd: OrdersEvent.CreateOrder },
         { userId, dto }
       )

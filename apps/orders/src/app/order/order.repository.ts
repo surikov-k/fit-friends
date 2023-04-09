@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { CrudRepositoryInterface } from '@fit-friends/core';
-import { OrderInterface } from '@fit-friends/shared-types';
+import { OrderInterface, PurchaseType } from '@fit-friends/shared-types';
 import { OrderEntity } from './order.entity';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -38,9 +38,16 @@ export class OrderRepository
       where: { userId },
     });
   }
+
   public async findByServiceId(serviceId: number): Promise<OrderInterface[]> {
     return this.prisma.order.findMany({
       where: { serviceId },
+    });
+  }
+
+  public async findWorkoutOrders(userId: string): Promise<OrderInterface[]> {
+    return this.prisma.order.findMany({
+      where: { userId, purchaseType: PurchaseType.Workout },
     });
   }
 }

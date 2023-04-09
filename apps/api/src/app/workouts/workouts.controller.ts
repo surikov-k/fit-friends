@@ -40,7 +40,6 @@ export class WorkoutsController {
   })
   @UseGuards(AccessTokenGuard)
   public async get(@Param('id') id: number) {
-    console.log(id, typeof id);
     const workout = await lastValueFrom(
       this.workoutsService.send({ cmd: WorkoutsEvent.GetWorkout }, { id })
     );

@@ -27,4 +27,9 @@ export class OrderController {
   public async getByServiceId(@Payload() { serviceId }) {
     return this.orderService.findByServiceId(serviceId);
   }
+
+  @EventPattern({ cmd: OrdersEvent.GetClientWorkoutOrders })
+  public async getClientWorkoutOrders(@Payload() { userId }) {
+    return this.orderService.findWorkoutOrders(userId);
+  }
 }

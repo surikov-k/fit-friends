@@ -26,7 +26,7 @@ export class WorkoutController {
   }
 
   @EventPattern({ cmd: WorkoutsEvent.GetWorkout })
-  public async get(@Payload() { id }) {
+  public async get(@Payload() { id }: { id: number }) {
     return this.workoutService.get(id);
   }
 

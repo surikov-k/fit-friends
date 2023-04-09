@@ -29,4 +29,10 @@ export class OrderService {
   ): Promise<OrderInterface[]> | null {
     return this.orderRepository.findByServiceId(serviceId);
   }
+
+  public async findWorkoutOrders(
+    userId: string
+  ): Promise<OrderInterface[]> | null {
+    return this.orderRepository.findWorkoutOrders(userId);
+  }
 }
