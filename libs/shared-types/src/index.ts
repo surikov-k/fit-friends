@@ -26,4 +26,7 @@ export * from './lib/meal.type';
 export * from './lib/meal.interface';
 export * from './lib/workout-log-entry.interface';
 export * from './lib/nutrition-events.enum';
-export * from './lib/workouts-list-query.interface';
+export * from './lib/coach-workouts-list-query.interface';
+export * from './lib/register.interface';
+export * from './lib/login.interface';
+export * from './lib/update-profile.interface';

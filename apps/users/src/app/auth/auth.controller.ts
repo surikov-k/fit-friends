@@ -1,26 +1,29 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { UserEvent } from '@fit-friends/shared-types';
+import {
+  LoginInterface,
+  RegisterInterface,
+  UserEvent,
+} from '@fit-friends/shared-types';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from '@fit-friends/core';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @MessagePattern({ cmd: UserEvent.Register })
-  public async register(@Payload() { dto }: { dto: RegisterDto }) {
+  public async register(@Payload() { dto }: { dto: RegisterInterface }) {
     return await this.authService.register(dto);
   }
 
   @MessagePattern({ cmd: UserEvent.Login })
-  public async login(@Payload() { dto }: { dto: LoginDto }) {
+  public async login(@Payload() { dto }: { dto: LoginInterface }) {
     return this.authService.login(dto);
   }
 
   @MessagePattern({ cmd: UserEvent.Verify })
-  public async verify(@Payload() { dto }: { dto: LoginDto }) {
+  public async verify(@Payload() { dto }: { dto: LoginInterface }) {
     return this.authService.verify(dto);
   }
 

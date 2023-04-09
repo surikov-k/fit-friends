@@ -34,6 +34,7 @@ export class AtStrategy extends PassportStrategy(Strategy) {
     if (!user || !user.refreshTokenHash) {
       return false;
     }
+
     return payload;
   }
 }

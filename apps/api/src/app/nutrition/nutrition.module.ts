@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { NutritionService } from './nutrition.service';
 import { NutritionController } from './nutrition.controller';
 import { RmqModule } from '@fit-friends/core';
 
 @Module({
-  providers: [NutritionService],
+  providers: [],
   controllers: [NutritionController],
   imports: [
     RmqModule.registerRmq({

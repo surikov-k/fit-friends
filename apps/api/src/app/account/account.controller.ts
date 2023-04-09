@@ -1,42 +1,53 @@
 import {
+  Body,
   Controller,
   Get,
   HttpStatus,
   Inject,
+  ParseArrayPipe,
+  Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { firstValueFrom } from 'rxjs';
 
-import { WorkoutInterface, WorkoutsEvent } from '@fit-friends/shared-types';
+import {
+  MealInterface,
+  NutritionEvent,
+  WorkoutInterface,
+  WorkoutsEvent,
+} from '@fit-friends/shared-types';
 import { fillObject } from '@fit-friends/core';
-import { CoachGuard } from '../../common/guards';
+import { ClientGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from '../workouts/rdo';
-import { WorkoutQuery } from '../workouts/query';
-import { ValidateWithRole } from '../../common/pipes';
+import { CoachWorkoutsListQuery } from '../workouts/query';
 import { CurrentUserId } from '../../common/decorators';
+import { MealRdo } from '../nutrition/rdo';
+import { CreateMealDto } from '../nutrition/dto';
 
+@ApiTags('account')
 @Controller('account')
 export class AccountController {
   constructor(
-    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
+    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy,
+    @Inject('NUTRITION_SERVICE') private readonly nutritionService: ClientProxy
   ) {}
 
   @Get('/workouts')
   @ApiResponse({
     type: [WorkoutRdo],
     status: HttpStatus.OK,
-    description: 'List of workouts',
+    description: 'List of workouts of a coach',
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: 'Only an authorized user can request the list of workouts',
+    description: 'Only an authorized coach can request the list of workouts',
   })
   @UseGuards(CoachGuard)
   public async index(
-    @Query(ValidateWithRole) query: WorkoutQuery,
+    @Query() query: CoachWorkoutsListQuery,
     @CurrentUserId() coachId: string
   ) {
     const workouts = await firstValueFrom<WorkoutInterface[]>(
@@ -50,5 +61,35 @@ export class AccountController {
     );
 
     return workouts.map((workout) => fillObject(WorkoutRdo, workout));
+  }
+
+  @Get('/nutrition')
+  @UseGuards(ClientGuard)
+  public async getForWeek(@CurrentUserId() userId: string) {
+    const meals = await firstValueFrom(
+      this.nutritionService.send<MealInterface[]>(
+        { cmd: NutritionEvent.GetMeals },
+        { userId }
+      )
+    );
+
+    return meals.map((meal) => fillObject(MealRdo, meal));
+  }
+
+  @Post('/nutrition')
+  @UseGuards(ClientGuard)
+  public async createMany(
+    @Body(new ParseArrayPipe({ items: CreateMealDto }))
+    dtos: CreateMealDto[],
+    @CurrentUserId() userId: string
+  ) {
+    const meals = await firstValueFrom(
+      this.nutritionService.send<MealInterface[]>(
+        { cmd: NutritionEvent.CreateMeals },
+        { userId, dtos }
+      )
+    );
+
+    return meals.map((meal) => fillObject(MealRdo, meal));
   }
 }

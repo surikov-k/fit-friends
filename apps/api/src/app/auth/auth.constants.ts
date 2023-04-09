@@ -9,7 +9,6 @@ export enum UsernameLength {
 }
 export enum AuthError {
   ALREADY_EXISTS = 'User with this email already exists',
-  NOT_FOUND = 'User not found',
   WRONG_CREDENTIALS = 'Wrong email or password',
   INVALID_EMAIL = 'The email is not valid',
   PASSWORD_TOO_SHORT = 'Password is too short',

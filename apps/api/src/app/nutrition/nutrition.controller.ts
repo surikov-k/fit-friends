@@ -1,22 +1,19 @@
-import {
-  Body,
-  Controller,
-  Get,
-  ParseArrayPipe,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
+import { MealInterface, NutritionEvent } from '@fit-friends/shared-types';
 import { fillObject } from '@fit-friends/core';
 import { ClientGuard } from '../../common/guards';
 import { CurrentUserId } from '../../common/decorators';
 import { CreateMealDto } from './dto';
 import { MealRdo } from './rdo';
-import { NutritionService } from './nutrition.service';
 
 @Controller('nutrition')
 export class NutritionController {
-  constructor(private readonly accountService: NutritionService) {}
+  constructor(
+    @Inject('NUTRITION_SERVICE') private readonly nutritionService: ClientProxy
+  ) {}
 
   @Post('/meal')
   @UseGuards(ClientGuard)
@@ -24,31 +21,16 @@ export class NutritionController {
     @Body() dto: CreateMealDto,
     @CurrentUserId() userId: string
   ) {
-    const meal = await this.accountService.create({
-      ...dto,
-      userId,
-    });
+    const meal = await firstValueFrom(
+      this.nutritionService.send<MealInterface>(
+        { cmd: NutritionEvent.CreateMeal },
+        {
+          ...dto,
+          userId,
+        }
+      )
+    );
 
     return fillObject(MealRdo, meal);
-  }
-
-  @Post('/')
-  @UseGuards(ClientGuard)
-  public async createMany(
-    @Body(new ParseArrayPipe({ items: CreateMealDto }))
-    dtos: CreateMealDto[],
-    @CurrentUserId() userId: string
-  ) {
-    const meals = await this.accountService.createMany(userId, dtos);
-
-    return meals.map((meal) => fillObject(MealRdo, meal));
-  }
-
-  @Get('/')
-  @UseGuards(ClientGuard)
-  public async getForWeek(@CurrentUserId() userId: string) {
-    const meals = await this.accountService.getForWeek(userId);
-
-    return meals.map((meal) => fillObject(MealRdo, meal));
   }
 }

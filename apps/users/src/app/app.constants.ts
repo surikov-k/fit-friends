@@ -13,3 +13,7 @@ export enum EnvValidationMessage {
   JwtRTSecretRequired = 'Jwt Refresh token secret is required',
   JwtRTExpirationRequired = 'Jwt Refresh token expiration time is required',
 }
+export enum AuthError {
+  NOT_FOUND = 'User not found',
+  WRONG_CREDENTIALS = 'Wrong email or password',
+}

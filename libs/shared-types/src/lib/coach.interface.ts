@@ -4,4 +4,5 @@ export interface CoachInterface extends UserInterface {
   certificate: string;
   hasPersonalTrainings: boolean;
   achievements: string;
+  info: string;
 }

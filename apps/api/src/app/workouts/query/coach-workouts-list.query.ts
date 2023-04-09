@@ -1,28 +1,19 @@
+import { IsEnum, IsInt, IsNumber, IsOptional, Max, Min } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+
 import {
-  IsEnum,
-  IsInt,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Max,
-  Min,
-} from 'class-validator';
-import {
+  CoachWorkoutsListQueryInterface,
   TimeSpan,
-  UserRole,
-  WorkoutsListQueryInterface,
-  WorkoutType,
 } from '@fit-friends/shared-types';
 import {
   Calories,
   Price,
   Rating,
   WorkoutIndexQueryDefault,
-} from '../workout.constants';
-import { Transform } from 'class-transformer';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+} from '../workouts.constants';
 
-export class WorkoutQuery implements WorkoutsListQueryInterface {
+export class CoachWorkoutsListQuery implements CoachWorkoutsListQueryInterface {
   @ApiPropertyOptional({
     description: 'A limit of the workouts per page',
     default: WorkoutIndexQueryDefault.ITEMS_PER_PAGE,
@@ -31,7 +22,7 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
     ({ value }) =>
       parseInt(value, 10) || (WorkoutIndexQueryDefault.ITEMS_PER_PAGE as number)
   )
-  @IsNumber({}, { always: true })
+  @IsNumber()
   @IsOptional()
   public limit: number = WorkoutIndexQueryDefault.ITEMS_PER_PAGE as number;
 
@@ -43,14 +34,14 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
     ({ value }) =>
       parseInt(value, 10) || (WorkoutIndexQueryDefault.PAGE as number)
   )
-  @IsNumber({}, { always: true })
+  @IsNumber()
   @IsOptional()
   public page: number = WorkoutIndexQueryDefault.PAGE;
 
   @ApiPropertyOptional({
     description: 'A minimal value of the price filter',
   })
-  @IsNumber({}, { always: true })
+  @IsNumber()
   @Min(Price.MIN)
   @IsOptional()
   @Transform(({ value }) => parseInt(value, 10) || (Price.MIN as number))
@@ -59,7 +50,7 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
   @ApiPropertyOptional({
     description: 'A maximal value of the price filter',
   })
-  @IsNumber({}, { always: true })
+  @IsNumber()
   @IsOptional()
   @Transform(({ value }) => parseInt(value, 10))
   public priceMax: number;
@@ -67,7 +58,7 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
   @ApiPropertyOptional({
     description: 'A minimal value of the calories filter',
   })
-  @IsNumber({}, { always: true })
+  @IsNumber()
   @Min(Calories.MIN)
   @IsOptional()
   @Transform(({ value }) => parseInt(value, 10))
@@ -76,7 +67,7 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
   @ApiPropertyOptional({
     description: 'A maximal value of the calories filter',
   })
-  @IsNumber({}, { always: true })
+  @IsNumber()
   @Max(Calories.MAX)
   @IsOptional()
   @Transform(({ value }) => parseInt(value, 10))
@@ -85,7 +76,7 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
   @ApiPropertyOptional({
     description: 'Rating filter',
   })
-  @IsInt({ always: true })
+  @IsInt()
   @Min(Rating.MIN)
   @Max(Rating.MAX)
   @IsOptional()
@@ -97,10 +88,7 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
     type: [TimeSpan],
     enum: TimeSpan,
   })
-  @IsEnum(TimeSpan, {
-    groups: [UserRole.Coach],
-    each: true,
-  })
+  @IsEnum(TimeSpan, { each: true })
   @IsOptional()
   @Transform(({ value }) => {
     if (Array.isArray(value)) {
@@ -109,40 +97,4 @@ export class WorkoutQuery implements WorkoutsListQueryInterface {
     return value.split(',');
   })
   public durations?: TimeSpan[];
-
-  @ApiPropertyOptional({
-    description: 'Workout type filter, only for a client',
-    type: [WorkoutType],
-    enum: WorkoutType,
-  })
-  @IsEnum(WorkoutType, {
-    groups: [UserRole.Client],
-    each: true,
-  })
-  @IsOptional()
-  @Transform(({ value }) => {
-    if (Array.isArray(value)) {
-      return value;
-    }
-    return value.split(',');
-  })
-  public types?: WorkoutType[];
-
-  @ApiPropertyOptional({
-    description: 'Workout list sorting, a client only',
-  })
-  @IsString({
-    groups: [UserRole.Client],
-  })
-  @IsOptional()
-  public sort: string;
-
-  @ApiPropertyOptional({
-    description: 'Workout list sort direction, a client only',
-  })
-  @IsString({
-    groups: [UserRole.Client],
-  })
-  @IsOptional()
-  public direction: string;
 }

@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { CrudRepositoryInterface } from '@fit-friends/core';
-import { WorkoutInterface } from '@fit-friends/shared-types';
+import {
+  CoachWorkoutsListQueryInterface,
+  WorkoutInterface,
+} from '@fit-friends/shared-types';
 import { WorkoutEntity } from './workout.entity';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -11,7 +14,10 @@ export class WorkoutRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async findByCoach(coachId: string, query) {
+  public async findByCoach(
+    coachId: string,
+    query: CoachWorkoutsListQueryInterface
+  ) {
     const {
       limit,
       caloriesMin,
@@ -21,7 +27,6 @@ export class WorkoutRepository
       page,
       durations,
       rating,
-      types,
     } = query;
 
     return this.prisma.workout.findMany({
@@ -30,7 +35,6 @@ export class WorkoutRepository
         rating,
         coachId,
         duration: { in: durations },
-        type: { in: types },
         AND: [
           { calories: { gte: caloriesMin } },
           { calories: { lte: caloriesMax } },

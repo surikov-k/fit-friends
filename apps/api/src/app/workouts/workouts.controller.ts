@@ -21,8 +21,8 @@ import { WorkoutRdo } from './rdo';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 import { CurrentUserId } from '../../common/decorators';
 
-@ApiTags('workout')
-@Controller('workout')
+@ApiTags('workouts')
+@Controller('workouts')
 export class WorkoutsController {
   constructor(
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
@@ -39,7 +39,8 @@ export class WorkoutsController {
     description: 'Only an authorized user can request the workout information',
   })
   @UseGuards(AccessTokenGuard)
-  public async get(@Param('id', ParseIntPipe) id: number) {
+  public async get(@Param('id') id: number) {
+    console.log(id, typeof id);
     const workout = await lastValueFrom(
       this.workoutsService.send({ cmd: WorkoutsEvent.GetWorkout }, { id })
     );

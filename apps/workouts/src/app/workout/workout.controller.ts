@@ -3,8 +3,8 @@ import { EventPattern, Payload } from '@nestjs/microservices';
 
 import { WorkoutService } from './workout.service';
 import {
+  CoachWorkoutsListQueryInterface,
   WorkoutsEvent,
-  WorkoutsListQueryInterface,
 } from '@fit-friends/shared-types';
 
 @Controller()
@@ -14,7 +14,13 @@ export class WorkoutController {
   @EventPattern({ cmd: WorkoutsEvent.GetWorkouts })
   public async index(
     @Payload()
-    { query, coachId }: { query: WorkoutsListQueryInterface; coachId: string }
+    {
+      query,
+      coachId,
+    }: {
+      query: CoachWorkoutsListQueryInterface;
+      coachId: string;
+    }
   ) {
     return this.workoutService.findByCoach(coachId, query);
   }

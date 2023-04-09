@@ -1,15 +1,14 @@
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
-  ClientDetailsDto,
-  CoachDetailsDto,
-  UpdateProfileDto,
-} from '@fit-friends/core';
-
-import { UserEvent } from '@fit-friends/shared-types';
+  ClientInterface,
+  CoachInterface,
+  UpdateProfileInterface,
+  UserEvent,
+} from '@fit-friends/shared-types';
 import { UserService } from './user.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @ApiTags('user')
 @Controller('user')
@@ -23,21 +22,21 @@ export class UserController {
 
   @MessagePattern({ cmd: UserEvent.SaveClientDetails })
   public async saveClientDetails(
-    @Payload() { dto, userId }: { dto: ClientDetailsDto; userId: string }
+    @Payload() { dto, userId }: { dto: ClientInterface; userId: string }
   ) {
     return this.userService.saveClientDetails(userId, dto);
   }
 
   @MessagePattern({ cmd: UserEvent.SaveCoachDetails })
   public async saveCoachDetails(
-    @Payload() { dto, userId }: { dto: CoachDetailsDto; userId: string }
+    @Payload() { dto, userId }: { dto: CoachInterface; userId: string }
   ) {
     return this.userService.saveCoachDetails(userId, dto);
   }
 
   @MessagePattern({ cmd: UserEvent.UpdateProfile })
   public async updateProfile(
-    @Payload() { dto, userId }: { dto: UpdateProfileDto; userId: string }
+    @Payload() { dto, userId }: { dto: UpdateProfileInterface; userId: string }
   ) {
     return this.userService.updateProfile(userId, dto);
   }

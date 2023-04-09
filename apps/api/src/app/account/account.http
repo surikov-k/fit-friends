@@ -1,0 +1,34 @@
+### Get list of workouts as a coach
+GET http://localhost:4000/api/account/workouts?caloriesMin=1300&caloriesMax=1315&priceMax=200
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExYjBjZjMzMmM2MTIxZjg2ODJhMGYiLCJlbWFpbCI6ImVkZGllLm1jY2x1cmVAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JjQs9C-0YDRjCIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3ODg4OTkyNiwiZXhwIjoxNjc4ODkwODI2fQ.OQk7XdIII1Y6zgxgz-7D8dWA_J8BTI0jFAa3j0vmR2s
+
+### Get workouts as a client
+GET http://localhost:4000/api/workout?types=Yoga,Boxing&priceMax=200
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
+
+### Get a nutrition log for a current week
+GET http://localhost:4000/api/account/nutrition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
+
+### Add several meal log entries
+POST http://localhost:4000/api/account/nutrition
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
+
+[
+  {
+    "calories": 100,
+    "type": "Breakfast",
+    "createdAt": "2023-04-05"
+  },
+  {
+    "calories": 111,
+    "type": "Breakfast",
+    "createdAt": "2023-04-08"
+  },
+  {
+    "calories": 555,
+    "type": "Launch",
+    "createdAt": "2023-04-08"
+  }
+]

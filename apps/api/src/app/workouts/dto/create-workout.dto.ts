@@ -21,7 +21,7 @@ import {
   DescriptionLength,
   Price,
   TitleLength,
-} from '../workout.constants';
+} from '../workouts.constants';
 
 export class CreateWorkoutDto
   implements

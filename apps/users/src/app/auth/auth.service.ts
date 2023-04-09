@@ -2,11 +2,17 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { JwtPayload, Tokens, UserInterface } from '@fit-friends/shared-types';
-import { AuthError, LoginDto, RegisterDto } from '@fit-friends/core';
+import {
+  JwtPayload,
+  LoginInterface,
+  RegisterInterface,
+  Tokens,
+  UserInterface,
+} from '@fit-friends/shared-types';
 import { UserRepository } from '../user/user.repository';
 import { UserEntity } from '../user/user.entity';
 import { RpcException } from '@nestjs/microservices';
+import { AuthError } from '../app.constants';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +22,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register(dto: RegisterDto) {
+  async register(dto: RegisterInterface) {
     const {
       name,
       email,
@@ -49,7 +55,7 @@ export class AuthService {
     return tokens;
   }
 
-  async verify(dto: LoginDto) {
+  async verify(dto: LoginInterface) {
     const { email, password } = dto;
     const user = await this.userRepository.findByEmail(email);
 
@@ -72,7 +78,7 @@ export class AuthService {
     return entity.toObject();
   }
 
-  public async login(dto: LoginDto) {
+  public async login(dto: LoginInterface) {
     const user = await this.verify(dto);
 
     const entity = new UserEntity(user);

@@ -1,1 +1,1 @@
-export * from './workout.query';
+export * from './coach-workouts-list.query';
