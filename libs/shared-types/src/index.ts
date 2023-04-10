@@ -3,7 +3,7 @@ export * from './lib/coach-workouts-list-query.interface';
 export * from './lib/coach.interface';
 export * from './lib/file.interface';
 export * from './lib/gender.enum';
-export * from './lib/gym-feature.enum';
+export * from './lib/gym-feature.type';
 export * from './lib/gym.interface';
 export * from './lib/jwt-payload.type';
 export * from './lib/location.enum';

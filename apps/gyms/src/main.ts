@@ -6,20 +6,20 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { AppModule } from './app/app.module';
 import { RmqService } from '@fit-friends/core';
 import { ConfigService } from '@nestjs/config';
+import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const rmqService = app.get<RmqService>(RmqService);
   const configService = app.get<ConfigService>(ConfigService);
-  const queue = configService.get('RABBITMQ_NUTRITION_SERVICE_QUEUE');
+  const queue = configService.get('RABBITMQ_GYMS_SERVICE_QUEUE');
 
   app.connectMicroservice(rmqService.getOptions(queue));
   await app.startAllMicroservices();
 
-  Logger.log(`🚀 Nutrition microservice is started`);
+  Logger.log(`🚀 Gyms microservice is started`);
 }
 
 bootstrap();

@@ -1,16 +1,16 @@
 version: '3.5'
 services:
-  postgres-fit-friends-orders:
+  postgres-fit-friends-gyms:
     image: postgres:14-alpine
-    container_name: postgres-fit-friends-nutrition
+    container_name: postgres-fit-friends-gyms
     environment:
       POSTGRES_USER: 'admin'
       POSTGRES_PASSWORD: 'test'
-      POSTGRES_DB: 'fit-friends-nutrition'
+      POSTGRES_DB: 'fit-friends-gyms'
     expose:
-      - '5434'
+      - '5435'
     ports:
-      - '5434:5434'
+      - '5435:5435'
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U admin -d test']
       interval: 10s
@@ -19,12 +19,12 @@ services:
       start_period: 10s
     volumes:
       - ./db:/var/lib/postgresql/data
-    command: -p 5434
+    command: -p 5435
     networks:
-      - postgres-fit-friends-nutrition
+      - postgres-fit-friends-gyms
 
   pgadmin-fit-friends-orders:
-    container_name: pgadmin-fit-friends-nutrition
+    container_name: pgadmin-fit-friends-gyms
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: 'keks@htmlacademy.local'
@@ -34,11 +34,11 @@ services:
     volumes:
       - ./db:/var/lib/pgadmin
     ports:
-      - '8084:80'
+      - '8085:80'
     restart: unless-stopped
     networks:
-      - postgres-fit-friends-nutrition
+      - postgres-fit-friends-gyms
 
 networks:
-  postgres-fit-friends-nutrition:
+  postgres-fit-friends-gyms:
     driver: bridge

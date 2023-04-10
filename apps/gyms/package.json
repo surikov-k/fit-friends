@@ -1,0 +1,6 @@
+{
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "name": "@fit-friends/gyms"
+}
