@@ -50,4 +50,18 @@ export class OrderRepository
       where: { userId, purchaseType: PurchaseType.Workout },
     });
   }
+
+  public async getAvailableWorkouts(
+    userId: string,
+    serviceId: number
+  ): Promise<number> {
+    const orders = await this.prisma.order.findMany({
+      where: { userId, purchaseType: PurchaseType.Workout, serviceId },
+    });
+
+    return orders.reduce(
+      (availableWorkouts, { quantity }) => availableWorkouts + quantity,
+      0
+    );
+  }
 }

@@ -4,4 +4,5 @@ export enum OrdersEvent {
   GetMyOrders = 'GetMyOrders',
   CreateOrder = 'CreateOrder',
   GetClientWorkoutOrders = 'GetClientWorkoutOrders',
+  GetAvailableWorkouts = 'GetAvailableWorkouts',
 }

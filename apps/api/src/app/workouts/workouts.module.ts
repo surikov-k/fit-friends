@@ -9,6 +9,9 @@ import { AtStrategy, CoachStrategy } from '../../common/strategies';
   providers: [CoachStrategy, AtStrategy],
   imports: [
     RmqModule.registerRmq({
+      name: 'ORDERS_SERVICE',
+    }),
+    RmqModule.registerRmq({
       name: 'WORKOUTS_SERVICE',
     }),
     RmqModule.registerRmq({

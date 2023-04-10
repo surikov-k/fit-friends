@@ -35,4 +35,8 @@ export class OrderService {
   ): Promise<OrderInterface[]> | null {
     return this.orderRepository.findWorkoutOrders(userId);
   }
+
+  public async getAvailableWorkouts(userId: string, workoutId: number) {
+    return this.orderRepository.getAvailableWorkouts(userId, workoutId);
+  }
 }

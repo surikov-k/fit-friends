@@ -12,7 +12,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzM
   "price": 200,
   "purchaseType": "Workout",
   "quantity": 5,
-  "serviceId":  14
+  "serviceId":  15
 }
 
 ### Get my orders (for a client)

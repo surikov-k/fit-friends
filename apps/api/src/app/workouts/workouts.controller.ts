@@ -16,13 +16,14 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 import { fillObject } from '@fit-friends/core';
 import { WorkoutsEvent } from '@fit-friends/shared-types';
-import { AccessTokenGuard, CoachGuard } from '../../common/guards';
+import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from './rdo';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 import { CurrentUserId } from '../../common/decorators';
+import { CanStartWorkout } from '../../common/pipes/can-start-workout.pipe';
 
 @ApiTags('workouts')
-@Controller('workouts')
+@Controller('workout')
 export class WorkoutsController {
   constructor(
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
@@ -99,5 +100,14 @@ export class WorkoutsController {
     );
 
     return fillObject(WorkoutRdo, workout);
+  }
+
+  @UseGuards(ClientGuard)
+  @Post(':id/start')
+  public async startWorkout(
+    @Param('id', CanStartWorkout) id: number,
+    @CurrentUserId() userId: string
+  ) {
+    // console.log(id, userId);
   }
 }

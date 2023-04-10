@@ -32,4 +32,9 @@ export class OrderController {
   public async getClientWorkoutOrders(@Payload() { userId }) {
     return this.orderService.findWorkoutOrders(userId);
   }
+
+  @EventPattern({ cmd: OrdersEvent.GetAvailableWorkouts })
+  public async getAvailableWorkouts(@Payload() { userId, workoutId }) {
+    return this.orderService.getAvailableWorkouts(userId, workoutId);
+  }
 }

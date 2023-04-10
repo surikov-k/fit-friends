@@ -70,3 +70,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzM
 ### Get a list of user's friends
 GET http://localhost:4000/api/user/friend HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JbQsNC90L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2ODAyMDg3NzEsImV4cCI6MTY4MDIwOTY3MX0._v4ooQDLihZLUBd6vOepJAuunYXNpUt2E7ansruG_24
+
