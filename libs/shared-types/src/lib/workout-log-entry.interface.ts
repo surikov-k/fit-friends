@@ -1,4 +1,4 @@
-import { TimeSpan, WorkoutStatus } from '@fit-friends/shared-types';
+import { WorkoutStatus } from '@fit-friends/shared-types';
 
 export interface WorkoutLogEntryInterface {
   id?: number;

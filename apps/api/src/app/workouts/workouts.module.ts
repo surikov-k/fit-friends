@@ -4,7 +4,6 @@ import { RmqModule } from '@fit-friends/core';
 import { WorkoutsController } from './workouts.controller';
 import { AtStrategy, CoachStrategy } from '../../common/strategies';
 import { WorkoutsService } from './workouts.service';
-import { UserService } from '../user/user.service';
 
 @Module({
   controllers: [WorkoutsController],

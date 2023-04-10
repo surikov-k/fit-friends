@@ -9,7 +9,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { REQUEST } from '@nestjs/core';
 import { firstValueFrom } from 'rxjs';
-import { OrdersEvent, WorkoutsEvent } from '@fit-friends/shared-types';
+import { WorkoutsEvent } from '@fit-friends/shared-types';
 
 const INCORRECT_WORKOUT = "You didn't start this workout";
 
