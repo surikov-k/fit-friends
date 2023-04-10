@@ -37,4 +37,9 @@ export class OrderController {
   public async getAvailableWorkouts(@Payload() { userId, workoutId }) {
     return this.orderService.getAvailableWorkouts(userId, workoutId);
   }
+
+  @EventPattern({ cmd: OrdersEvent.DecreaseAvailableWorkouts })
+  public async decreaseAvailableWorkouts(@Payload() { userId, workoutId }) {
+    return this.orderService.decreaseAvailableWorkouts(userId, workoutId);
+  }
 }

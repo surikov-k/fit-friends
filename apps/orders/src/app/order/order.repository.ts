@@ -30,7 +30,10 @@ export class OrderRepository
   }
 
   public async update(id: number, item: OrderEntity): Promise<OrderInterface> {
-    return Promise.resolve(undefined);
+    return this.prisma.order.update({
+      where: { id },
+      data: item.toObject(),
+    });
   }
 
   public async findByUserId(userId: string): Promise<OrderInterface[]> {
@@ -51,7 +54,21 @@ export class OrderRepository
     });
   }
 
-  public async getAvailableWorkouts(
+  public async findAvailableWorkoutOrder(
+    userId: string,
+    serviceId: number
+  ): Promise<OrderInterface> {
+    return this.prisma.order.findFirst({
+      where: {
+        userId,
+        purchaseType: PurchaseType.Workout,
+        serviceId,
+        quantity: { gt: 0 },
+      },
+    });
+  }
+
+  public async getAvailableWorkoutsNumber(
     userId: string,
     serviceId: number
   ): Promise<number> {

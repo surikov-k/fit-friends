@@ -37,6 +37,17 @@ export class OrderService {
   }
 
   public async getAvailableWorkouts(userId: string, workoutId: number) {
-    return this.orderRepository.getAvailableWorkouts(userId, workoutId);
+    return this.orderRepository.getAvailableWorkoutsNumber(userId, workoutId);
+  }
+
+  public async decreaseAvailableWorkouts(userId: string, workoutId: number) {
+    const order = await this.orderRepository.findAvailableWorkoutOrder(
+      userId,
+      workoutId
+    );
+    const entity = new OrderEntity(order);
+    entity.decreaseQuantity();
+
+    return this.orderRepository.update(order.id, entity);
   }
 }

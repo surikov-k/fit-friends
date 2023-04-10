@@ -17,5 +17,6 @@ import {
   ],
   controllers: [UserController],
   providers: [UserService, CoachStrategy, AtStrategy, ClientStrategy],
+  exports: [UserService],
 })
 export class UserModule {}

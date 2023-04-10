@@ -1,9 +1,9 @@
-import { TimeSpan } from '@fit-friends/shared-types';
+import { TimeSpan, WorkoutStatus } from '@fit-friends/shared-types';
 
 export interface WorkoutLogEntryInterface {
   id?: number;
   workoutId: number;
-  calories: number;
-  duration: TimeSpan;
-  createdAt: Date;
+  createdAt?: Date;
+  status?: WorkoutStatus;
+  userId: string;
 }

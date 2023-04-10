@@ -31,6 +31,10 @@ export class OrderEntity
     this.userId = entity.userId;
   }
 
+  decreaseQuantity() {
+    this.quantity = Math.max(this.quantity - 1, 0);
+  }
+
   toObject(): OrderEntity {
     return { ...this };
   }

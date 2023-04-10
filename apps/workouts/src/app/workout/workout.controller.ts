@@ -6,12 +6,16 @@ import {
   CoachWorkoutsListQueryInterface,
   WorkoutsEvent,
 } from '@fit-friends/shared-types';
+import { WorkoutsLogService } from '../workouts-log/workouts-log.service';
 
 @Controller()
 export class WorkoutController {
-  constructor(private readonly workoutService: WorkoutService) {}
+  constructor(
+    private readonly workoutsService: WorkoutService,
+    private readonly workoutsLogService: WorkoutsLogService
+  ) {}
 
-  @EventPattern({ cmd: WorkoutsEvent.GetWorkouts })
+  @EventPattern({ cmd: WorkoutsEvent.Index })
   public async index(
     @Payload()
     {
@@ -22,28 +26,46 @@ export class WorkoutController {
       coachId: string;
     }
   ) {
-    return this.workoutService.findByCoach(coachId, query);
+    return this.workoutsService.findByCoach(coachId, query);
   }
 
-  @EventPattern({ cmd: WorkoutsEvent.GetWorkout })
+  @EventPattern({ cmd: WorkoutsEvent.Get })
   public async get(@Payload() { id }: { id: number }) {
-    return this.workoutService.get(id);
+    return this.workoutsService.get(id);
   }
 
-  @EventPattern({ cmd: WorkoutsEvent.CreateWorkout })
+  @EventPattern({ cmd: WorkoutsEvent.Create })
   public async create(@Payload() { dto, coachId }) {
-    // TODO: Check coachId
-    return this.workoutService.create(coachId, dto);
+    return this.workoutsService.create(coachId, dto);
   }
 
-  @EventPattern({ cmd: WorkoutsEvent.UpdateWorkout })
-  // TODO: Check workout id
+  @EventPattern({ cmd: WorkoutsEvent.Update })
   public async update(@Payload() { dto, id }) {
-    return this.workoutService.update(id, dto);
+    return this.workoutsService.update(id, dto);
   }
 
-  @EventPattern({ cmd: WorkoutsEvent.GetCoachWorkouts })
+  @EventPattern({ cmd: WorkoutsEvent.CoachIndex })
   public async getCoachWorkouts(@Payload() { coachId }) {
-    return this.workoutService.getCoachWorkouts(coachId);
+    return this.workoutsService.getCoachWorkouts(coachId);
+  }
+
+  @EventPattern({ cmd: WorkoutsEvent.Start })
+  public async startWorkout(@Payload() { clientId, workoutId }) {
+    return this.workoutsLogService.create(clientId, workoutId);
+  }
+
+  @EventPattern({ cmd: WorkoutsEvent.Complete })
+  public async completeWorkout(@Payload() { clientId, workoutId }) {
+    return this.workoutsLogService.complete(clientId, workoutId);
+  }
+
+  @EventPattern({ cmd: WorkoutsEvent.Log })
+  public async getLog(@Payload() { clientId }) {
+    return this.workoutsLogService.getLog(clientId);
+  }
+
+  @EventPattern({ cmd: WorkoutsEvent.CanComplete })
+  public async checkActive(@Payload() { clientId, workoutId }) {
+    return this.workoutsLogService.checkActive(clientId, workoutId);
   }
 }

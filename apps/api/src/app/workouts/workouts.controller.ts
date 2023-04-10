@@ -10,24 +10,21 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 import { fillObject } from '@fit-friends/core';
-import { WorkoutsEvent } from '@fit-friends/shared-types';
 import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from './rdo';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 import { CurrentUserId } from '../../common/decorators';
 import { CanStartWorkout } from '../../common/pipes/can-start-workout.pipe';
+import { WorkoutsService } from './workouts.service';
+import { CanCompleteWorkout } from '../../common/pipes/can-complete-workout.pipe';
 
 @ApiTags('workouts')
 @Controller('workout')
 export class WorkoutsController {
-  constructor(
-    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
-  ) {}
+  constructor(private readonly workoutsService: WorkoutsService) {}
 
   @Get('/:id')
   @ApiResponse({
@@ -41,9 +38,7 @@ export class WorkoutsController {
   })
   @UseGuards(AccessTokenGuard)
   public async get(@Param('id') id: number) {
-    const workout = await lastValueFrom(
-      this.workoutsService.send({ cmd: WorkoutsEvent.GetWorkout }, { id })
-    );
+    const workout = await this.workoutsService.get(id);
 
     return fillObject(WorkoutRdo, workout);
   }
@@ -63,15 +58,7 @@ export class WorkoutsController {
     @Body() dto: CreateWorkoutDto,
     @CurrentUserId() coachId: string
   ) {
-    const workout = await firstValueFrom(
-      this.workoutsService.send(
-        { cmd: WorkoutsEvent.CreateWorkout },
-        {
-          coachId,
-          dto,
-        }
-      )
-    );
+    const workout = await this.workoutsService.create(coachId, dto);
 
     return fillObject(WorkoutRdo, workout);
   }
@@ -92,12 +79,7 @@ export class WorkoutsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateWorkoutRdo
   ) {
-    const workout = await firstValueFrom(
-      this.workoutsService.send(
-        { cmd: WorkoutsEvent.UpdateWorkout },
-        { id, dto }
-      )
-    );
+    const workout = await this.workoutsService.update(id, dto);
 
     return fillObject(WorkoutRdo, workout);
   }
@@ -108,6 +90,21 @@ export class WorkoutsController {
     @Param('id', CanStartWorkout) id: number,
     @CurrentUserId() userId: string
   ) {
-    // console.log(id, userId);
+    return this.workoutsService.startWorkout(userId, id);
+  }
+
+  @UseGuards(ClientGuard)
+  @Patch(':id/complete')
+  public async completeWorkout(
+    @Param('id', CanCompleteWorkout) id: number,
+    @CurrentUserId() userId: string
+  ) {
+    return this.workoutsService.completeWorkout(userId, id);
+  }
+
+  @UseGuards(ClientGuard)
+  @Patch('/log')
+  public async getLog(@CurrentUserId() clientId: string) {
+    return this.workoutsService.getLog(clientId);
   }
 }

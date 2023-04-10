@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { WorkoutModule } from './workout/workout.module';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { validateEnvironment } from './env.validation';
+import { WorkoutsLogModule } from './workouts-log/workouts-log.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { validateEnvironment } from './env.validation';
       validate: validateEnvironment,
     }),
     RmqModule,
+    WorkoutsLogModule,
   ],
   controllers: [],
   providers: [],

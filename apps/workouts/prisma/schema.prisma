@@ -40,6 +40,11 @@ enum TimeSpan {
   Longest
 }
 
+enum WorkoutStatus {
+  Active
+  Completed
+}
+
 model Review {
   id        Int      @id @default(autoincrement())
   clientId  String
@@ -67,4 +72,12 @@ model Workout {
   duration       TimeSpan
   createdAt      DateTime    @default(now())
   reviews        Review[]
+}
+
+model WorkoutLogEntry {
+  id        Int           @id @default(autoincrement())
+  workoutId Int
+  createdAt DateTime      @default(now())
+  status    WorkoutStatus @default(Active)
+  userId    String
 }
