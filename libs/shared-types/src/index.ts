@@ -5,6 +5,7 @@ export * from './lib/file.interface';
 export * from './lib/gender.enum';
 export * from './lib/gym-feature.type';
 export * from './lib/gym.interface';
+export * from './lib/gyms-event.enum';
 export * from './lib/jwt-payload.type';
 export * from './lib/location.enum';
 export * from './lib/login.interface';

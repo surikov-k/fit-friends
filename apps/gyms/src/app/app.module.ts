@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { RmqModule } from '@fit-friends/core';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { validateEnvironment } from './env.validation';
-import { GymsModule } from './gyms/gyms.module';
+import { GymModule } from './gyms/gym.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -16,7 +16,7 @@ import { PrismaModule } from './prisma/prisma.module';
       validate: validateEnvironment,
     }),
     RmqModule,
-    GymsModule,
+    GymModule,
     PrismaModule,
   ],
   controllers: [],
