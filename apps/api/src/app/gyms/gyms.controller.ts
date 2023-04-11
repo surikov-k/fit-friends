@@ -3,7 +3,9 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 import { GymInterface, GymsEvent } from '@fit-friends/shared-types';
+import { fillObject } from '@fit-friends/core';
 import { CheckGymId } from '../../common/pipes';
+import { GymRdo } from './rdo';
 
 @Controller('gyms')
 export class GymsController {
@@ -17,15 +19,15 @@ export class GymsController {
       this.gymService.send<GymInterface>({ cmd: GymsEvent.Get }, { id })
     );
 
-    return gym;
+    return fillObject(GymRdo, gym);
   }
 
   @Get()
   public async getAll() {
     const gyms = await firstValueFrom(
-      this.gymService.send<GymInterface>({ cmd: GymsEvent.GetAll }, {})
+      this.gymService.send<GymInterface[]>({ cmd: GymsEvent.GetAll }, {})
     );
 
-    return gyms;
+    return gyms.map((gym) => fillObject(GymRdo, gym));
   }
 }
