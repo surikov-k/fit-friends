@@ -1,0 +1,5 @@
+### Get a gym
+GET http://localhost:4000/api/gyms/1
+
+### Get gyms
+GET http://localhost:4000/api/gyms

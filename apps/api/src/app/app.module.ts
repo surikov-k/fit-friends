@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { jwtOptions } from '../config';
 import { NutritionModule } from './nutrition/nutrition.module';
 import { AccountModule } from './account/account.module';
+import { GymsModule } from './gyms/gyms.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AccountModule } from './account/account.module';
     AuthModule,
     NutritionModule,
     AccountModule,
+    GymsModule,
   ],
   providers: [],
 })
