@@ -1,7 +1,9 @@
 import { Controller, Get, Inject, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { GymInterface, GymsEvent } from '@fit-friends/shared-types';
 import { firstValueFrom } from 'rxjs';
+
+import { GymInterface, GymsEvent } from '@fit-friends/shared-types';
+import { CheckGymId } from '../../common/pipes';
 
 @Controller('gyms')
 export class GymsController {
@@ -10,7 +12,7 @@ export class GymsController {
   ) {}
 
   @Get(':id')
-  public async get(@Param('id') id: number) {
+  public async get(@Param('id', CheckGymId) id: number) {
     const gym = await firstValueFrom(
       this.gymService.send<GymInterface>({ cmd: GymsEvent.Get }, { id })
     );
