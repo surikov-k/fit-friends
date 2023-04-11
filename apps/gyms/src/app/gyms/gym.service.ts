@@ -20,4 +20,8 @@ export class GymService {
   ): Promise<GymInterface> {
     return this.gymRepository.toggleFavorite(id, userId);
   }
+
+  public async getFavorites(userId: string): Promise<GymInterface[]> {
+    return this.gymRepository.getFavorites(userId);
+  }
 }

@@ -22,6 +22,16 @@ export class GymsController {
     @Inject('GYMS_SERVICE') private readonly gymService: ClientProxy
   ) {}
 
+  @Get('/favorites')
+  @UseGuards(AccessTokenGuard)
+  public async getFavorites(@CurrentUserId() userId: string) {
+    const gyms = await firstValueFrom(
+      this.gymService.send({ cmd: GymsEvent.GetFavorites }, { userId })
+    );
+
+    return gyms.map((gym) => fillObject(GymRdo, gym));
+  }
+
   @Get(':id')
   public async get(@Param('id', CheckGymId) id: number) {
     const gym = await firstValueFrom(

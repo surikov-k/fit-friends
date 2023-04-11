@@ -49,4 +49,12 @@ export class GymRepository
 
     return this.prisma.gym.findFirst({ where: { id: favorite.gymId } });
   }
+
+  public async getFavorites(userId: string) {
+    return this.prisma.gym.findMany({
+      where: {
+        favs: { some: { userId } },
+      },
+    });
+  }
 }

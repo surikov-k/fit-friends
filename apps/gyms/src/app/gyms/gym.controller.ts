@@ -23,4 +23,9 @@ export class GymController {
   ) {
     return this.gymService.toggleFavorite(id, userId);
   }
+
+  @EventPattern({ cmd: GymsEvent.GetFavorites })
+  public async getFavorites(@Payload() { userId }: { userId: string }) {
+    return this.gymService.getFavorites(userId);
+  }
 }
