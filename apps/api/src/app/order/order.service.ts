@@ -26,7 +26,7 @@ export class OrderService {
     );
     order.service = await firstValueFrom(
       this.workoutsService.send(
-        { cmd: WorkoutsEvent.GetWorkout },
+        { cmd: WorkoutsEvent.Get },
         { id: order.serviceId }
       )
     );
@@ -52,7 +52,7 @@ export class OrderService {
   public async getCoachOrders(coachId: string) {
     const coachWorkouts = await firstValueFrom(
       this.workoutsService.send<WorkoutInterface[]>(
-        { cmd: WorkoutsEvent.GetCoachWorkouts },
+        { cmd: WorkoutsEvent.CoachIndex },
         { coachId }
       )
     );
@@ -80,7 +80,7 @@ export class OrderService {
     );
     order.service = await firstValueFrom(
       this.workoutsService.send<WorkoutInterface>(
-        { cmd: WorkoutsEvent.GetWorkout },
+        { cmd: WorkoutsEvent.Get },
         { id: order.serviceId }
       )
     );
@@ -92,7 +92,7 @@ export class OrderService {
     if (purchaseType === PurchaseType.Workout) {
       return firstValueFrom(
         this.workoutsService.send<WorkoutInterface>(
-          { cmd: WorkoutsEvent.GetWorkout },
+          { cmd: WorkoutsEvent.Get },
           { id: serviceId }
         )
       );

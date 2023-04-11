@@ -22,7 +22,7 @@ export class AccountService {
   ) {
     return firstValueFrom<WorkoutInterface[]>(
       this.workoutsService.send(
-        { cmd: WorkoutsEvent.GetWorkouts },
+        { cmd: WorkoutsEvent.Index },
         {
           coachId: userId,
           query,
@@ -43,7 +43,7 @@ export class AccountService {
       orders.map(({ serviceId }) =>
         firstValueFrom<WorkoutInterface>(
           this.workoutsService.send(
-            { cmd: WorkoutsEvent.GetWorkout },
+            { cmd: WorkoutsEvent.Get },
             { id: serviceId }
           )
         )
