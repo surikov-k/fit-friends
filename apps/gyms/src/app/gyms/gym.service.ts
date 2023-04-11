@@ -13,4 +13,11 @@ export class GymService {
   public async getAll(): Promise<GymInterface[]> {
     return this.gymRepository.findAll();
   }
+
+  public async toggleFavorite(
+    id: number,
+    userId: string
+  ): Promise<GymInterface> {
+    return this.gymRepository.toggleFavorite(id, userId);
+  }
 }

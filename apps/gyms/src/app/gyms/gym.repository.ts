@@ -11,11 +11,11 @@ export class GymRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(item: GymEntity): Promise<GymInterface> {
+  public async create(item: GymEntity): Promise<GymInterface> {
     return Promise.resolve(undefined);
   }
 
-  destroy(id: number): Promise<void> {
+  public async destroy(id: number): Promise<void> {
     return Promise.resolve(undefined);
   }
 
@@ -27,7 +27,26 @@ export class GymRepository
     return this.prisma.gym.findMany();
   }
 
-  update(id: number, item: GymEntity): Promise<GymInterface> {
+  public async update(id: number, item: GymEntity): Promise<GymInterface> {
     return Promise.resolve(undefined);
+  }
+
+  public async toggleFavorite(gymId: number, userId: string) {
+    let favorite = await this.prisma.favorite.findFirst({
+      where: { gymId, userId },
+    });
+
+    if (!favorite) {
+      favorite = await this.prisma.favorite.create({
+        data: {
+          userId,
+          Gym: { connect: { id: gymId } },
+        },
+      });
+    } else {
+      await this.prisma.favorite.delete({ where: { id: favorite.id } });
+    }
+
+    return this.prisma.gym.findFirst({ where: { id: favorite.gymId } });
   }
 }

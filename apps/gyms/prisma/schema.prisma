@@ -36,4 +36,15 @@ model Gym {
   description String
   price       Int
   createdAt   DateTime     @default(now())
+  favs        Favorite[]
+}
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  gymId     Int
+  createdAt DateTime @default(now())
+  Gym       Gym      @relation(fields: [gymId], references: [id])
+
+  @@unique([userId, gymId])
 }

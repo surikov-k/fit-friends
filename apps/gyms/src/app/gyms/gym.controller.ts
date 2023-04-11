@@ -16,4 +16,11 @@ export class GymController {
   public async getAll() {
     return this.gymService.getAll();
   }
+
+  @EventPattern({ cmd: GymsEvent.ToggleFavorite })
+  public async toggleFavorite(
+    @Payload() { id, userId }: { id: number; userId: string }
+  ) {
+    return this.gymService.toggleFavorite(id, userId);
+  }
 }
