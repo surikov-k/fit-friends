@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/orders-client';
-import { PaymentMethod, PurchaseType } from '../../../libs/shared-types/src';
+import { PurchaseType } from '../../../libs/shared-types/src';
 
 const prisma = new PrismaClient();
 

@@ -3,8 +3,9 @@ import { firstValueFrom } from 'rxjs';
 
 import {
   CoachWorkoutsListQueryInterface,
-  OrderInterface,
+  GymsEvent,
   OrdersEvent,
+  PurchaseType,
   WorkoutInterface,
   WorkoutsEvent,
 } from '@fit-friends/shared-types';
@@ -13,41 +14,82 @@ import { ClientProxy } from '@nestjs/microservices';
 @Injectable()
 export class AccountService {
   constructor(
-    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy,
-    @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy
+    @Inject('GYMS_SERVICE') private readonly gymsService: ClientProxy,
+    @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy,
+    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
   ) {}
+
   async getCoachWorkouts(
-    userId: string,
+    coachId: string,
     query: CoachWorkoutsListQueryInterface
   ) {
-    return firstValueFrom<WorkoutInterface[]>(
+    const workouts = await firstValueFrom<WorkoutInterface[]>(
       this.workoutsService.send(
-        { cmd: WorkoutsEvent.Index },
-        {
-          coachId: userId,
-          query,
-        }
+        { cmd: WorkoutsEvent.GetByCoach },
+        { coachId, query }
       )
     );
-  }
 
-  async getClientWorkouts(userId: string) {
-    const orders = await firstValueFrom<OrderInterface[]>(
+    const workoutsIds = workouts.reduce<number[]>(
+      (acc, { id }) => acc.concat([id]),
+      []
+    );
+
+    const orders = await firstValueFrom(
       this.ordersService.send(
-        { cmd: OrdersEvent.GetClientWorkoutOrders },
-        { userId }
+        { cmd: OrdersEvent.GetCoachOrders },
+        { workoutsIds }
       )
     );
 
     return Promise.all(
-      orders.map(({ serviceId }) =>
-        firstValueFrom<WorkoutInterface>(
+      orders.map(async (order) => {
+        order.workout = await firstValueFrom(
           this.workoutsService.send(
             { cmd: WorkoutsEvent.Get },
-            { id: serviceId }
+            { id: order.serviceId }
           )
-        )
+        );
+
+        return order;
+      })
+    );
+  }
+
+  public async getClientOrders(clientId: string) {
+    const orders = await firstValueFrom(
+      this.ordersService.send(
+        { cmd: OrdersEvent.GetClientOrders },
+        { clientId }
       )
+    );
+
+    return Promise.all(
+      orders.map(async (order) => {
+        if (order.purchaseType === PurchaseType.Workout) {
+          order.service = await firstValueFrom(
+            this.workoutsService.send(
+              { cmd: WorkoutsEvent.Get },
+              { id: order.serviceId }
+            )
+          );
+        }
+
+        if (order.purchaseType === PurchaseType.Membership) {
+          order.service = await firstValueFrom(
+            this.gymsService.send(
+              { cmd: GymsEvent.Get },
+              { id: order.serviceId }
+            )
+          );
+        }
+        //
+        // order.total = order._sum.quantity;
+        // delete order._sum;
+        // delete order.serviceId;
+
+        return order;
+      })
     );
   }
 }

@@ -1,4 +1,4 @@
-import { UserInterface } from '@fit-friends/shared-types';
+import { UserInterface } from './user.interface';
 
 export interface NotificationInterface {
   createdAt: Date;

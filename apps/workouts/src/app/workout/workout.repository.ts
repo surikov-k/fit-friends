@@ -98,11 +98,4 @@ export class WorkoutRepository
       },
     });
   }
-
-  public async findByCoachId(coachId: string): Promise<WorkoutInterface[]> {
-    return this.prisma.workout.findMany({
-      where: { coachId },
-      include: { reviews: true },
-    });
-  }
 }

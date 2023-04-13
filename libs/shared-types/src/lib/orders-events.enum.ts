@@ -1,9 +1,10 @@
 export enum OrdersEvent {
-  GetOrder = 'GetOrder',
-  GetOrderByServiceId = 'GetOrderByServiceId',
-  GetMyOrders = 'GetMyOrders',
-  CreateOrder = 'CreateOrder',
-  GetClientWorkoutOrders = 'GetClientWorkoutOrders',
+  Get = 'Get',
+  GetByServiceId = 'GetByServiceId',
+  GetClientOrders = 'GetClientOrders',
+  GetCoachOrders = 'GetCoachOrders',
+  Create = 'Create',
+  GetClientWorkouts = 'GetClientWorkouts',
   GetAvailableWorkouts = 'GetAvailableWorkouts',
   DecreaseAvailableWorkouts = 'DecreaseAvailableWorkouts',
 }

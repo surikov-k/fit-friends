@@ -10,15 +10,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzM
 {
   "payment": "Visa",
   "price": 200,
-  "purchaseType": "Workout",
-  "quantity": 5,
-  "serviceId":  15
+  "purchaseType": "Membership",
+  "quantity": 1,
+  "serviceId":  1
 }
 
 ### Get my orders (for a client)
-GET http://localhost:4000/api/order/my HTTP/1.1
+GET http://localhost:4000/api/order/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
 
 ### Get my orders (for a coach)
-GET http://localhost:4000/api/order/my HTTP/1.1
+GET http://localhost:4000/api/order/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExYjBjZjMzMmM2MTIxZjg2ODJhMGYiLCJlbWFpbCI6ImVkZGllLm1jY2x1cmVAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JjQs9C-0YDRjCIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3ODg4OTkyNiwiZXhwIjoxNjc4ODkwODI2fQ.OQk7XdIII1Y6zgxgz-7D8dWA_J8BTI0jFAa3j0vmR2s

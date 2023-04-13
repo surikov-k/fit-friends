@@ -1,11 +1,11 @@
 export enum WorkoutsEvent {
   CanComplete = 'CanComplete',
-  CoachIndex = 'CoachIndex',
+  GetByCoach = 'GetByCoach',
   Complete = 'Complete',
   Create = 'Create',
   Get = 'Get',
-  Index = 'Index',
-  Log = 'Log',
+  GetAll = 'GetAll',
+  GetLog = 'GetLog',
   Start = 'Start',
   Update = 'Update',
 }

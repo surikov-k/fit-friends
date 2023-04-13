@@ -37,8 +37,4 @@ export class WorkoutService {
 
     return this.workoutRepository.update(id, entity);
   }
-
-  public async getCoachWorkouts(coachId: string) {
-    return this.workoutRepository.findByCoachId(coachId);
-  }
 }

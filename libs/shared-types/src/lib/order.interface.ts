@@ -1,9 +1,7 @@
-import {
-  GymInterface,
-  PaymentMethod,
-  PurchaseType,
-  WorkoutInterface,
-} from '@fit-friends/shared-types';
+import { PurchaseType } from './purchase-type.enum';
+import { WorkoutInterface } from './workout.interface';
+import { GymInterface } from './gym.interface';
+import { PaymentMethod } from './payment-method.enum';
 
 export interface OrderInterface {
   id?: number;

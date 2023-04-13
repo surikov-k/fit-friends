@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { OrdersEvent, WorkoutsEvent } from '@fit-friends/shared-types';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class WorkoutsService {
   ) {}
 
   public async get(id) {
-    return lastValueFrom(
+    return firstValueFrom(
       this.workoutsService.send({ cmd: WorkoutsEvent.Get }, { id })
     );
   }
@@ -60,7 +60,7 @@ export class WorkoutsService {
 
   public async getLog(clientId: string) {
     return firstValueFrom(
-      this.workoutsService.send({ cmd: WorkoutsEvent.Log }, { clientId })
+      this.workoutsService.send({ cmd: WorkoutsEvent.GetLog }, { clientId })
     );
   }
 }

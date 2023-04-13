@@ -1,4 +1,5 @@
-import { RequestStatus, UserInterface } from '@fit-friends/shared-types';
+import { UserInterface } from './user.interface';
+import { RequestStatus } from './request-status.enum';
 
 export interface WorkoutRequestInterface {
   initiator: UserInterface;

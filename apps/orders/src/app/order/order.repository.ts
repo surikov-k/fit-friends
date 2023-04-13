@@ -36,9 +36,22 @@ export class OrderRepository
     });
   }
 
-  public async findByUserId(userId: string): Promise<OrderInterface[]> {
-    return this.prisma.order.findMany({
+  public async findByClient(userId: string) {
+    return await this.prisma.order.groupBy({
       where: { userId },
+      by: ['serviceId', 'purchaseType'],
+      _sum: { quantity: true },
+    });
+  }
+
+  public async getCoachOrders(ids: number[]) {
+    return this.prisma.order.groupBy({
+      where: {
+        purchaseType: PurchaseType.Workout,
+        serviceId: { in: ids },
+      },
+      by: ['serviceId'],
+      _sum: { quantity: true, total: true },
     });
   }
 

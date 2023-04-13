@@ -16,9 +16,9 @@ import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from './rdo';
 import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
 import { CurrentUserId } from '../../common/decorators';
-import { CanStartWorkout } from '../../common/pipes/can-start-workout.pipe';
+import { CanStartWorkout } from '../../common/pipes';
 import { WorkoutsService } from './workouts.service';
-import { CanCompleteWorkout } from '../../common/pipes/can-complete-workout.pipe';
+import { CanCompleteWorkout } from '../../common/pipes';
 
 @ApiTags('workouts')
 @Controller('workout')

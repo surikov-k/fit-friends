@@ -1,4 +1,4 @@
-import { TimeSpan } from '@fit-friends/shared-types';
+import { TimeSpan } from './time-span.type';
 
 export interface CoachWorkoutsListQueryInterface {
   limit?: number;

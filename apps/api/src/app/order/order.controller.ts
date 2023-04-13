@@ -9,33 +9,15 @@ import {
 } from '@nestjs/common';
 
 import { fillObject } from '@fit-friends/core';
-import { UserRole } from '@fit-friends/shared-types';
 import { CreateWorkoutOrderDto } from './dto';
 import { OrderRdo } from './rdo';
 import { OrderService } from './order.service';
 import { AccessTokenGuard } from '../../common/guards';
-import { CurrentUserId, CurrentUserRole } from '../../common/decorators';
+import { CurrentUserId } from '../../common/decorators';
 
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
-
-  @UseGuards(AccessTokenGuard)
-  @Get('/my')
-  public async getMy(
-    @CurrentUserId() userId: string,
-    @CurrentUserRole() role: UserRole
-  ) {
-    if (role === UserRole.Client) {
-      const orders = await this.orderService.getClientOrders(userId);
-      return orders.map((order) => fillObject(OrderRdo, order));
-    }
-
-    if (role === UserRole.Coach) {
-      const orders = await this.orderService.getCoachOrders(userId);
-      return orders;
-    }
-  }
 
   @UseGuards(AccessTokenGuard)
   @Get('/:id')

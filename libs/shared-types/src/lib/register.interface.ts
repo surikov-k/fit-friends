@@ -1,4 +1,6 @@
-import { Gender, Location, UserRole } from '@fit-friends/shared-types';
+import { Gender } from './gender.enum';
+import { UserRole } from './user-role.enum';
+import { Location } from './location.enum';
 
 export interface RegisterInterface {
   name: string;

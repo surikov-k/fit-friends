@@ -13,6 +13,9 @@ import { AccountService } from './account.service';
   providers: [CoachStrategy, ClientStrategy, AtStrategy, AccountService],
   imports: [
     RmqModule.registerRmq({
+      name: 'GYMS_SERVICE',
+    }),
+    RmqModule.registerRmq({
       name: 'NUTRITION_SERVICE',
     }),
     RmqModule.registerRmq({

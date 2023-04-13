@@ -1,10 +1,8 @@
-import {
-  Gender,
-  ReviewInterface,
-  Skill,
-  TimeSpan,
-  WorkoutType,
-} from '@fit-friends/shared-types';
+import { Skill } from './skill.type';
+import { WorkoutType } from './workout-type.type';
+import { Gender } from './gender.enum';
+import { TimeSpan } from './time-span.type';
+import { ReviewInterface } from './review.interface';
 
 export interface WorkoutInterface {
   id?: number;

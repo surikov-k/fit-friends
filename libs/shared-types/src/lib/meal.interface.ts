@@ -1,4 +1,4 @@
-import { Meal } from '@fit-friends/shared-types';
+import { Meal } from './meal.type';
 
 export interface MealInterface {
   id?: number;

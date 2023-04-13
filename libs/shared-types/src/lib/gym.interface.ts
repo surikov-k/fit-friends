@@ -1,4 +1,4 @@
-import { GymFeature, Location } from '@fit-friends/shared-types';
+import { GymFeature } from './gym-feature.type';
 
 export interface GymInterface {
   id?: number;

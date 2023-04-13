@@ -11,28 +11,26 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { firstValueFrom } from 'rxjs';
+import { ClientProxy } from '@nestjs/microservices';
 
-import {
-  MealInterface,
-  NutritionEvent,
-  UserRole,
-} from '@fit-friends/shared-types';
+import { MealInterface, NutritionEvent } from '@fit-friends/shared-types';
 import { fillObject } from '@fit-friends/core';
-import { AccessTokenGuard, ClientGuard } from '../../common/guards';
+import { AccountService } from './account.service';
+import { ClientGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from '../workouts/rdo';
 import { CoachWorkoutsListQuery } from '../workouts/query';
-import { CurrentUserId, CurrentUserRole } from '../../common/decorators';
+import { CurrentUserId } from '../../common/decorators';
 import { MealRdo } from '../nutrition/rdo';
 import { CreateMealDto } from '../nutrition/dto';
-import { ClientProxy } from '@nestjs/microservices';
-import { AccountService } from './account.service';
+import { ClientOrderTotal, PurchasedWorkoutTotalRdo } from './rdo';
 
 @ApiTags('account')
 @Controller('account')
 export class AccountController {
   constructor(
-    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy,
     @Inject('NUTRITION_SERVICE') private readonly nutritionService: ClientProxy,
+    @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy,
+    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy,
     private readonly accountService: AccountService
   ) {}
 
@@ -46,23 +44,15 @@ export class AccountController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Only an authorized user can request the list of workouts',
   })
-  @UseGuards(AccessTokenGuard)
+  @UseGuards(CoachGuard)
   public async getWorkouts(
     @Query() query: CoachWorkoutsListQuery,
-    @CurrentUserId() userId: string,
-    @CurrentUserRole() role: UserRole
+    @CurrentUserId() userId: string
   ) {
-    let workouts;
-
-    if (role === UserRole.Coach) {
-      workouts = await this.accountService.getCoachWorkouts(userId, query);
-      return workouts.map((workout) => fillObject(WorkoutRdo, workout));
-    }
-
-    if (role === UserRole.Client) {
-      workouts = await this.accountService.getClientWorkouts(userId);
-      return workouts.map((workout) => fillObject(WorkoutRdo, workout));
-    }
+    const workouts = await this.accountService.getCoachWorkouts(userId, query);
+    return workouts.map((workout) =>
+      fillObject(PurchasedWorkoutTotalRdo, workout)
+    );
   }
 
   @Get('/nutrition')
@@ -93,5 +83,13 @@ export class AccountController {
     );
 
     return meals.map((meal) => fillObject(MealRdo, meal));
+  }
+
+  @Get('/purchases')
+  @UseGuards(ClientGuard)
+  public async getPurchases(@CurrentUserId() userId: string) {
+    const totals = await this.accountService.getClientOrders(userId);
+
+    return totals.map((total) => fillObject(ClientOrderTotal, total));
   }
 }

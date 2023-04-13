@@ -20,8 +20,8 @@ export class OrderService {
     return this.orderRepository.create(entity);
   }
 
-  public async findByUserId(userId: string): Promise<OrderInterface[]> | null {
-    return this.orderRepository.findByUserId(userId);
+  public async getByClient(clientId: string) {
+    return this.orderRepository.findByClient(clientId);
   }
 
   public async findByServiceId(
@@ -49,5 +49,9 @@ export class OrderService {
     entity.decreaseQuantity();
 
     return this.orderRepository.update(order.id, entity);
+  }
+
+  public async getCoachOrders(ids: number[]) {
+    return this.orderRepository.getCoachOrders(ids);
   }
 }

@@ -1,8 +1,6 @@
-import {
-  RegisterInterface,
-  Skill,
-  WorkoutType,
-} from '@fit-friends/shared-types';
+import { RegisterInterface } from './register.interface';
+import { Skill } from './skill.type';
+import { WorkoutType } from './workout-type.type';
 
 export interface UserInterface extends Omit<RegisterInterface, 'password'> {
   _id?: string;

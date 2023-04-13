@@ -8,27 +8,34 @@ import { OrderService } from './order.service';
 export class OrderController {
   constructor(public readonly orderService: OrderService) {}
 
-  @EventPattern({ cmd: OrdersEvent.GetMyOrders })
-  public async getByUserId(@Payload() { userId }) {
-    return this.orderService.findByUserId(userId);
+  @EventPattern({ cmd: OrdersEvent.GetClientOrders })
+  public async getByClient(@Payload() { clientId }) {
+    return this.orderService.getByClient(clientId);
   }
 
-  @EventPattern({ cmd: OrdersEvent.GetOrder })
+  @EventPattern({ cmd: OrdersEvent.GetCoachOrders })
+  public async getByCoach(
+    @Payload() { workoutsIds }: { workoutsIds: number[] }
+  ) {
+    return this.orderService.getCoachOrders(workoutsIds);
+  }
+
+  @EventPattern({ cmd: OrdersEvent.Get })
   public async get(@Payload() { id }) {
     return this.orderService.get(id);
   }
 
-  @EventPattern({ cmd: OrdersEvent.CreateOrder })
+  @EventPattern({ cmd: OrdersEvent.Create })
   public async create(@Payload() { userId, dto }) {
     return this.orderService.create(userId, dto);
   }
 
-  @EventPattern({ cmd: OrdersEvent.GetOrderByServiceId })
+  @EventPattern({ cmd: OrdersEvent.GetByServiceId })
   public async getByServiceId(@Payload() { serviceId }) {
     return this.orderService.findByServiceId(serviceId);
   }
 
-  @EventPattern({ cmd: OrdersEvent.GetClientWorkoutOrders })
+  @EventPattern({ cmd: OrdersEvent.GetClientWorkouts })
   public async getClientWorkoutOrders(@Payload() { userId }) {
     return this.orderService.findWorkoutOrders(userId);
   }

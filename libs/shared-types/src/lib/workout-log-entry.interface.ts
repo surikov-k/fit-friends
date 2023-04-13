@@ -1,4 +1,4 @@
-import { WorkoutStatus } from '@fit-friends/shared-types';
+import { WorkoutStatus } from './workout-status.type';
 
 export interface WorkoutLogEntryInterface {
   id?: number;

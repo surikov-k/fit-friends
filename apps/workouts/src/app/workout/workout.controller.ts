@@ -15,18 +15,11 @@ export class WorkoutController {
     private readonly workoutsLogService: WorkoutsLogService
   ) {}
 
-  @EventPattern({ cmd: WorkoutsEvent.Index })
-  public async index(
-    @Payload()
-    {
-      query,
-      coachId,
-    }: {
-      query: CoachWorkoutsListQueryInterface;
-      coachId: string;
-    }
-  ) {
-    return this.workoutsService.findByCoach(coachId, query);
+  @EventPattern({ cmd: WorkoutsEvent.GetAll })
+  public async index() // @Payload()
+  // { query, coachId }
+  {
+    // return this.workoutsService.findAll(coachId, query);
   }
 
   @EventPattern({ cmd: WorkoutsEvent.Get })
@@ -44,9 +37,18 @@ export class WorkoutController {
     return this.workoutsService.update(id, dto);
   }
 
-  @EventPattern({ cmd: WorkoutsEvent.CoachIndex })
-  public async getCoachWorkouts(@Payload() { coachId }) {
-    return this.workoutsService.getCoachWorkouts(coachId);
+  @EventPattern({ cmd: WorkoutsEvent.GetByCoach })
+  public async getCoachWorkouts(
+    @Payload()
+    {
+      query,
+      coachId,
+    }: {
+      query: CoachWorkoutsListQueryInterface;
+      coachId: string;
+    }
+  ) {
+    return this.workoutsService.findByCoach(coachId, query);
   }
 
   @EventPattern({ cmd: WorkoutsEvent.Start })
@@ -59,7 +61,7 @@ export class WorkoutController {
     return this.workoutsLogService.complete(clientId, workoutId);
   }
 
-  @EventPattern({ cmd: WorkoutsEvent.Log })
+  @EventPattern({ cmd: WorkoutsEvent.GetLog })
   public async getLog(@Payload() { clientId }) {
     return this.workoutsLogService.getLog(clientId);
   }
