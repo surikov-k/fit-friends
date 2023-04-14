@@ -5,18 +5,19 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 
+import { RmqService } from '@fit-friends/core';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3333;
-  await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
-}
+  const rmqService = app.get<RmqService>(RmqService);
+  const configService = app.get<ConfigService>(ConfigService);
+  const queue = configService.get('RABBITMQ_NOTIFICATION_SERVICE_QUEUE');
 
-bootstrap();
+  app.connectMicroservice(rmqService.getOptions(queue));
+  await app.startAllMicroservices();
+
+  Logger.log(`🚀 Notification microservice is started`);
+}
