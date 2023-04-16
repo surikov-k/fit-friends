@@ -1,8 +1,10 @@
-export interface Subscriber {
-  id?: string;
+import { SubscriptionInterface } from './subscription.interface';
+
+export interface SubscriberInterface {
+  _id?: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  name: string;
   userId: string;
   active: boolean;
+  subscriptions: SubscriptionInterface[];
 }

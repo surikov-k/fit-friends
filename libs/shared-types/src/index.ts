@@ -21,6 +21,8 @@ export * from './lib/request-status.enum';
 export * from './lib/review.interface';
 export * from './lib/skill.type';
 export * from './lib/subscriber.interface';
+export * from './lib/subscription-type.enum';
+export * from './lib/subscription.interface';
 export * from './lib/time-span.type';
 export * from './lib/tokens.type';
 export * from './lib/update-profile.interface';
