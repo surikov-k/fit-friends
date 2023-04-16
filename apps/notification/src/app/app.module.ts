@@ -8,6 +8,7 @@ import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { databaseConfig, getMongoDbConfig } from '../config';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { SubscriptionModule } from './subscriptions/subscription.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { SubscriptionModule } from './subscriptions/subscription.module';
     MongooseModule.forRootAsync(getMongoDbConfig()),
     SubscriberModule,
     SubscriptionModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],
