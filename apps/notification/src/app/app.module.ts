@@ -6,8 +6,7 @@ import { RmqModule } from '@fit-friends/core';
 import { validateEnvironment } from './env.validation';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { databaseConfig, getMongoDbConfig } from '../config';
-import { SubscriberModule } from './subscriber/subscriber.module';
-import { SubscriptionModule } from './subscriptions/subscription.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 import { MailModule } from './mail/mail.module';
 
 @Module({
@@ -21,7 +20,6 @@ import { MailModule } from './mail/mail.module';
     }),
     RmqModule,
     MongooseModule.forRootAsync(getMongoDbConfig()),
-    SubscriberModule,
     SubscriptionModule,
     MailModule,
   ],
