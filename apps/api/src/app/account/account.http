@@ -33,3 +33,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzM
 ### Get a list of client purchases (Баланс)
 GET http://localhost:4000/api/account/purchases
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
+

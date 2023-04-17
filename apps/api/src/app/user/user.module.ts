@@ -12,6 +12,9 @@ import {
 @Module({
   imports: [
     RmqModule.registerRmq({
+      name: 'NOTIFICATIONS_SERVICE',
+    }),
+    RmqModule.registerRmq({
       name: 'USER_SERVICE',
     }),
   ],

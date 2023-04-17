@@ -1,7 +1,10 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { SubscriberInterface } from '@fit-friends/shared-types';
+import {
+  SubscriptionInterface,
+  SubscriptionType,
+} from '@fit-friends/shared-types';
 
 const SUBSCRIBER_COLLECTION_NAME = 'subscribers';
 
@@ -9,18 +12,28 @@ const SUBSCRIBER_COLLECTION_NAME = 'subscribers';
   collection: SUBSCRIBER_COLLECTION_NAME,
   timestamps: true,
 })
-export class SubscriptionModel extends Document implements SubscriberInterface {
+export class SubscriptionModel
+  extends Document
+  implements SubscriptionInterface
+{
   @Prop()
-  public email: string;
+  email: string;
 
   @Prop()
-  public name: string;
+  clientName: string;
+
+  @Prop()
+  coachName: string;
+
+  @Prop()
+  public type: SubscriptionType;
 
   @Prop()
   public clientId: string;
 
   @Prop()
-  public active: boolean;
+  public coachId: string;
 }
 
-export const SubscriberSchema = SchemaFactory.createForClass(SubscriptionModel);
+export const SubscriptionSchema =
+  SchemaFactory.createForClass(SubscriptionModel);

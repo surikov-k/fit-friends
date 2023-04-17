@@ -1,13 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { OrdersEvent, WorkoutsEvent } from '@fit-friends/shared-types';
+import {
+  MailEvent,
+  OrdersEvent,
+  WorkoutsEvent,
+} from '@fit-friends/shared-types';
 
 @Injectable()
 export class WorkoutsService {
   constructor(
-    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy,
-    @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy
+    @Inject('NOTIFICATIONS_SERVICE')
+    private readonly notificationsService: ClientProxy,
+    @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy,
+    @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
   ) {}
 
   public async get(id) {
@@ -17,7 +23,7 @@ export class WorkoutsService {
   }
 
   public async create(coachId, dto) {
-    return firstValueFrom(
+    const workout = await firstValueFrom(
       this.workoutsService.send(
         { cmd: WorkoutsEvent.Create },
         {
@@ -26,6 +32,13 @@ export class WorkoutsService {
         }
       )
     );
+
+    this.notificationsService.send(
+      { cmd: MailEvent.CreateDelivery },
+      { workout }
+    );
+
+    return workout;
   }
 
   public async update(id, dto) {

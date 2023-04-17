@@ -1,31 +1,35 @@
 import {
-  SubscriberInterface,
   SubscriptionInterface,
+  SubscriptionType,
 } from '@fit-friends/shared-types';
 import { EntityInterface } from '@fit-friends/core';
 
 export class SubscriptionEntity
-  implements SubscriberInterface, EntityInterface<SubscriberInterface>
+  implements SubscriptionInterface, EntityInterface<SubscriptionInterface>
 {
   _id?: string;
-  active: boolean;
+  type: SubscriptionType;
+  clientId: string;
+  coachId: string;
+  clientName: string;
+  coachName: string;
   email: string;
-  name: string;
-  subscriptions: SubscriptionInterface[];
-  userId: string;
 
-  constructor(subscriber: SubscriberInterface) {
-    this.fillEntity(subscriber);
+  constructor(subscription: SubscriptionInterface) {
+    this.fillEntity(subscription);
   }
 
-  fillEntity(subscriber: SubscriberInterface): void {
-    this._id = subscriber._id;
-    this.active = subscriber.active;
-    this.name = subscriber.name;
-    this.userId = subscriber.userId;
+  fillEntity(subscription: SubscriptionInterface): void {
+    this._id = subscription._id;
+    this.type = subscription.type;
+    this.clientId = subscription.clientId;
+    this.coachId = subscription.coachId;
+    this.clientName = subscription.clientName;
+    this.coachName = subscription.coachName;
+    this.email = subscription.email;
   }
 
-  toObject(): SubscriberInterface {
+  toObject(): SubscriptionInterface {
     return { ...this };
   }
 }

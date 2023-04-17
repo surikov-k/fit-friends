@@ -3,38 +3,39 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CrudRepositoryInterface } from '@fit-friends/core';
-import { SubscriberInterface } from '@fit-friends/shared-types';
+import { SubscriptionInterface } from '@fit-friends/shared-types';
 import { SubscriptionEntity } from './subscription.entity';
 import { SubscriptionModel } from './subscription.model';
 
 @Injectable()
 export class SubscriptionRepository
   implements
-    CrudRepositoryInterface<SubscriptionEntity, string, SubscriberInterface>
+    CrudRepositoryInterface<SubscriptionEntity, string, SubscriptionInterface>
 {
   constructor(
     @InjectModel(SubscriptionModel.name)
-    private readonly subscriberModel: Model<SubscriptionModel>
+    private readonly subscriptionModel: Model<SubscriptionModel>
   ) {}
 
-  public async create(item: SubscriptionEntity): Promise<SubscriberInterface> {
-    const subscriber = new this.subscriberModel(item);
+  public async create(
+    entity: SubscriptionEntity
+  ): Promise<SubscriptionInterface> {
+    const subscriber = new this.subscriptionModel(entity);
     return subscriber.save();
   }
 
   public async destroy(id: string): Promise<void> {
-    this.subscriberModel.deleteOne({ id });
+    this.subscriptionModel.deleteOne({ id });
   }
 
-  public async findById(id: string): Promise<SubscriberInterface | null> {
-    return this.subscriberModel
-      .findOne({ id })
-      .populate('subscriptions')
-      .exec();
+  public async findById(id: string): Promise<SubscriptionInterface | null> {
+    return this.subscriptionModel.findOne({ id }).exec();
   }
 
-  public async findByEmail(email: string): Promise<SubscriberInterface | null> {
-    return this.subscriberModel
+  public async findByEmail(
+    email: string
+  ): Promise<SubscriptionInterface | null> {
+    return this.subscriptionModel
       .findOne({ email })
       .populate('subscriptions')
       .exec();
@@ -43,9 +44,19 @@ export class SubscriptionRepository
   public async update(
     id: string,
     item: SubscriptionEntity
-  ): Promise<SubscriberInterface> {
-    return this.subscriberModel
+  ): Promise<SubscriptionInterface> {
+    return this.subscriptionModel
       .findByIdAndUpdate(id, item.toObject(), { new: true })
       .exec();
+  }
+
+  public async findByClientAndCoach(clientId, coachId) {
+    return this.subscriptionModel.findOne({ clientId, coachId });
+  }
+
+  public async findByCoachId(
+    coachId: string
+  ): Promise<SubscriptionInterface[]> {
+    return this.subscriptionModel.find({ coachId }).exec();
   }
 }

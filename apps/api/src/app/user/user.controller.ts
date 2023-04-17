@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
 import { fillObject } from '@fit-friends/core';
@@ -17,7 +18,11 @@ import { UserService } from './user.service';
 import { UserRdo } from './rdo';
 import { ClientDetailsDto, CoachDetailsDto, UpdateProfileDto } from './dto';
 import { CurrentUserId } from '../../common/decorators';
-import { CheckMongoId, ValidateWithRole } from '../../common/pipes';
+import {
+  CheckCoachId,
+  CheckMongoId,
+  ValidateWithRole,
+} from '../../common/pipes';
 
 @Controller('user')
 export class UserController {
@@ -157,5 +162,14 @@ export class UserController {
   ) {
     const user = await this.userService.toggleFriend(friendId, userId);
     return fillObject(UserRdo, user);
+  }
+
+  @Post(':coachId/subscribe')
+  @UseGuards(ClientGuard)
+  public async subscribeToNewWorkouts(
+    @Param('coachId', CheckMongoId, CheckCoachId) coachId,
+    @CurrentUserId() clientId: string
+  ) {
+    return this.userService.toggleSubscription(clientId, coachId);
   }
 }

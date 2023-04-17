@@ -1,3 +1,3 @@
 export enum SubscriptionType {
-  'NewCoachWorkouts' = 'NewCoachWorkouts',
+  'NewWorkout' = 'NewWorkout',
 }

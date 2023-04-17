@@ -1,6 +1,9 @@
 export const ENV_FILE_PATH = 'environments/.notification.env';
 export const RABBITMQ_ENV_FILE_PATH = 'environments/.rabbitmq.env';
 
+export const NEW_WORKOUT_EMAIL_SUBJECT = 'Новая тренировка на FitFriends';
+export const NEW_WORKOUT_EMAIL_TEMPLATE = 'new-workout.hbs';
+
 export enum EnvValidationMessage {
   RabbitMqQueue = 'RabbitMQ queue name required',
   DBHostRequired = 'MongoDB host is required',

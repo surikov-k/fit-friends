@@ -10,6 +10,9 @@ import { WorkoutsService } from './workouts.service';
   providers: [CoachStrategy, AtStrategy, WorkoutsService],
   imports: [
     RmqModule.registerRmq({
+      name: 'NOTIFICATIONS_SERVICE',
+    }),
+    RmqModule.registerRmq({
       name: 'ORDERS_SERVICE',
     }),
     RmqModule.registerRmq({

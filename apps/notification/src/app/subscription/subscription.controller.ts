@@ -1,13 +1,18 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
+import { EventPattern, Payload } from '@nestjs/microservices';
 
 import {
   NotificationEvent,
-  SubscriberInterface,
+  SubscriptionInterface,
 } from '@fit-friends/shared-types';
+import { SubscriptionService } from './subscription.service';
 
 @Controller()
 export class SubscriptionController {
-  @EventPattern({ cmd: NotificationEvent.AddSubscriber })
-  public async createSubscriber(dto: SubscriberInterface) {}
+  constructor(private readonly subscriptionService: SubscriptionService) {}
+
+  @EventPattern({ cmd: NotificationEvent.ToggleSubscription })
+  public async toggle(@Payload() dto: SubscriptionInterface) {
+    return this.subscriptionService.toggle(dto);
+  }
 }
