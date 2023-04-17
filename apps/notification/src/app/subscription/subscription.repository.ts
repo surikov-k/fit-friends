@@ -4,20 +4,20 @@ import { Model } from 'mongoose';
 
 import { CrudRepositoryInterface } from '@fit-friends/core';
 import { SubscriberInterface } from '@fit-friends/shared-types';
-import { SubscriberEntity } from './subscriber.entity';
-import { SubscriberModel } from './subscriber.model';
+import { SubscriptionEntity } from './subscription.entity';
+import { SubscriptionModel } from './subscription.model';
 
 @Injectable()
-export class SubscriberRepository
+export class SubscriptionRepository
   implements
-    CrudRepositoryInterface<SubscriberEntity, string, SubscriberInterface>
+    CrudRepositoryInterface<SubscriptionEntity, string, SubscriberInterface>
 {
   constructor(
-    @InjectModel(SubscriberModel.name)
-    private readonly subscriberModel: Model<SubscriberModel>
+    @InjectModel(SubscriptionModel.name)
+    private readonly subscriberModel: Model<SubscriptionModel>
   ) {}
 
-  public async create(item: SubscriberEntity): Promise<SubscriberInterface> {
+  public async create(item: SubscriptionEntity): Promise<SubscriberInterface> {
     const subscriber = new this.subscriberModel(item);
     return subscriber.save();
   }
@@ -33,9 +33,16 @@ export class SubscriberRepository
       .exec();
   }
 
+  public async findByEmail(email: string): Promise<SubscriberInterface | null> {
+    return this.subscriberModel
+      .findOne({ email })
+      .populate('subscriptions')
+      .exec();
+  }
+
   public async update(
     id: string,
-    item: SubscriberEntity
+    item: SubscriptionEntity
   ): Promise<SubscriberInterface> {
     return this.subscriberModel
       .findByIdAndUpdate(id, item.toObject(), { new: true })

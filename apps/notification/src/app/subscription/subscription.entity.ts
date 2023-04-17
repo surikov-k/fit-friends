@@ -4,7 +4,7 @@ import {
 } from '@fit-friends/shared-types';
 import { EntityInterface } from '@fit-friends/core';
 
-export class SubscriberEntity
+export class SubscriptionEntity
   implements SubscriberInterface, EntityInterface<SubscriberInterface>
 {
   _id?: string;
