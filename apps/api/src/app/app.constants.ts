@@ -6,3 +6,7 @@ export enum EnvValidationError {
   JwtATSecretRequired = 'Jwt Access token secret is required',
   JwtRTExpirationRequired = 'Jwt Refresh token expiration time is required',
 }
+
+export enum CreateWorkoutRequestError {
+  IncorrectInitiator = "Can't create a workout request to yourself",
+}

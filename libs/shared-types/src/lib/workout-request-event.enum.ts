@@ -1,6 +1,6 @@
 export enum WorkoutRequestEvent {
-  Create = 'Create',
-  Accept = 'Accept',
-  Decline = 'Decline',
-  Get = 'Get',
+  CreateRequest = 'CreateRequest',
+  AcceptRequest = 'AcceptRequest',
+  RejectRequest = 'RejectRequest',
+  GetRequest = 'GetRequest',
 }

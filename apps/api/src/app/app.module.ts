@@ -11,6 +11,7 @@ import { NutritionModule } from './nutrition/nutrition.module';
 import { AccountModule } from './account/account.module';
 import { GymsModule } from './gyms/gyms.module';
 import { AlertModule } from './alert/alert.module';
+import { WorkoutRequestModule } from './workout-request/workout-request.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AlertModule } from './alert/alert.module';
     AccountModule,
     GymsModule,
     AlertModule,
+    WorkoutRequestModule,
   ],
   providers: [],
 })

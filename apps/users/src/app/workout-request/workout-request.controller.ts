@@ -12,17 +12,17 @@ import { WorkoutRequestService } from './workout-request.service';
 export class WorkoutRequestController {
   constructor(private readonly workoutRequestService: WorkoutRequestService) {}
 
-  @EventPattern({ cmd: WorkoutRequestEvent.Create })
+  @EventPattern({ cmd: WorkoutRequestEvent.CreateRequest })
   public async create(@Payload() dto: WorkoutRequestInterface) {
     return this.workoutRequestService.create(dto);
   }
 
-  @EventPattern({ cmd: WorkoutRequestEvent.Accept })
+  @EventPattern({ cmd: WorkoutRequestEvent.AcceptRequest })
   public async accept(@Payload() id: string) {
     return this.workoutRequestService.changeStatus(id, RequestStatus.Accepted);
   }
 
-  @EventPattern({ cmd: WorkoutRequestEvent.Decline })
+  @EventPattern({ cmd: WorkoutRequestEvent.RejectRequest })
   public async reject(@Payload() id: string) {
     return this.workoutRequestService.changeStatus(id, RequestStatus.Rejected);
   }

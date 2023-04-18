@@ -1,3 +1,4 @@
+export * from './can-change-request-status.pipe';
 export * from './can-complete-workout.pipe';
 export * from './can-start-workout.pipe';
 export * from './check-coach-id.pipe';
