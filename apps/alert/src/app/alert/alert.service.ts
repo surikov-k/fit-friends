@@ -6,6 +6,10 @@ import { AlertInterface } from '@fit-friends/shared-types';
 export class AlertService {
   constructor(private readonly alertRepository: AlertRepository) {}
 
+  public async get(id: string): Promise<AlertInterface | null> {
+    return this.alertRepository.findById(id);
+  }
+
   public async getByRecipient(recipientId: string): Promise<AlertInterface[]> {
     return this.alertRepository.findByRecipient(recipientId);
   }

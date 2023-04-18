@@ -8,6 +8,11 @@ import { AlertService } from './alert.service';
 export class AlertController {
   constructor(private readonly alertService: AlertService) {}
 
+  @EventPattern({ cmd: AlertEvent.Get })
+  public async get(@Payload() { id }: { id: string }) {
+    return this.alertService.get(id);
+  }
+
   @EventPattern({ cmd: AlertEvent.GetByRecipient })
   public async getByRecipient(
     @Payload() { recipientId }: { recipientId: string }

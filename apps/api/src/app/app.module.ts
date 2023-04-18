@@ -10,6 +10,7 @@ import { jwtOptions } from '../config';
 import { NutritionModule } from './nutrition/nutrition.module';
 import { AccountModule } from './account/account.module';
 import { GymsModule } from './gyms/gyms.module';
+import { AlertModule } from './alert/alert.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { GymsModule } from './gyms/gyms.module';
     NutritionModule,
     AccountModule,
     GymsModule,
+    AlertModule,
   ],
   providers: [],
 })
