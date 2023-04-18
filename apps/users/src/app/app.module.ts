@@ -9,6 +9,7 @@ import { getMongoDbConfig, jwtOptions } from '../config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { validateEnvironments } from './env.validation';
+import { WorkoutRequestModule } from './workout-request/workout-request.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { validateEnvironments } from './env.validation';
     RmqModule,
     UserModule,
     AuthModule,
+    WorkoutRequestModule,
   ],
   controllers: [],
   providers: [],
