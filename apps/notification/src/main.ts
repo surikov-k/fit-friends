@@ -21,3 +21,5 @@ async function bootstrap() {
 
   Logger.log(`🚀 Notification microservice is started`);
 }
+
+bootstrap();
