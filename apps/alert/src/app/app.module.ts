@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { validateEnvironment } from './env.validation';
 import { databaseConfig, getMongoDbConfig } from '../config';
+import { AlertModule } from './alert/alert.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { databaseConfig, getMongoDbConfig } from '../config';
     }),
     RmqModule,
     MongooseModule.forRootAsync(getMongoDbConfig()),
+    AlertModule,
   ],
   controllers: [],
   providers: [],

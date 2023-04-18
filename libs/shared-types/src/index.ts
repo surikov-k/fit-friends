@@ -1,3 +1,5 @@
+export * from './lib/alert-event.enum';
+export * from './lib/alert.interface';
 export * from './lib/client.interface';
 export * from './lib/coach-workouts-list-query.interface';
 export * from './lib/coach.interface';
