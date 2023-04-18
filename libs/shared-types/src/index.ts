@@ -38,5 +38,6 @@ export * from './lib/workout-log-entry.interface';
 export * from './lib/workout-request.interface';
 export * from './lib/workout-status.type';
 export * from './lib/workout-type.type';
+export * from './lib/workout-request-event.enum';
 export * from './lib/workout.interface';
 export * from './lib/workouts-events.enum';
