@@ -22,6 +22,11 @@ export enum Rating {
   MAX = 5,
 }
 
+export enum ReviewLength {
+  MIN = 100,
+  MAX = 1024,
+}
+
 export enum WorkoutIndexQueryDefault {
   ITEMS_PER_PAGE = 6,
   PAGE = 1,

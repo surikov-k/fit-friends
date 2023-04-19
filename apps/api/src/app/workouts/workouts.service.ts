@@ -10,8 +10,6 @@ import {
   WorkoutsEvent,
   WorkoutsListQueryInterface,
 } from '@fit-friends/shared-types';
-import { fillObject } from '@fit-friends/core';
-import { UserRdo } from '../user/rdo';
 
 @Injectable()
 export class WorkoutsService {
@@ -92,19 +90,36 @@ export class WorkoutsService {
 
   public async createReview(dto: ReviewInterface) {
     const review = await firstValueFrom(
-      await this.workoutsService.send(
-        { cmd: WorkoutsEvent.CreateReview },
-        { dto }
-      )
+      this.workoutsService.send({ cmd: WorkoutsEvent.CreateReview }, { dto })
     );
 
-    const user = await firstValueFrom(
+    review.user = await firstValueFrom(
       this.userService.send(
         { cmd: UserEvent.GetUser },
         { userId: dto.clientId }
       )
     );
-    review.user = fillObject(UserRdo, user);
+
     return review;
+  }
+
+  public async getReviews(workoutId: number) {
+    const reviews = await firstValueFrom(
+      this.workoutsService.send(
+        { cmd: WorkoutsEvent.GetReviews },
+        { workoutId }
+      )
+    );
+    return Promise.all(
+      reviews.map(async (review) => {
+        review.user = await firstValueFrom(
+          this.userService.send(
+            { cmd: UserEvent.GetUser },
+            { userId: review.clientId }
+          )
+        );
+        return review;
+      })
+    );
   }
 }

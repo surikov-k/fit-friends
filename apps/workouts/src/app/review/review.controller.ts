@@ -15,7 +15,9 @@ export class ReviewController {
   }
 
   @EventPattern({ cmd: WorkoutsEvent.GetReviews })
-  public async getReview(workoutId: number): Promise<ReviewInterface[]> {
+  public async getReview(
+    @Payload() { workoutId }: { workoutId: number }
+  ): Promise<ReviewInterface[]> {
     return this.reviewService.getByWorkoutId(workoutId);
   }
 }

@@ -1,5 +1,6 @@
 import {
   ArgumentMetadata,
+  BadRequestException,
   Inject,
   Injectable,
   NotFoundException,
@@ -11,9 +12,10 @@ import { firstValueFrom } from 'rxjs';
 import { WorkoutsEvent } from '@fit-friends/shared-types';
 
 const WORKOUT_NOT_FOUND = 'This workout does not exist';
+const INCORRECT_WORKOUT_ID = 'Incorrect workout id';
 
 @Injectable({ scope: Scope.REQUEST })
-export class ValidateId implements PipeTransform {
+export class ValidateWorkoutId implements PipeTransform {
   constructor(
     @Inject('WORKOUTS_SERVICE')
     private readonly workoutService: ClientProxy
@@ -23,6 +25,11 @@ export class ValidateId implements PipeTransform {
     if (type !== 'param') {
       throw new Error('This pipe is for params only');
     }
+
+    if (isNaN(value)) {
+      throw new BadRequestException(INCORRECT_WORKOUT_ID);
+    }
+
     const workout = await firstValueFrom(
       this.workoutService.send({ cmd: WorkoutsEvent.Get }, { id: value })
     );

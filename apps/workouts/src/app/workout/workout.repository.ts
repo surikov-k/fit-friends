@@ -137,4 +137,18 @@ export class WorkoutRepository
       },
     });
   }
+
+  public async updateRating(workoutId: number) {
+    const workout = await this.findById(workoutId);
+    const { reviews } = workout;
+    const rating =
+      reviews.reduce<number>((acc, review) => {
+        acc += review.rating;
+        return acc;
+      }, 0) / reviews.length;
+
+    const entity = new WorkoutEntity({ ...workout, rating });
+
+    return this.update(workoutId, entity);
+  }
 }
