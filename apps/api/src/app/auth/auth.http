@@ -4,11 +4,11 @@ Content-Type: application/json
 
 {
   "name": "Игорь",
-  "email": "ronnie12.lloyd@example.com",
+  "email": "ronnie123.lloyd@example.com",
   "password": "123456",
   "gender": "Male",
   "role": "Client",
-  "location": "Пионерская"
+  "location": "Petrogradskaya"
 }
 
 ### Register a new coach

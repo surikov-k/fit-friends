@@ -3,5 +3,6 @@ export interface ReviewInterface {
   clientId: string;
   rating: number;
   text: string;
-  createdAt: Date;
+  createdAt?: Date;
+  workoutId?: number;
 }

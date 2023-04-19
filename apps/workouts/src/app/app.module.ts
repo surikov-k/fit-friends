@@ -7,6 +7,7 @@ import { WorkoutModule } from './workout/workout.module';
 import { ENV_FILE_PATH, RABBITMQ_ENV_FILE_PATH } from './app.constants';
 import { validateEnvironment } from './env.validation';
 import { WorkoutsLogModule } from './workouts-log/workouts-log.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { WorkoutsLogModule } from './workouts-log/workouts-log.module';
     }),
     RmqModule,
     WorkoutsLogModule,
+    ReviewModule,
   ],
   controllers: [],
   providers: [],

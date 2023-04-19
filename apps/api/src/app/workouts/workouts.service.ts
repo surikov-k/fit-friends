@@ -4,10 +4,14 @@ import { firstValueFrom } from 'rxjs';
 import {
   MailEvent,
   OrdersEvent,
+  ReviewInterface,
+  UserEvent,
   WorkoutInterface,
   WorkoutsEvent,
   WorkoutsListQueryInterface,
 } from '@fit-friends/shared-types';
+import { fillObject } from '@fit-friends/core';
+import { UserRdo } from '../user/rdo';
 
 @Injectable()
 export class WorkoutsService {
@@ -15,6 +19,7 @@ export class WorkoutsService {
     @Inject('NOTIFICATIONS_SERVICE')
     private readonly notificationsService: ClientProxy,
     @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy,
+    @Inject('USER_SERVICE') private readonly userService: ClientProxy,
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
   ) {}
 
@@ -83,5 +88,23 @@ export class WorkoutsService {
     return firstValueFrom(
       this.workoutsService.send({ cmd: WorkoutsEvent.GetLog }, { clientId })
     );
+  }
+
+  public async createReview(dto: ReviewInterface) {
+    const review = await firstValueFrom(
+      await this.workoutsService.send(
+        { cmd: WorkoutsEvent.CreateReview },
+        { dto }
+      )
+    );
+
+    const user = await firstValueFrom(
+      this.userService.send(
+        { cmd: UserEvent.GetUser },
+        { userId: dto.clientId }
+      )
+    );
+    review.user = fillObject(UserRdo, user);
+    return review;
   }
 }

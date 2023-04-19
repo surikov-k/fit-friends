@@ -8,4 +8,6 @@ export enum WorkoutsEvent {
   GetLog = 'GetLog',
   Start = 'Start',
   Update = 'Update',
+  CreateReview = 'CreateReview',
+  GetReviews = 'GetReviews',
 }

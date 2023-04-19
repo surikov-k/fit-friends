@@ -13,9 +13,9 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { fillObject } from '@fit-friends/core';
-import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { WorkoutRdo } from './rdo';
-import { CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
+import { CreateReviewDto, CreateWorkoutDto, UpdateWorkoutRdo } from './dto';
+import { AccessTokenGuard, ClientGuard, CoachGuard } from '../../common/guards';
 import { CurrentUserId } from '../../common/decorators';
 import { CanStartWorkout } from '../../common/pipes';
 import { WorkoutsService } from './workouts.service';
@@ -99,6 +99,20 @@ export class WorkoutsController {
     @CurrentUserId() userId: string
   ) {
     return this.workoutsService.startWorkout(userId, id);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Post(':id')
+  public async createReview(
+    @Param('id') id: number,
+    @CurrentUserId() userId: string,
+    @Body() dto: CreateReviewDto
+  ) {
+    return this.workoutsService.createReview({
+      workoutId: id,
+      clientId: userId,
+      ...dto,
+    });
   }
 
   @UseGuards(ClientGuard)
