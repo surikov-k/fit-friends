@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -19,11 +20,19 @@ import { CurrentUserId } from '../../common/decorators';
 import { CanStartWorkout } from '../../common/pipes';
 import { WorkoutsService } from './workouts.service';
 import { CanCompleteWorkout } from '../../common/pipes';
+import { WorkoutsListQuery } from './query';
 
 @ApiTags('workouts')
 @Controller('workout')
 export class WorkoutsController {
   constructor(private readonly workoutsService: WorkoutsService) {}
+
+  @Get()
+  @UseGuards(AccessTokenGuard)
+  public async getAll(@Query() query: WorkoutsListQuery) {
+    const workouts = await this.workoutsService.getAll(query);
+    return workouts.map((workout) => fillObject(WorkoutRdo, workout));
+  }
 
   @Get('/:id')
   @ApiResponse({

@@ -15,7 +15,7 @@ const COACH_NOT_FOUND = "A coach with this id wasn't found";
 @Injectable()
 export class CheckCoachId implements PipeTransform {
   constructor(
-    @Inject('USERS_SERVICE') private readonly usersService: ClientProxy
+    @Inject('USER_SERVICE') private readonly usersService: ClientProxy
   ) {}
 
   async transform(value: string, { type }: ArgumentMetadata) {

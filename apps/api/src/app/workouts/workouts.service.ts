@@ -4,7 +4,9 @@ import { firstValueFrom } from 'rxjs';
 import {
   MailEvent,
   OrdersEvent,
+  WorkoutInterface,
   WorkoutsEvent,
+  WorkoutsListQueryInterface,
 } from '@fit-friends/shared-types';
 
 @Injectable()
@@ -15,6 +17,12 @@ export class WorkoutsService {
     @Inject('ORDERS_SERVICE') private readonly ordersService: ClientProxy,
     @Inject('WORKOUTS_SERVICE') private readonly workoutsService: ClientProxy
   ) {}
+
+  public async getAll(query: WorkoutsListQueryInterface) {
+    return firstValueFrom<WorkoutInterface[]>(
+      this.workoutsService.send({ cmd: WorkoutsEvent.GetAll }, { query })
+    );
+  }
 
   public async get(id) {
     return firstValueFrom(

@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { WorkoutInterface } from '@fit-friends/shared-types';
+import {
+  WorkoutInterface,
+  WorkoutsListQueryInterface,
+} from '@fit-friends/shared-types';
 import { WorkoutRepository } from './workout.repository';
 import { WorkoutEntity } from './workout.entity';
 
@@ -10,6 +13,10 @@ export class WorkoutService {
 
   public async findByCoach(coachId, query) {
     return this.workoutRepository.findByCoach(coachId, query);
+  }
+
+  public async findAll(query: WorkoutsListQueryInterface) {
+    return this.workoutRepository.findAll(query);
   }
 
   public async get(id: number) {

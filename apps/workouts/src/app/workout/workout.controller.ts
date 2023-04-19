@@ -5,6 +5,7 @@ import { WorkoutService } from './workout.service';
 import {
   CoachWorkoutsListQueryInterface,
   WorkoutsEvent,
+  WorkoutsListQueryInterface,
 } from '@fit-friends/shared-types';
 import { WorkoutsLogService } from '../workouts-log/workouts-log.service';
 
@@ -16,10 +17,10 @@ export class WorkoutController {
   ) {}
 
   @EventPattern({ cmd: WorkoutsEvent.GetAll })
-  public async index() // @Payload()
-  // { query, coachId }
-  {
-    // return this.workoutsService.findAll(coachId, query);
+  public async index(
+    @Payload() { query }: { query: WorkoutsListQueryInterface }
+  ) {
+    return this.workoutsService.findAll(query);
   }
 
   @EventPattern({ cmd: WorkoutsEvent.Get })

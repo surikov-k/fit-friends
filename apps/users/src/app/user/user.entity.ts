@@ -1,6 +1,8 @@
 import { compare, genSalt, hash } from 'bcrypt';
 
 import {
+  ClientInterface,
+  CoachInterface,
   Gender,
   Location,
   Skill,
@@ -9,12 +11,8 @@ import {
   UserRole,
   WorkoutType,
 } from '@fit-friends/shared-types';
-import {
-  ClientDetailsDto,
-  CoachDetailsDto,
-  EntityInterface,
-  SALT_ROUNDS,
-} from '@fit-friends/core';
+import { EntityInterface } from '@fit-friends/core';
+import { SALT_ROUNDS } from './user.constants';
 
 export class UserEntity
   implements UserInterface, EntityInterface<UserInterface>
@@ -45,7 +43,7 @@ export class UserEntity
     this.fillEntity(user);
   }
 
-  public setClientDetails(dto: ClientDetailsDto) {
+  public setClientDetails(dto: ClientInterface) {
     this.skill = dto.skill;
     this.trainings = dto.trainings;
     this.duration = dto.duration;
@@ -55,7 +53,7 @@ export class UserEntity
     this.info = dto.info;
   }
 
-  public setCoachDetails(dto: CoachDetailsDto) {
+  public setCoachDetails(dto: CoachInterface) {
     this.skill = dto.skill;
     this.trainings = dto.trainings;
     this.hasPersonalTrainings = dto.hasPersonalTrainings;
@@ -102,7 +100,6 @@ export class UserEntity
   }
 
   fillEntity(user: UserInterface): void {
-    this._id = user._id;
     this.avatar = user.avatar;
     this.birthday = user.birthday;
     this.createdAt = user.createdAt;
@@ -110,19 +107,7 @@ export class UserEntity
     this.gender = user.gender;
     this.location = user.location;
     this.name = user.name;
-    this.passwordHash = user.passwordHash;
-    this.refreshTokenHash = user.refreshTokenHash;
     this.role = user.role;
-    this.skill = user.skill;
-    this.trainings = user.trainings;
-    this.duration = user.duration;
-    this.caloriesTarget = user.caloriesTarget;
-    this.caloriesPerDay = user.caloriesPerDay;
-    this.readiness = user.readiness;
-    this.hasPersonalTrainings = user.hasPersonalTrainings;
-    this.achievements = user.achievements;
-    this.info = user.info;
-    this.friends = user.friends;
   }
 
   toObject(): UserInterface {

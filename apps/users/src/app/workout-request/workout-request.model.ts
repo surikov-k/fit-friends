@@ -1,12 +1,11 @@
+import * as mongoose from 'mongoose';
 import { Document, now } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import {
   RequestStatus,
-  UserInterface,
   WorkoutRequestInterface,
 } from '@fit-friends/shared-types';
-import * as mongoose from 'mongoose';
 import { UserModel } from '../user/user.model';
 
 const WORKOUT_REQUESTS_COLLECTION = 'workout-requests';
@@ -19,11 +18,11 @@ export class WorkoutRequestModel
   extends Document
   implements WorkoutRequestInterface
 {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: UserModel })
-  initiator: UserInterface;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'UserModel' })
+  initiator: UserModel;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: UserModel })
-  user: UserInterface;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'UserModel' })
+  user: UserModel;
 
   @Prop({ default: now() })
   createdAt: Date;

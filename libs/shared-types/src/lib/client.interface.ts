@@ -6,4 +6,5 @@ export interface ClientInterface extends UserInterface {
   caloriesTarget: number;
   caloriesPerDay: number;
   readiness: boolean;
+  info: string;
 }

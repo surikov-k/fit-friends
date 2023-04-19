@@ -83,11 +83,6 @@ export class AccountService {
             )
           );
         }
-        //
-        // order.total = order._sum.quantity;
-        // delete order._sum;
-        // delete order.serviceId;
-
         return order;
       })
     );

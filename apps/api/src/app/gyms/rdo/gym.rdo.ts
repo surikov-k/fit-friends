@@ -1,7 +1,6 @@
 import { Expose } from 'class-transformer';
-import { GymFeature, GymInterface, Location } from '@fit-friends/shared-types';
 
-export class GymRdo implements GymInterface {
+export class GymRdo {
   @Expose()
   id: number;
 
@@ -12,13 +11,13 @@ export class GymRdo implements GymInterface {
   description: string;
 
   @Expose()
-  features: GymFeature[];
+  features: string[];
 
   @Expose()
   isVerified: boolean;
 
   @Expose()
-  location: Location;
+  location: string;
 
   @Expose()
   name: string;

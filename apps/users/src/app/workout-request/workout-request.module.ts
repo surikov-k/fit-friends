@@ -7,6 +7,7 @@ import {
   WorkoutRequestSchema,
 } from './workout-request.model';
 import { WorkoutRequestService } from './workout-request.service';
+import { WorkoutRequestRepository } from './workout-request.repository';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { WorkoutRequestService } from './workout-request.service';
     ]),
   ],
   controllers: [WorkoutRequestController],
-  providers: [WorkoutRequestService],
+  providers: [WorkoutRequestService, WorkoutRequestRepository],
 })
 export class WorkoutRequestModule {}

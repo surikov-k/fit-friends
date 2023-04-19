@@ -9,6 +9,9 @@ import { AlertController } from './alert.controller';
     RmqModule.registerRmq({
       name: 'ALERT_SERVICE',
     }),
+    RmqModule.registerRmq({
+      name: 'USER_SERVICE',
+    }),
   ],
   controllers: [AlertController],
 })
