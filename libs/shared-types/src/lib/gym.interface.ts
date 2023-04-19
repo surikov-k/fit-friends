@@ -1,4 +1,5 @@
 import { GymFeature } from './gym-feature.type';
+import { Location } from './location.enum';
 
 export interface GymInterface {
   id?: number;
