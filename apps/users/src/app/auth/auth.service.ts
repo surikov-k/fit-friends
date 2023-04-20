@@ -146,7 +146,8 @@ export class AuthService {
 
   getJwtPayload({ _id, email, name, role }: UserInterface): JwtPayload {
     return {
-      sub: _id.toString(),
+      // sub: _id.toString(),
+      sub: _id,
       email,
       name,
       role,

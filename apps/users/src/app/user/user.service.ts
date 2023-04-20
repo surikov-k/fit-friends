@@ -60,7 +60,7 @@ export class UserService {
 
   async getFriends(userId) {
     const user = await this.userRepository.findById(userId);
-
+    console.log('getFr', user.friends);
     return this.userRepository.findMany(user.friends);
   }
 }

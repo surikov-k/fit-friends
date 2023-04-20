@@ -6,6 +6,7 @@ export interface UserInterface extends Omit<RegisterInterface, 'password'> {
   _id?: string;
   createdAt?: Date;
   refreshTokenHash?: string;
+  passwordHash?: string;
 
   skill?: Skill;
   trainings?: WorkoutType[];
