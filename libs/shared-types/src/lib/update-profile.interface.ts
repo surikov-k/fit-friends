@@ -1,7 +1,6 @@
 import { CoachInterface } from './coach.interface';
 import { ClientInterface } from './client.interface';
 
-export interface UpdateProfileInterface
-  extends Partial<
+export type UpdateProfileInterface = Partial<
     Omit<CoachInterface & ClientInterface, '_id' | 'refreshTokenHash'>
-  > {}
+  >
