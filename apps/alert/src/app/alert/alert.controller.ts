@@ -4,13 +4,20 @@ import { EventPattern, Payload } from '@nestjs/microservices';
 import { AlertEvent } from '@fit-friends/shared-types';
 import { AlertService } from './alert.service';
 
-@Controller('alert')
+@Controller()
 export class AlertController {
   constructor(private readonly alertService: AlertService) {}
 
   @EventPattern({ cmd: AlertEvent.Get })
   public async get(@Payload() { id }: { id: string }) {
     return this.alertService.get(id);
+  }
+
+  @EventPattern({ cmd: AlertEvent.Create })
+  public async create(
+    @Payload() { recipientId, text }: { recipientId: string; text: string }
+  ) {
+    return this.alertService.create(recipientId, text);
   }
 
   @EventPattern({ cmd: AlertEvent.GetByRecipient })
