@@ -33,7 +33,7 @@ describe('AuthService', () => {
         Promise.resolve({ ...user, ...entity, _id: id }),
     };
 
-    const fakeConfigService = {
+    const fakeConfigService: Partial<ConfigService> = {
       get: (key) => {
         const keys = {
           'jwt.accessTokenSecret': 'secret',
@@ -42,7 +42,7 @@ describe('AuthService', () => {
       },
     };
 
-    const fakeJwtService = {
+    const fakeJwtService: Partial<JwtService> = {
       signAsync: () => Promise.resolve('token'),
     };
 
