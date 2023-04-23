@@ -56,6 +56,39 @@
           "codeCoverage": true
         }
       }
+    },
+    "build-seed": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/alert",
+        "main": "apps/users/src/seeds.ts",
+        "tsConfig": "apps/users/tsconfig.app.json",
+        "isolatedConfig": true,
+        "webpackConfig": "apps/users/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false
+        }
+      }
+    },
+    "seed": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "users:build-seed",
+        "watch": false,
+        "inspect": false
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "users:build-seed:production"
+        }
+      }
     }
   },
   "tags": []

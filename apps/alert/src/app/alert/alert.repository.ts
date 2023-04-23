@@ -11,15 +11,15 @@ export class AlertRepository
 {
   constructor(
     @InjectModel(AlertModel.name) private readonly alertModel: Model<AlertModel>
-  ) {}
+  ) { }
 
   public async create(entity: AlertEntity): Promise<AlertInterface> {
     const alert = new this.alertModel(entity);
     return alert.save();
   }
 
-  public async destroy(id: string): Promise<void> {
-    this.alertModel.deleteOne({ id });
+  public async destroy(id: string): Promise<unknown> {
+    return this.alertModel.deleteOne({ id });
   }
 
   public async findById(id: string): Promise<AlertInterface | null> {

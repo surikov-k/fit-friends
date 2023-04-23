@@ -13,7 +13,7 @@ export class UserRepository
 {
   constructor(
     @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>
-  ) {}
+  ) { }
 
   public async create(entity: UserEntity): Promise<UserInterface> {
     const user = new this.userModel(entity);
@@ -48,5 +48,9 @@ export class UserRepository
         _id: { $in: ids },
       })
       .exec();
+  }
+
+  public async upsert(entity: UserEntity) {
+    return this.userModel.findOneAndUpdate({ _id: entity._id }, entity, { upsert: true, new: true })
   }
 }

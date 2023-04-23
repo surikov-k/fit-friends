@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/gyms-client';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { GymFeature, Location } from '../../../libs/shared-types/src';
 
 const prisma = new PrismaClient();

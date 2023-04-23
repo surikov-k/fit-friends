@@ -14,6 +14,7 @@ export class AlertEntity
   }
 
   fillEntity(alert: AlertInterface): void {
+    this._id = alert._id;
     this.createdAt = alert.createdAt;
     this.recipientId = alert.recipientId;
     this.text = alert.text;

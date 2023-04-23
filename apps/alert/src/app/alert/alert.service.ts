@@ -5,7 +5,7 @@ import { AlertEntity } from './alert.entity';
 
 @Injectable()
 export class AlertService {
-  constructor(private readonly alertRepository: AlertRepository) {}
+  constructor(private readonly alertRepository: AlertRepository) { }
 
   public async get(id: string): Promise<AlertInterface | null> {
     return this.alertRepository.findById(id);
@@ -23,7 +23,7 @@ export class AlertService {
     return this.alertRepository.findByRecipient(recipientId);
   }
 
-  public async delete(id: string): Promise<void> {
+  public async delete(id: string): Promise<unknown> {
     return this.alertRepository.destroy(id);
   }
 }
