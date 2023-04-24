@@ -23,7 +23,7 @@ export class AlertService {
     return this.alertRepository.findByRecipient(recipientId);
   }
 
-  public async delete(id: string): Promise<unknown> {
+  public async delete(id: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
     return this.alertRepository.destroy(id);
   }
 }

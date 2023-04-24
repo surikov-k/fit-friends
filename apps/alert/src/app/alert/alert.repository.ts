@@ -18,12 +18,12 @@ export class AlertRepository
     return alert.save();
   }
 
-  public async destroy(id: string): Promise<unknown> {
-    return this.alertModel.deleteOne({ id });
+  public async destroy(id: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
+    return this.alertModel.deleteOne({ id }).exec();
   }
 
   public async findById(id: string): Promise<AlertInterface | null> {
-    return this.alertModel.findOne({ id }).exec();
+    return this.alertModel.findOne({ _id: id }).exec();
   }
 
   public async findByRecipient(recipientId): Promise<AlertInterface[]> {

@@ -11,4 +11,5 @@ export interface GymInterface {
   description: string;
   price: number;
   createdAt: Date;
+  favs?: string[];
 }

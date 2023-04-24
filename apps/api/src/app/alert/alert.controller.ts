@@ -25,7 +25,7 @@ export class AlertController {
   constructor(
     @Inject('ALERT_SERVICE')
     private readonly alertService: ClientProxy
-  ) {}
+  ) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -66,4 +66,5 @@ export class AlertController {
       this.alertService.send({ cmd: AlertEvent.Delete }, { id })
     );
   }
+
 }

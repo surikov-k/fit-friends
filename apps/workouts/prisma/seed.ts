@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/workouts-client';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   Gender,
   Skill,

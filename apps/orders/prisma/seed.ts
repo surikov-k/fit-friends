@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/orders-client';
-import { PurchaseType } from '../../../libs/shared-types/src';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { PaymentMethod, PurchaseType } from '../../../libs/shared-types/src';
 
 const prisma = new PrismaClient();
 
