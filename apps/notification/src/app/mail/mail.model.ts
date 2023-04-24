@@ -19,10 +19,10 @@ export class MailModel extends Document implements MailInterface {
   @Prop()
   template: string;
 
-  @Prop()
-  context?: object;
+  // @Prop()
+  // context?: Record<string, any>;
 
-  @Prop()
+  @Prop({ type: String, enum: MailStatus })
   status: MailStatus;
 }
 

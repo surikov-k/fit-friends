@@ -25,7 +25,7 @@ export class SubscriptionModel
   @Prop()
   coachName: string;
 
-  @Prop()
+  @Prop({ type: String, enum: SubscriptionType })
   public type: SubscriptionType;
 
   @Prop()
