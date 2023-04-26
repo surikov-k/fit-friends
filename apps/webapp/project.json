@@ -11,12 +11,12 @@
       "options": {
         "compiler": "babel",
         "outputPath": "dist/apps/webapp",
-        "index": "apps/webapp/src/index.html",
+        "index": "apps/webapp/src/assets/index.html",
         "baseHref": "/",
         "main": "apps/webapp/src/main.tsx",
         "tsConfig": "apps/webapp/tsconfig.app.json",
-        "assets": ["apps/webapp/src/favicon.ico", "apps/webapp/src/assets"],
-        "styles": ["apps/webapp/src/styles.css"],
+        "assets": ["apps/webapp/src/assets"],
+        "styles": ["apps/webapp/src/assets/css/style.min.css"],
         "scripts": [],
         "isolatedConfig": true,
         "webpackConfig": "apps/webapp/webpack.config.js"
