@@ -1,7 +1,7 @@
+import { WelcomeScreen } from '../pages/welcome-screen';
+
 export function App() {
-  return (
-      <h1>Fit Friends</h1>
-  );
+  return <WelcomeScreen />;
 }
 
 export default App;
