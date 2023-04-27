@@ -4,7 +4,7 @@ import { ModalContext } from './modal-context';
 import { useScrollLock } from '../../hooks';
 
 type ModalProviderProps = {
-  children: JSX.Element[];
+  children: JSX.Element[] | JSX.Element;
 };
 
 export function ModalProvider({ children }: ModalProviderProps) {

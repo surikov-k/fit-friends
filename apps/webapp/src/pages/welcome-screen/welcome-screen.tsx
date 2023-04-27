@@ -1,4 +1,14 @@
+import { useContext } from 'react';
+import { ModalContext } from '../../contexts';
+import { ModalLogin } from '../../components/modal-login/modal-login';
+
 export function WelcomeScreen(): JSX.Element {
+  const { open } = useContext(ModalContext);
+
+  const loginClickHandler = () => {
+    open(<ModalLogin />);
+  };
+
   return (
     <main>
       <div className="intro">
@@ -47,9 +57,17 @@ export function WelcomeScreen(): JSX.Element {
             </button>
             <p className="intro__text">
               Есть аккаунт?{' '}
-              <a className="intro__link" href="#">
+              <button
+                className="intro__link"
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  cursor: 'pointer',
+                }}
+                onClick={loginClickHandler}
+              >
                 Вход
-              </a>
+              </button>
             </p>
           </div>
         </div>
