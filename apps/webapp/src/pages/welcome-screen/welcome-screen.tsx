@@ -1,12 +1,17 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts';
 import { ModalLogin } from '../../components/modal-login/modal-login';
+import { ModalRegister } from '../../components/modal-register/modal-register';
 
 export function WelcomeScreen(): JSX.Element {
   const { open } = useContext(ModalContext);
 
   const loginClickHandler = () => {
     open(<ModalLogin />);
+  };
+
+  const registerClickHandler = () => {
+    open(<ModalRegister />);
   };
 
   return (
@@ -52,7 +57,11 @@ export function WelcomeScreen(): JSX.Element {
             </picture>
           </div>
           <div className="intro__buttons">
-            <button className="btn intro__button" type="button">
+            <button
+              className="btn intro__button"
+              type="button"
+              onClick={registerClickHandler}
+            >
               Регистрация
             </button>
             <p className="intro__text">
