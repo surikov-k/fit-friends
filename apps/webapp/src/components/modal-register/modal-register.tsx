@@ -1,11 +1,30 @@
+import { FormEvent, useContext, useState } from 'react';
+
+import { UserRole } from '@fit-friends/shared-types';
 import { ModalContext } from '../../contexts';
-import { FormEvent, useContext } from 'react';
+import { ModalClientProfile } from '../modal-client-profile';
+import { ModalCoachProfile } from '../modal-coach-profile';
 
 export function ModalRegister() {
-  const { close } = useContext(ModalContext);
+  const [profileType, setProfileType] = useState(UserRole.Coach);
+
+  const { open, close } = useContext(ModalContext);
   const registerSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     close();
+    if (profileType === UserRole.Client) {
+      open(<ModalClientProfile />);
+    } else {
+      open(<ModalCoachProfile />);
+    }
+  };
+
+  const handleCoachSelect = () => {
+    setProfileType(UserRole.Coach);
+  };
+
+  const handleClientSelect = () => {
+    setProfileType(UserRole.Client);
   };
 
   return (
@@ -107,7 +126,7 @@ export function ModalRegister() {
                       </div>
                       <div className="custom-toggle-radio__block">
                         <label>
-                          <input type="radio" name="sex" checked />
+                          <input type="radio" name="sex" />
                           <span className="custom-toggle-radio__icon"></span>
                           <span className="custom-toggle-radio__label">
                             Женский
@@ -136,7 +155,8 @@ export function ModalRegister() {
                           type="radio"
                           name="role"
                           value="coach"
-                          checked={true}
+                          defaultChecked={true}
+                          onChange={handleCoachSelect}
                         />
                         <span className="role-btn__icon">
                           <svg width="12" height="13" aria-hidden="true">
@@ -155,6 +175,7 @@ export function ModalRegister() {
                           type="radio"
                           name="role"
                           value="sportsman"
+                          onChange={handleClientSelect}
                         />
                         <span className="role-btn__icon">
                           <svg width="12" height="13" aria-hidden="true">
@@ -174,7 +195,7 @@ export function ModalRegister() {
                       type="checkbox"
                       value="user-agreement"
                       name="user-agreement"
-                      checked
+                      defaultChecked={true}
                     />
                     <span className="sign-up__checkbox-icon">
                       <svg width="9" height="6" aria-hidden="true">

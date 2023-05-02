@@ -1,26 +1,26 @@
 import { FormEvent, useContext } from 'react';
 import { ModalContext } from '../../contexts';
 
-export function ModalClientProfile() {
+export function ModalCoachProfile() {
   const { close } = useContext(ModalContext);
   const formSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     close();
   };
   return (
-    <div className="popup-form popup-form--questionnaire-user">
+    <div className="popup-form popup-form--questionnaire-coach">
       <div className="popup-form__wrapper">
         <div className="popup-form__content">
           <div className="popup-form__form">
             <form method="get" onSubmit={formSubmitHandler}>
-              <div className="questionnaire-user">
+              <div className="questionnaire-coach">
                 <h1 className="visually-hidden">Опросник</h1>
-                <div className="questionnaire-user__wrapper">
-                  <div className="questionnaire-user__block">
-                    <span className="questionnaire-user__legend">
+                <div className="questionnaire-coach__wrapper">
+                  <div className="questionnaire-coach__block">
+                    <span className="questionnaire-coach__legend">
                       Ваша специализация (тип) тренировок
                     </span>
-                    <div className="specialization-checkbox questionnaire-user__specializations">
+                    <div className="specialization-checkbox questionnaire-coach__specializations">
                       <div className="btn-checkbox">
                         <label>
                           <input
@@ -111,54 +111,11 @@ export function ModalClientProfile() {
                       </div>
                     </div>
                   </div>
-                  <div className="questionnaire-user__block">
-                    <span className="questionnaire-user__legend">
-                      Сколько времени вы готовы уделять на тренировку в день
-                    </span>
-                    <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="time" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            10-30 мин
-                          </span>
-                        </label>
-                      </div>
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="time" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            30-50 мин
-                          </span>
-                        </label>
-                      </div>
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="time" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            50-80 мин
-                          </span>
-                        </label>
-                      </div>
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="time" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            больше 80 мин
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="questionnaire-user__block">
-                    <span className="questionnaire-user__legend">
+                  <div className="questionnaire-coach__block">
+                    <span className="questionnaire-coach__legend">
                       Ваш уровень
                     </span>
-                    <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
+                    <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-coach__radio">
                       <div className="custom-toggle-radio__block">
                         <label>
                           <input type="radio" name="level" />
@@ -188,37 +145,57 @@ export function ModalClientProfile() {
                       </div>
                     </div>
                   </div>
-                  <div className="questionnaire-user__block">
-                    <div className="questionnaire-user__calories-lose">
-                      <span className="questionnaire-user__legend">
-                        Сколько калорий хотите сбросить
-                      </span>
-                      <div className="custom-input custom-input--with-text-right questionnaire-user__input">
-                        <label>
-                          <span className="custom-input__wrapper">
-                            <input type="number" name="calories-lose" />
-                            <span className="custom-input__text">ккал</span>
-                          </span>
-                        </label>
-                      </div>
+                  <div className="questionnaire-coach__block">
+                    <span className="questionnaire-coach__legend">
+                      Ваши дипломы и сертификаты
+                    </span>
+                    <div className="drag-and-drop questionnaire-coach__drag-and-drop">
+                      <label>
+                        <span className="drag-and-drop__label" tabIndex={0}>
+                          Загрузите сюда файлы формата PDF, JPG или PNG
+                          <svg width="20" height="20" aria-hidden="true">
+                            <use xlinkHref="#icon-import"></use>
+                          </svg>
+                        </span>
+                        <input
+                          type="file"
+                          name="import"
+                          tabIndex={-1}
+                          accept=".pdf, .jpg, .png"
+                        />
+                      </label>
                     </div>
-                    <div className="questionnaire-user__calories-waste">
-                      <span className="questionnaire-user__legend">
-                        Сколько калорий тратить в день
-                      </span>
-                      <div className="custom-input custom-input--with-text-right questionnaire-user__input">
-                        <label>
-                          <span className="custom-input__wrapper">
-                            <input type="number" name="calories-waste" />
-                            <span className="custom-input__text">ккал</span>
-                          </span>
-                        </label>
-                      </div>
+                  </div>
+                  <div className="questionnaire-coach__block">
+                    <span className="questionnaire-coach__legend">
+                      Расскажите о своём опыте, который мы сможем проверить
+                    </span>
+                    <div className="custom-textarea questionnaire-coach__textarea">
+                      <label>
+                        <textarea name="description" placeholder=" "></textarea>
+                      </label>
+                    </div>
+                    <div className="questionnaire-coach__checkbox">
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="individual-training"
+                          name="individual-training"
+                        />
+                        <span className="questionnaire-coach__checkbox-icon">
+                          <svg width="9" height="6" aria-hidden="true">
+                            <use xlinkHref="#arrow-check"></use>
+                          </svg>
+                        </span>
+                        <span className="questionnaire-coach__checkbox-label">
+                          Хочу дополнительно индивидуально тренировать
+                        </span>
+                      </label>
                     </div>
                   </div>
                 </div>
                 <button
-                  className="btn questionnaire-user__button"
+                  className="btn questionnaire-coach__button"
                   type="submit"
                 >
                   Продолжить

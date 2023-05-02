@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts';
-import { ModalLogin } from '../../components/modal-login/modal-login';
-import { ModalRegister } from '../../components/modal-register/modal-register';
+import { ModalLogin } from '../../components/modal-login';
+import { ModalRegister } from '../../components/modal-register';
 
 export function WelcomeScreen(): JSX.Element {
   const { open } = useContext(ModalContext);
