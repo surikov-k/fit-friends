@@ -1,31 +1,47 @@
-import { FormEvent, useContext, useState } from 'react';
+import { useContext } from 'react';
+import { SubmitHandler, useController, useForm } from 'react-hook-form';
+import cn from 'classnames';
 
-import { UserRole } from '@fit-friends/shared-types';
+import { Gender, Location, UserRole } from '@fit-friends/shared-types';
 import { ModalContext } from '../../contexts';
 import { ModalClientProfile } from '../modal-client-profile';
 import { ModalCoachProfile } from '../modal-coach-profile';
+import { FormValues, registerFormOptions } from './register-form-options';
+import { Select } from '../select';
+import { UploadAvatar } from '../upload-avatar';
 
 export function ModalRegister() {
-  const [profileType, setProfileType] = useState(UserRole.Coach);
-
   const { open, close } = useContext(ModalContext);
-  const registerSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<FormValues>(registerFormOptions);
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+    watch,
+  } = form;
+
+  const role = watch('role');
+
+  const {
+    field: { onChange: onLocationChange },
+  } = useController({ name: 'location', control });
+
+  const submit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
     close();
-    if (profileType === UserRole.Client) {
+    if (role === UserRole.Client) {
       open(<ModalClientProfile />);
     } else {
       open(<ModalCoachProfile />);
     }
   };
 
-  const handleCoachSelect = () => {
-    setProfileType(UserRole.Coach);
-  };
-
-  const handleClientSelect = () => {
-    setProfileType(UserRole.Client);
-  };
+  const locationOptions = Object.keys(Location).map((key) => ({
+    label: key,
+    value: key,
+  }));
 
   return (
     <div className="popup-form popup-form--sign-up">
@@ -35,89 +51,94 @@ export function ModalRegister() {
             <h1 className="popup-form__title">Регистрация</h1>
           </div>
           <div className="popup-form__form">
-            <form method="get" onSubmit={registerSubmitHandler}>
+            <form onSubmit={handleSubmit(submit, (e) => console.log(e))}>
               <div className="sign-up">
-                <div className="sign-up__load-photo">
-                  <div className="input-load-avatar">
-                    <label>
-                      <input
-                        className="visually-hidden"
-                        type="file"
-                        accept="image/png, image/jpeg"
-                      />
-                      <span className="input-load-avatar__btn">
-                        <svg width="20" height="20" aria-hidden="true">
-                          <use xlinkHref="#icon-import"></use>
-                        </svg>
-                      </span>
-                    </label>
-                  </div>
-                  <div className="sign-up__description">
-                    <h2 className="sign-up__legend">Загрузите фото профиля</h2>
-                    <span className="sign-up__text">
-                      JPG, PNG, оптимальный размер 100&times;100&nbsp;px
-                    </span>
-                  </div>
-                </div>
+                <UploadAvatar form={form} />
                 <div className="sign-up__data">
-                  <div className="custom-input">
+                  <div
+                    className={cn('custom-input', {
+                      'custom-input--error': errors?.name,
+                    })}
+                  >
                     <label>
                       <span className="custom-input__label">Имя</span>
                       <span className="custom-input__wrapper">
-                        <input type="text" name="name" />
+                        <input type="text" {...register('name')} />
+                      </span>
+                      <span className="custom-input__error">
+                        {errors.name?.message}
                       </span>
                     </label>
                   </div>
-                  <div className="custom-input">
+                  <div
+                    className={cn('custom-input', {
+                      'custom-input--error': errors?.email,
+                    })}
+                  >
                     <label>
                       <span className="custom-input__label">E-mail</span>
                       <span className="custom-input__wrapper">
-                        <input type="email" name="email" />
+                        <input {...register('email')} />
+                      </span>
+                      <span className="custom-input__error">
+                        {errors.email?.message}
                       </span>
                     </label>
                   </div>
-                  <div className="custom-input">
+                  <div
+                    className={cn('custom-input', {
+                      'custom-input--error': errors?.birthday,
+                    })}
+                  >
                     <label>
                       <span className="custom-input__label">Дата рождения</span>
                       <span className="custom-input__wrapper">
-                        <input type="date" name="birthday" max="2099-12-31" />
+                        <input type="date" {...register('birthday')} />
+                      </span>
+                      <span className="custom-input__error">
+                        {errors.birthday?.message}
                       </span>
                     </label>
                   </div>
-                  <div className="custom-select custom-select--not-selected">
-                    <span className="custom-select__label">Ваша локация</span>
-                    <button
-                      className="custom-select__button"
-                      type="button"
-                      aria-label="Выберите одну из опций"
-                    >
-                      <span className="custom-select__text"></span>
-                      <span className="custom-select__icon">
-                        <svg width="15" height="6" aria-hidden="true">
-                          <use xlinkHref="#arrow-down"></use>
-                        </svg>
-                      </span>
-                    </button>
-                    <ul className="custom-select__list" role="listbox"></ul>
-                  </div>
-                  <div className="custom-input">
+                  <Select
+                    label="Ваша локация"
+                    options={locationOptions}
+                    onChange={onLocationChange}
+                    errors={errors}
+                  />
+                  <div
+                    className={cn('custom-input', {
+                      'custom-input--error': errors?.password,
+                    })}
+                  >
                     <label>
                       <span className="custom-input__label">Пароль</span>
                       <span className="custom-input__wrapper">
                         <input
                           type="password"
-                          name="password"
+                          {...register('password')}
                           autoComplete="off"
                         />
                       </span>
+                      <span className="custom-input__error">
+                        {errors.password?.message}
+                      </span>
                     </label>
                   </div>
-                  <div className="sign-up__radio">
+                  <div
+                    className={cn('sign-up__radio', {
+                      'custom-input--error': errors?.gender,
+                    })}
+                  >
                     <span className="sign-up__label">Пол</span>
                     <div className="custom-toggle-radio custom-toggle-radio--big">
                       <div className="custom-toggle-radio__block">
                         <label>
-                          <input type="radio" name="sex" />
+                          <input
+                            type="radio"
+                            {...register('gender')}
+                            value={Gender.Male}
+                          />
                           <span className="custom-toggle-radio__icon"></span>
                           <span className="custom-toggle-radio__label">
                             Мужской
@@ -126,7 +147,11 @@ export function ModalRegister() {
                       </div>
                       <div className="custom-toggle-radio__block">
                         <label>
-                          <input type="radio" name="sex" />
+                          <input
+                            type="radio"
+                            {...register('gender')}
+                            value={Gender.Female}
+                          />
                           <span className="custom-toggle-radio__icon"></span>
                           <span className="custom-toggle-radio__label">
                             Женский
@@ -135,13 +160,20 @@ export function ModalRegister() {
                       </div>
                       <div className="custom-toggle-radio__block">
                         <label>
-                          <input type="radio" name="sex" />
+                          <input
+                            type="radio"
+                            {...register('gender')}
+                            value={Gender.Common}
+                          />
                           <span className="custom-toggle-radio__icon"></span>
                           <span className="custom-toggle-radio__label">
                             Неважно
                           </span>
                         </label>
                       </div>
+                    </div>{' '}
+                    <div className="custom-input__error">
+                      {errors.gender?.message}
                     </div>
                   </div>
                 </div>
@@ -153,10 +185,11 @@ export function ModalRegister() {
                         <input
                           className="visually-hidden"
                           type="radio"
-                          name="role"
-                          value="coach"
+                          // name="role"
+                          value="Coach"
                           defaultChecked={true}
-                          onChange={handleCoachSelect}
+                          // onChange={handleCoachSelect}
+                          {...register('role')}
                         />
                         <span className="role-btn__icon">
                           <svg width="12" height="13" aria-hidden="true">
@@ -173,9 +206,10 @@ export function ModalRegister() {
                         <input
                           className="visually-hidden"
                           type="radio"
-                          name="role"
-                          value="sportsman"
-                          onChange={handleClientSelect}
+                          // name="role"
+                          value="Client"
+                          // onChange={handleClientSelect}
+                          {...register('role')}
                         />
                         <span className="role-btn__icon">
                           <svg width="12" height="13" aria-hidden="true">
@@ -189,12 +223,15 @@ export function ModalRegister() {
                     </div>
                   </div>
                 </div>
-                <div className="sign-up__checkbox">
+                <div
+                  className={cn('sign-up__checkbox', {
+                    'custom-input--error': errors?.agreement,
+                  })}
+                >
                   <label>
                     <input
                       type="checkbox"
-                      value="user-agreement"
-                      name="user-agreement"
+                      {...register('agreement')}
                       defaultChecked={true}
                     />
                     <span className="sign-up__checkbox-icon">
@@ -206,6 +243,9 @@ export function ModalRegister() {
                       Я соглашаюсь с <span>политикой конфиденциальности</span>{' '}
                       компании
                     </span>
+                    <div className="custom-input__error">
+                      {errors.agreement?.message}
+                    </div>
                   </label>
                 </div>
                 <button className="btn sign-up__button" type="submit">

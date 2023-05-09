@@ -8,6 +8,7 @@ export enum UsernameLength {
   MAX = 15,
 }
 export enum AuthError {
+  ACCEPT_REQUIRED = "Acceptance of the company's privacy policy is required",
   ALREADY_EXISTS = 'User with this email already exists',
   WRONG_CREDENTIALS = 'Wrong email or password',
   INVALID_EMAIL = 'The email is not valid',

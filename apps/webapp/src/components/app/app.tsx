@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute } from '../../app.constants';
-import { WelcomeScreen } from '../../pages/welcome-screen';
+import { WelcomeScreen } from '../../pages';
 import { ModalProvider } from '../../contexts';
 
 export function App() {

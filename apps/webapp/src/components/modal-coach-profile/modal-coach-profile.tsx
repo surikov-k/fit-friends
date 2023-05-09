@@ -1,10 +1,22 @@
-import { FormEvent, useContext } from 'react';
+import { useContext } from 'react';
 import { ModalContext } from '../../contexts';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  coachProfileFormOptions,
+  CoachProfileFormValues,
+} from './coach-profile-form-options';
+import { WorkoutsButtons } from '../workout-buttons';
+import { SkillButtons } from '../skill-buttons';
+import { Info } from '../info';
 
 export function ModalCoachProfile() {
   const { close } = useContext(ModalContext);
-  const formSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<CoachProfileFormValues>(coachProfileFormOptions);
+
+  const { handleSubmit } = form;
+
+  const onSubmit: SubmitHandler<CoachProfileFormValues> = (data) => {
+    console.log(data);
     close();
   };
   return (
@@ -12,139 +24,14 @@ export function ModalCoachProfile() {
       <div className="popup-form__wrapper">
         <div className="popup-form__content">
           <div className="popup-form__form">
-            <form method="get" onSubmit={formSubmitHandler}>
+            <form onSubmit={handleSubmit(onSubmit, (d) => console.log(d))}>
               <div className="questionnaire-coach">
                 <h1 className="visually-hidden">Опросник</h1>
                 <div className="questionnaire-coach__wrapper">
-                  <div className="questionnaire-coach__block">
-                    <span className="questionnaire-coach__legend">
-                      Ваша специализация (тип) тренировок
-                    </span>
-                    <div className="specialization-checkbox questionnaire-coach__specializations">
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="yoga"
-                          />
-                          <span className="btn-checkbox__btn">Йога</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="running"
-                          />
-                          <span className="btn-checkbox__btn">Бег</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="power"
-                          />
-                          <span className="btn-checkbox__btn">Силовые</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="aerobics"
-                          />
-                          <span className="btn-checkbox__btn">Аэробика</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="crossfit"
-                          />
-                          <span className="btn-checkbox__btn">Кроссфит</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="boxing"
-                          />
-                          <span className="btn-checkbox__btn">Бокс</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="pilates"
-                          />
-                          <span className="btn-checkbox__btn">Пилатес</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input
-                            className="visually-hidden"
-                            type="checkbox"
-                            name="specialisation"
-                            value="stretching"
-                          />
-                          <span className="btn-checkbox__btn">Стрейчинг</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="questionnaire-coach__block">
-                    <span className="questionnaire-coach__legend">
-                      Ваш уровень
-                    </span>
-                    <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-coach__radio">
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="level" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            Новичок
-                          </span>
-                        </label>
-                      </div>
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="level" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            Любитель
-                          </span>
-                        </label>
-                      </div>
-                      <div className="custom-toggle-radio__block">
-                        <label>
-                          <input type="radio" name="level" />
-                          <span className="custom-toggle-radio__icon"></span>
-                          <span className="custom-toggle-radio__label">
-                            Профессионал
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
+                  <WorkoutsButtons form={form} />
+
+                  <SkillButtons form={form} />
+
                   <div className="questionnaire-coach__block">
                     <span className="questionnaire-coach__legend">
                       Ваши дипломы и сертификаты
@@ -167,20 +54,17 @@ export function ModalCoachProfile() {
                     </div>
                   </div>
                   <div className="questionnaire-coach__block">
-                    <span className="questionnaire-coach__legend">
-                      Расскажите о своём опыте, который мы сможем проверить
-                    </span>
-                    <div className="custom-textarea questionnaire-coach__textarea">
-                      <label>
-                        <textarea name="description" placeholder=" "></textarea>
-                      </label>
-                    </div>
+                    <Info
+                      title={
+                        'Расскажите о своём опыте, который мы сможем проверить'
+                      }
+                      form={form}
+                    />
                     <div className="questionnaire-coach__checkbox">
                       <label>
                         <input
                           type="checkbox"
-                          value="individual-training"
-                          name="individual-training"
+                          {...form.register('hasPersonalTrainings')}
                         />
                         <span className="questionnaire-coach__checkbox-icon">
                           <svg width="9" height="6" aria-hidden="true">
