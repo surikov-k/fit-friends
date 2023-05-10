@@ -1,12 +1,24 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import cn from 'classnames';
 
 import { ModalContext } from '../../contexts';
 import { FormValues, loginFormOptions } from './login-form-options';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loginActions } from '../../store/api-actions';
+import { getUserState } from '../../store/user-slice';
+import { AuthorizationStatus } from '../../app.constants';
 
 export function ModalLogin() {
   const { close } = useContext(ModalContext);
+  const dispatch = useAppDispatch();
+  const userState = useAppSelector(getUserState);
+
+  useEffect(() => {
+    if (userState.authStatus === AuthorizationStatus.Auth) {
+      close();
+    }
+  }, [close, userState.authStatus]);
 
   const {
     register,
@@ -15,8 +27,7 @@ export function ModalLogin() {
   } = useForm<FormValues>(loginFormOptions);
 
   const submitHandler: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    close();
+    dispatch(loginActions(data));
   };
 
   return (
@@ -46,7 +57,7 @@ export function ModalLogin() {
                 </div>
                 <div
                   className={cn('custom-input sign-in__input', {
-                    'custom-input--error': errors?.password,
+                    'custom-input--error': errors?.password || userState.error,
                   })}
                 >
                   <label>
@@ -56,9 +67,12 @@ export function ModalLogin() {
                     </span>
                     <span className="custom-input__error">
                       {errors.password?.message}
+                      <br />
+                      {userState.error}
                     </span>
                   </label>
                 </div>
+
                 <button className="btn sign-in__button" type="submit">
                   Продолжить
                 </button>
