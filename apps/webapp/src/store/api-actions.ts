@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiError, LoginInterface } from '@fit-friends/shared-types';
 import { AxiosError, AxiosInstance, AxiosResponse, isAxiosError } from 'axios';
+import jwtDecode from 'jwt-decode';
+
 import { AppDispatch, State } from './index';
 import { APIRoute } from '../app.constants';
 import { saveAccessToken, saveRefreshToken } from '../services/tokens';
-import jwtDecode from 'jwt-decode';
-import { saveUser } from './user-slice';
+import { setUser } from './user-slice';
 
 export const loginActions = createAsyncThunk<
   void,
@@ -38,6 +39,6 @@ export const loginActions = createAsyncThunk<
     saveAccessToken(accessToken);
     saveRefreshToken(refreshToken);
     const user = jwtDecode(accessToken);
-    dispatch(saveUser(user));
+    dispatch(setUser(user));
   }
 );

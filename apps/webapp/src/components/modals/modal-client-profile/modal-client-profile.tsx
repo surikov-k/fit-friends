@@ -1,16 +1,14 @@
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { ModalContext } from '../../contexts';
 import {
   clientProfileFormOptions,
   ClientProfileFormValues,
 } from './client-profile-form-options';
 
 import { CaloriesTargetsInputs } from './calories-targets-inputs';
-import { WorkoutsButtons } from '../workout-buttons';
-import { DurationButtons } from '../duration-buttons';
-import { SkillButtons } from '../skill-buttons';
+import { ModalContext } from '../../../contexts';
+import { DurationButtons, SkillButtons, WorkoutsButtons } from '../../forms';
 
 export function ModalClientProfile() {
   const { close } = useContext(ModalContext);

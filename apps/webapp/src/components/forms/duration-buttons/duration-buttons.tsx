@@ -1,8 +1,8 @@
 import { UseFormReturn } from 'react-hook-form';
-
 import { TimeSpan } from '@fit-friends/shared-types';
 import cn from 'classnames';
-import { ClientProfileFormValues } from '../modal-client-profile';
+
+import { ClientProfileFormValues } from '../../modals';
 
 type DurationButtonsProps = {
   form: UseFormReturn<ClientProfileFormValues>;

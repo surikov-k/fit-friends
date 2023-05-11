@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { UseFormReturn } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
-import { FormValues } from '../modal-register/register-form-options';
+import { FormValues } from '../../modals/modal-register/register-form-options';
 
 type UploadAvatarProps = {
   form: UseFormReturn<FormValues>;

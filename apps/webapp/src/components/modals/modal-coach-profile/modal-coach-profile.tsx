@@ -1,13 +1,11 @@
 import { useContext } from 'react';
-import { ModalContext } from '../../contexts';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   coachProfileFormOptions,
   CoachProfileFormValues,
 } from './coach-profile-form-options';
-import { WorkoutsButtons } from '../workout-buttons';
-import { SkillButtons } from '../skill-buttons';
-import { Info } from '../info';
+import { ModalContext } from '../../../contexts';
+import { Info, SkillButtons, WorkoutsButtons } from '../../forms';
 
 export function ModalCoachProfile() {
   const { close } = useContext(ModalContext);

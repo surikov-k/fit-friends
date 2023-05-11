@@ -1,9 +1,13 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts';
 import { ModalLogin, ModalRegister } from '../../components';
+import { useAppSelector } from '../../hooks';
+import { getAuthStatus } from '../../store/user-slice';
+import { AuthorizationStatus } from '../../app.constants';
 
 export function WelcomeScreen(): JSX.Element {
   const { open } = useContext(ModalContext);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const loginClickHandler = () => {
     open(<ModalLogin />);
@@ -56,27 +60,46 @@ export function WelcomeScreen(): JSX.Element {
             </picture>
           </div>
           <div className="intro__buttons">
-            <button
-              className="btn intro__button"
-              type="button"
-              onClick={registerClickHandler}
-            >
-              Регистрация
-            </button>
-            <p className="intro__text">
-              Есть аккаунт?{' '}
-              <button
-                className="intro__link"
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                }}
-                onClick={loginClickHandler}
-              >
-                Вход
-              </button>
-            </p>
+            {authStatus !== AuthorizationStatus.Coach &&
+            authStatus !== AuthorizationStatus.Client ? (
+              <>
+                <button
+                  className="btn intro__button"
+                  type="button"
+                  onClick={registerClickHandler}
+                >
+                  Регистрация
+                </button>
+                <p className="intro__text">
+                  Есть аккаунт?{' '}
+                  <button
+                    className="intro__link"
+                    style={{
+                      border: 'none',
+                      background: 'transparent',
+                      cursor: 'pointer',
+                    }}
+                    onClick={loginClickHandler}
+                  >
+                    Вход
+                  </button>
+                </p>
+              </>
+            ) : (
+              <p className="intro__text">
+                <button
+                  className="intro__link"
+                  style={{
+                    border: 'none',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                  }}
+                  onClick={loginClickHandler}
+                >
+                  Выход
+                </button>
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -3,12 +3,11 @@ import { SubmitHandler, useController, useForm } from 'react-hook-form';
 import cn from 'classnames';
 
 import { Gender, Location, UserRole } from '@fit-friends/shared-types';
-import { ModalContext } from '../../contexts';
 import { ModalClientProfile } from '../modal-client-profile';
 import { ModalCoachProfile } from '../modal-coach-profile';
 import { FormValues, registerFormOptions } from './register-form-options';
-import { Select } from '../select';
-import { UploadAvatar } from '../upload-avatar';
+import { ModalContext } from '../../../contexts';
+import { Select, UploadAvatar } from '../../forms';
 
 export function ModalRegister() {
   const { open, close } = useContext(ModalContext);

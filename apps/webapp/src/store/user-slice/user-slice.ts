@@ -12,7 +12,7 @@ type LoggedUser = {
 };
 
 const initialState: {
-  authStatus: string;
+  authStatus: AuthorizationStatus;
   user: LoggedUser | null;
   error: string;
 } = {
@@ -25,17 +25,24 @@ export const userSlice = createSlice({
   name: NameSpace.User,
   initialState,
   reducers: {
-    saveUser: (state, action) => {
+    setUser: (state, action) => {
       const { email, name, role, sub: id } = action.payload;
       state.user = { email, name, role, id };
-      console.log(state.user);
+      if (role === UserRole.Coach) {
+        state.authStatus = AuthorizationStatus.Coach;
+      }
+      if (role === UserRole.Client) {
+        state.authStatus = AuthorizationStatus.Client;
+      }
+    },
+    setAuthStatus: (state, action) => {
+      state.authStatus = action.payload;
     },
   },
   extraReducers(builder) {
     builder
       .addCase(loginActions.fulfilled, (state) => {
         state.error = '';
-        state.authStatus = AuthorizationStatus.Auth;
       })
       .addCase(loginActions.rejected, (state, action) => {
         state.error = action.payload ? action.payload.message : '';
@@ -43,4 +50,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { saveUser } = userSlice.actions;
+export const { setUser } = userSlice.actions;

@@ -1,24 +1,32 @@
 import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
-import { ModalContext } from '../../contexts';
 import { FormValues, loginFormOptions } from './login-form-options';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginActions } from '../../store/api-actions';
-import { getUserState } from '../../store/user-slice';
-import { AuthorizationStatus } from '../../app.constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { ModalContext } from '../../../contexts';
+import { getAuthError, getAuthStatus } from '../../../store/user-slice';
+import { AppRoute, AuthorizationStatus } from '../../../app.constants';
+import { loginActions } from '../../../store/api-actions';
 
 export function ModalLogin() {
+  const navigate = useNavigate();
   const { close } = useContext(ModalContext);
   const dispatch = useAppDispatch();
-  const userState = useAppSelector(getUserState);
+  const authStatus = useAppSelector(getAuthStatus);
+  const authError = useAppSelector(getAuthError);
 
   useEffect(() => {
-    if (userState.authStatus === AuthorizationStatus.Auth) {
+    if (authStatus === AuthorizationStatus.Client) {
+      navigate(AppRoute.Main);
       close();
     }
-  }, [close, userState.authStatus]);
+    if (authStatus === AuthorizationStatus.Coach) {
+      navigate(AppRoute.Coach);
+      close();
+    }
+  }, [close, authStatus, navigate]);
 
   const {
     register,
@@ -57,7 +65,7 @@ export function ModalLogin() {
                 </div>
                 <div
                   className={cn('custom-input sign-in__input', {
-                    'custom-input--error': errors?.password || userState.error,
+                    'custom-input--error': errors?.password || authError,
                   })}
                 >
                   <label>
@@ -68,7 +76,7 @@ export function ModalLogin() {
                     <span className="custom-input__error">
                       {errors.password?.message}
                       <br />
-                      {userState.error}
+                      {authError}
                     </span>
                   </label>
                 </div>
