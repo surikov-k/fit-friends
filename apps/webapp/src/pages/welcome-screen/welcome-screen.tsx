@@ -8,6 +8,7 @@ import { AuthorizationStatus } from '../../app.constants';
 export function WelcomeScreen(): JSX.Element {
   const { open } = useContext(ModalContext);
   const authStatus = useAppSelector(getAuthStatus);
+  console.log('welcome-screen.tsx', authStatus);
   const dispatch = useAppDispatch();
 
   const loginClickHandler = () => {
@@ -65,8 +66,7 @@ export function WelcomeScreen(): JSX.Element {
             </picture>
           </div>
           <div className="intro__buttons">
-            {authStatus !== AuthorizationStatus.Coach &&
-            authStatus !== AuthorizationStatus.Client ? (
+            {authStatus === AuthorizationStatus.NoAuth ? (
               <>
                 <button
                   className="btn intro__button"

@@ -1,29 +1,32 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { AppRoute } from '../../app.constants';
-import { CoachProfile, Main, WelcomeScreen } from '../../pages';
+import { AppRoute, AuthorizationStatus } from '../../app.constants';
+import { Main, NotFound, WelcomeScreen } from '../../pages';
 import { ModalProvider } from '../../contexts';
 import { Layout } from '../layout';
 import { useAppSelector } from '../../hooks';
 import { getAuthStatus } from '../../store/user-slice';
-
-import { ClientRoute, CoachRoute } from '../routs';
+import { PrivateRoute } from '../routs';
+import { Profile } from '../profile';
 
 export function App() {
   const authStatus = useAppSelector(getAuthStatus);
+  console.log('app.tsx', authStatus);
+  if (authStatus === AuthorizationStatus.Unknown) {
+    return <p>Loading</p>;
+  }
   return (
     <BrowserRouter>
       <ModalProvider>
         <Routes>
-          <Route path={AppRoute.Root} element={<WelcomeScreen />} />
+          <Route path={AppRoute.Welcome} element={<WelcomeScreen />} />
           <Route element={<Layout />}>
-            <Route element={<ClientRoute authStatus={authStatus} />}>
-              <Route path={AppRoute.Main} element={<Main />} />
-            </Route>
-            <Route element={<CoachRoute authStatus={authStatus} />}>
-              <Route path={AppRoute.Coach} element={<CoachProfile />} />
+            <Route path={AppRoute.Profile} element={<Profile />} />
+            <Route element={<PrivateRoute role={AuthorizationStatus.Client} />}>
+              <Route path={AppRoute.Root} element={<Main />} />
             </Route>
           </Route>
+          <Route path={AppRoute.NotFound} element={<NotFound />} />
         </Routes>
       </ModalProvider>
     </BrowserRouter>

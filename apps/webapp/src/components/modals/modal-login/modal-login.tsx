@@ -26,7 +26,7 @@ export function ModalLogin() {
       close();
     }
     if (authStatus === AuthorizationStatus.Coach) {
-      navigate(AppRoute.Coach);
+      navigate(AppRoute.Profile);
       close();
     }
   }, [close, authStatus, navigate]);

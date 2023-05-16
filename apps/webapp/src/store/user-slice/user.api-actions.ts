@@ -14,7 +14,7 @@ import {
 } from '@fit-friends/shared-types';
 
 import { AppDispatch, Extra, State } from '../index';
-import { APIRoute } from '../../app.constants';
+import { APIRoute, AuthorizationStatus } from '../../app.constants';
 import {
   dropAccessToken,
   dropRefreshToken,
@@ -161,4 +161,17 @@ export const uploadAvatarAction = createAsyncThunk<
     },
   });
   return response.data.filename;
+});
+
+export const checkAuthAction = createAsyncThunk<
+  AuthorizationStatus,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: Extra;
+  }
+>('user/checkAuth', async (_, { extra: { api } }) => {
+  const { data } = await api.get(APIRoute.CheckAuth);
+  return data;
 });

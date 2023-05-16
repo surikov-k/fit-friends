@@ -31,7 +31,7 @@ export function ModalCoachProfile() {
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Coach) {
       close();
-      navigate(AppRoute.Coach);
+      navigate(AppRoute.Profile);
     }
   }, [close, authStatus, navigate]);
 

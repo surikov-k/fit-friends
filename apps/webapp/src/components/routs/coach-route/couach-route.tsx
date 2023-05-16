@@ -7,6 +7,7 @@ type AuthRouteProps = {
 };
 
 export function CoachRoute({ authStatus, children }: AuthRouteProps) {
+  console.log('coach-route.tsx', authStatus);
   return authStatus === AuthorizationStatus.Coach ? (
     children ? (
       children
@@ -14,6 +15,6 @@ export function CoachRoute({ authStatus, children }: AuthRouteProps) {
       <Outlet />
     )
   ) : (
-    <Navigate to={AppRoute.Root} />
+    <Navigate to={AppRoute.Welcome} />
   );
 }

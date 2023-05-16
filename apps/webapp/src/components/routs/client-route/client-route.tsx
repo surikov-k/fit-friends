@@ -14,6 +14,6 @@ export function ClientRoute({ authStatus, children }: AuthRouteProps) {
       <Outlet />
     )
   ) : (
-    <Navigate to={AppRoute.Root} />
+    <Navigate to={AppRoute.Welcome} />
   );
 }

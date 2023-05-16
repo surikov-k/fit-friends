@@ -17,13 +17,25 @@ import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { AccessTokenGuard, RefreshTokenGuard } from '../../common/guards';
 import { LoginDto, RegisterDto } from './dto';
-import { CurrentUserId } from '../../common/decorators';
+import { CurrentUserId, CurrentUserRole } from '../../common/decorators';
+import { UserRole } from '@fit-friends/shared-types';
 
 @ApiTags('auth')
 @Controller('auth')
 @UseFilters()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get()
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    type: String,
+    status: HttpStatus.OK,
+    description: 'Check user status',
+  })
+  public async checkAuth(@CurrentUserRole() role: UserRole) {
+    return role;
+  }
 
   @Post('register')
   @ApiResponse({

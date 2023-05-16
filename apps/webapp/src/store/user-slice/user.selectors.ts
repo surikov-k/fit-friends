@@ -8,3 +8,4 @@ export const getAuthStatus = (state: State) => state[NameSpace.User].authStatus;
 export const getRegistrationStatus = (state: State) =>
   state[NameSpace.User].regStatus;
 export const getAuthError = (state: State) => state[NameSpace.User].error;
+export const getCurrentUserId = (state: State) => state[NameSpace.User].user.id;

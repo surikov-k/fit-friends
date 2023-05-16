@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, NameSpace } from '../../app.constants';
 import { UserRole } from '@fit-friends/shared-types';
 import {
+  checkAuthAction,
   loginAction,
   logoutAction,
   registerUserAction,
@@ -94,6 +95,10 @@ export const userSlice = createSlice({
 
     builder.addCase(uploadAvatarAction.fulfilled, (state, action) => {
       state.user.avatar = action.payload;
+    });
+
+    builder.addCase(checkAuthAction.fulfilled, (state, action) => {
+      state.authStatus = action.payload;
     });
   },
 });

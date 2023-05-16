@@ -1,4 +1,9 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getCurrentUserId } from '../../store/user-slice';
+
 export function CoachProfile() {
+  const dispatch = useAppDispatch();
+  const currentUserid = useAppSelector(getCurrentUserId);
   return (
     <main>
       <section className="inner-page">
