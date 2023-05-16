@@ -1,16 +1,21 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts';
 import { ModalLogin, ModalRegister } from '../../components';
-import { useAppSelector } from '../../hooks';
-import { getAuthStatus } from '../../store/user-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthStatus, logoutAction } from '../../store/user-slice';
 import { AuthorizationStatus } from '../../app.constants';
 
 export function WelcomeScreen(): JSX.Element {
   const { open } = useContext(ModalContext);
   const authStatus = useAppSelector(getAuthStatus);
+  const dispatch = useAppDispatch();
 
   const loginClickHandler = () => {
     open(<ModalLogin />);
+  };
+
+  const logoutClickHandler = () => {
+    dispatch(logoutAction());
   };
 
   const registerClickHandler = () => {
@@ -94,7 +99,7 @@ export function WelcomeScreen(): JSX.Element {
                     background: 'transparent',
                     cursor: 'pointer',
                   }}
-                  onClick={loginClickHandler}
+                  onClick={logoutClickHandler}
                 >
                   Выход
                 </button>

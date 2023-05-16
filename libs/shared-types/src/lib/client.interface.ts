@@ -5,6 +5,6 @@ export interface ClientInterface extends UserInterface {
   duration: TimeSpan;
   caloriesTarget: number;
   caloriesPerDay: number;
-  readiness: boolean;
-  info: string;
+  readiness?: boolean;
+  info?: string;
 }

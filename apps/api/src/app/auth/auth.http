@@ -26,8 +26,8 @@ Content-Type: application/json
 }
 
 ### Logout
-GET http://localhost:4000/api/auth/logout HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JbQsNC90L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2ODAxNzkxOTEsImV4cCI6MTY4MDE4MDA5MX0._kQaHgZ9JwQcaLUQ-pDH8hndB6jKM3HAAwPVUvl-1D0
+DELETE http://localhost:4000/api/auth/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQ0ZGNkOThlYWU5ZjQ4OWQ5YzYwNDIiLCJlbWFpbCI6Imxlb25vcmEua2lsYmFja0Bob3RtYWlsLmNvbSIsIm5hbWUiOiLQldC70LjQt9Cw0LLQtdGC0LAiLCJyb2xlIjoiQ2xpZW50IiwiaWF0IjoxNjgzODM1NTM5LCJleHAiOjE2ODM4MzY0Mzl9.KIXKmdxbUsvym9xYiFmvwnSANAAi5v5u24VIL5OWY0E
 
 ### Login a client
 POST http://localhost:4000/api/auth/login HTTP/1.1
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 {
   "email": "leonora.kilback@hotmail.com",
-  "password": "1234567"
+  "password": "123456"
 }
 
 ### Login a coach

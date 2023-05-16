@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import {
@@ -9,16 +10,31 @@ import {
 import { CaloriesTargetsInputs } from './calories-targets-inputs';
 import { ModalContext } from '../../../contexts';
 import { DurationButtons, SkillButtons, WorkoutsButtons } from '../../forms';
+import { AppRoute, AuthorizationStatus } from '../../../app.constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import {
+  getAuthStatus,
+  saveClientProfileAction,
+} from '../../../store/user-slice';
 
 export function ModalClientProfile() {
   const { close } = useContext(ModalContext);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(getAuthStatus);
   const form = useForm<ClientProfileFormValues>(clientProfileFormOptions);
 
   const { handleSubmit } = form;
 
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Client) {
+      close();
+      navigate(AppRoute.Main);
+    }
+  }, [close, authStatus, navigate]);
+
   const onSubmit: SubmitHandler<ClientProfileFormValues> = (data) => {
-    console.log(data);
-    close();
+    dispatch(saveClientProfileAction(data));
   };
 
   return (

@@ -1,29 +1,37 @@
 import cn from 'classnames';
 import { UseFormReturn } from 'react-hook-form';
-import { useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect } from 'react';
+
 import { FormValues } from '../../modals/modal-register/register-form-options';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getUserAvatar, uploadAvatarAction } from '../../../store/user-slice';
+import { FILES_URL } from '../../../app.constants';
 
 type UploadAvatarProps = {
   form: UseFormReturn<FormValues>;
 };
 
 export function UploadAvatar({ form }: UploadAvatarProps) {
+  const dispatch = useAppDispatch();
+  const avatar = useAppSelector(getUserAvatar);
+
   const {
     register,
     formState: { errors },
     setValue,
-    watch,
   } = form;
 
-  const image = useRef('');
-  const upload = watch('upload');
-
   useEffect(() => {
-    if (upload?.length) {
-      image.current = URL.createObjectURL(upload[0]);
-      setValue('avatar', image.current, { shouldValidate: true });
-    }
-  }, [upload, setValue]);
+    setValue('avatar', avatar ? avatar : '', { shouldValidate: true });
+  }, [avatar, setValue]);
+
+  const avatarInputChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (!evt.target.files) return;
+
+    const formData = new FormData();
+    formData.append('avatar', evt.target.files[0]);
+    dispatch(uploadAvatarAction(formData));
+  };
 
   return (
     <div className="sign-up__load-photo">
@@ -33,16 +41,18 @@ export function UploadAvatar({ form }: UploadAvatarProps) {
             className="visually-hidden"
             type="file"
             accept="image/png, image/jpeg"
-            {...register('upload')}
+            {...register('upload', {
+              onChange: avatarInputChangeHandler,
+            })}
           />
           <span
             className="input-load-avatar__btn"
             style={{
-              backgroundImage: `url(${image.current})`,
+              backgroundImage: `url(${avatar ? FILES_URL + avatar : ''})`,
               backgroundSize: 'cover',
             }}
           >
-            {!image.current && (
+            {!avatar && (
               <svg width="20" height="20" aria-hidden="true">
                 <use xlinkHref="#icon-import"></use>
               </svg>

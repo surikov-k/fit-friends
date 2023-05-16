@@ -6,9 +6,12 @@ import cn from 'classnames';
 import { FormValues, loginFormOptions } from './login-form-options';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { ModalContext } from '../../../contexts';
-import { getAuthError, getAuthStatus } from '../../../store/user-slice';
+import {
+  getAuthError,
+  getAuthStatus,
+  loginAction,
+} from '../../../store/user-slice';
 import { AppRoute, AuthorizationStatus } from '../../../app.constants';
-import { loginActions } from '../../../store/api-actions';
 
 export function ModalLogin() {
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ export function ModalLogin() {
   } = useForm<FormValues>(loginFormOptions);
 
   const submitHandler: SubmitHandler<FormValues> = (data) => {
-    dispatch(loginActions(data));
+    dispatch(loginAction(data));
   };
 
   return (

@@ -9,12 +9,11 @@ import { getAccessToken } from './tokens';
 import { ApiError } from '@fit-friends/shared-types';
 import { toast } from 'react-toastify';
 
-const BACKEND_URL = 'http://localhost:4000/api';
 const REQUEST_TIMEOUT = 5000;
 
-export function createApi(): AxiosInstance {
+export function createApi(url: string): AxiosInstance {
   const api = axios.create({
-    baseURL: BACKEND_URL,
+    baseURL: url,
     timeout: REQUEST_TIMEOUT,
   });
 
@@ -32,6 +31,9 @@ export function createApi(): AxiosInstance {
     (response) => response,
     (error: AxiosError<ApiError>) => {
       if (error.response && shouldShowError(error.response)) {
+        if (Array.isArray(error.response.data.message)) {
+          error.response.data.message = error.response.data.message.join('\n');
+        }
         toast.error(error.response.data.message);
       }
       return Promise.reject(error);

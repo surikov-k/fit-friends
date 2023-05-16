@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpException,
@@ -54,18 +55,23 @@ export class AuthController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiResponse({
-    status: HttpStatus.OK,
+    status: HttpStatus.NO_CONTENT,
     description: 'A user successfully logged out',
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not logged in',
   })
-  @Get('logout')
-  logout(@CurrentUserId() userId: string) {
-    return this.authService.logout(userId);
+  @Delete('logout')
+  async logout(@CurrentUserId() userId: string) {
+    try {
+      await this.authService.logout(userId);
+      return;
+    } catch ({ message, status }) {
+      throw new HttpException(message, status);
+    }
   }
 
   @UseGuards(RefreshTokenGuard)

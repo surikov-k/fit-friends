@@ -1,41 +1,52 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useController, useForm } from 'react-hook-form';
 import cn from 'classnames';
 
 import { Gender, Location, UserRole } from '@fit-friends/shared-types';
-import { ModalClientProfile } from '../modal-client-profile';
-import { ModalCoachProfile } from '../modal-coach-profile';
 import { FormValues, registerFormOptions } from './register-form-options';
 import { ModalContext } from '../../../contexts';
 import { Select, UploadAvatar } from '../../forms';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import {
+  getAuthError,
+  getRegistrationStatus,
+  registerUserAction,
+} from '../../../store/user-slice';
+import { ModalCoachProfile } from '../modal-coach-profile';
+import { ModalClientProfile } from '../modal-client-profile';
 
 export function ModalRegister() {
   const { open, close } = useContext(ModalContext);
   const form = useForm<FormValues>(registerFormOptions);
+  const dispatch = useAppDispatch();
+  const authError = useAppSelector(getAuthError);
+  const registrationStatus = useAppSelector(getRegistrationStatus);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     control,
-    watch,
   } = form;
-
-  const role = watch('role');
 
   const {
     field: { onChange: onLocationChange },
   } = useController({ name: 'location', control });
 
   const submit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    close();
-    if (role === UserRole.Client) {
+    dispatch(registerUserAction(data));
+  };
+
+  useEffect(() => {
+    if (registrationStatus === UserRole.Client) {
+      close();
       open(<ModalClientProfile />);
-    } else {
+    }
+    if (registrationStatus === UserRole.Coach) {
+      close();
       open(<ModalCoachProfile />);
     }
-  };
+  }, [registrationStatus, close, open]);
 
   const locationOptions = Object.keys(Location).map((key) => ({
     label: key,
@@ -50,7 +61,7 @@ export function ModalRegister() {
             <h1 className="popup-form__title">Регистрация</h1>
           </div>
           <div className="popup-form__form">
-            <form onSubmit={handleSubmit(submit, (e) => console.log(e))}>
+            <form onSubmit={handleSubmit(submit)}>
               <div className="sign-up">
                 <UploadAvatar form={form} />
                 <div className="sign-up__data">
@@ -184,10 +195,8 @@ export function ModalRegister() {
                         <input
                           className="visually-hidden"
                           type="radio"
-                          // name="role"
                           value="Coach"
                           defaultChecked={true}
-                          // onChange={handleCoachSelect}
                           {...register('role')}
                         />
                         <span className="role-btn__icon">
@@ -205,9 +214,7 @@ export function ModalRegister() {
                         <input
                           className="visually-hidden"
                           type="radio"
-                          // name="role"
                           value="Client"
-                          // onChange={handleClientSelect}
                           {...register('role')}
                         />
                         <span className="role-btn__icon">
@@ -250,6 +257,12 @@ export function ModalRegister() {
                 <button className="btn sign-up__button" type="submit">
                   Продолжить
                 </button>
+                <div
+                  className="custom-input custom-input--error"
+                  style={{ justifyContent: 'center' }}
+                >
+                  <span className="custom-input__error">{authError}</span>
+                </div>
               </div>
             </form>
           </div>

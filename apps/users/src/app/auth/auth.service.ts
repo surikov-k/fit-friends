@@ -98,7 +98,7 @@ export class AuthService {
     const entity = new UserEntity(user);
     entity.clearRefreshTokenHash();
 
-    await this.userRepository.update(userId, entity);
+    return this.userRepository.update(userId, entity);
   }
 
   public async getTokens(payload: JwtPayload): Promise<Tokens> {

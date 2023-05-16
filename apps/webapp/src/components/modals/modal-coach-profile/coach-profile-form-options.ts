@@ -10,14 +10,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 const validationSchema = Yup.object().shape({
   certificate: Yup.string(),
-  hasPersonalTrainings: Yup.string(),
+  hasPersonalTrainings: Yup.boolean(),
   skill: Yup.string()
     .required(REQUIRED_FILED_MESSAGE)
     .oneOf(Object.values(Skill), REQUIRED_FILED_MESSAGE),
-  trainings: Yup.array()
-    .typeError(REQUIRED_FILED_MESSAGE)
-    .of(Yup.string().oneOf(Object.values(WorkoutType)))
-    .min(1, REQUIRED_FILED_MESSAGE),
+  trainings: Yup.array(
+    Yup.string().required().oneOf(Object.values(WorkoutType))
+  ).required(),
   achievements: Yup.string()
     .required(REQUIRED_FILED_MESSAGE)
     .min(CoachAchievements.MIN, UserError.ACHIEVEMENTS_TOO_SMALL)

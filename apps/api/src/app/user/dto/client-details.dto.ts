@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsEnum,
   IsInt,
+  IsOptional,
   IsString,
   Max,
   MaxLength,
@@ -89,6 +90,7 @@ export class ClientDetailsDto {
     example: true,
   })
   @IsBoolean({ groups: [UserRole.Client] })
+  @IsOptional()
   readiness: boolean;
 
   @ApiProperty({
@@ -105,5 +107,6 @@ export class ClientDetailsDto {
     message: UserError.CLIENT_INGO_TOO_BIG,
     groups: [UserRole.Client],
   })
+  @IsOptional()
   info: string;
 }

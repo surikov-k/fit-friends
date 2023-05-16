@@ -1,28 +1,46 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
 import {
   coachProfileFormOptions,
   CoachProfileFormValues,
 } from './coach-profile-form-options';
 import { ModalContext } from '../../../contexts';
 import { Info, SkillButtons, WorkoutsButtons } from '../../forms';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import {
+  getAuthStatus,
+  saveCoachProfileAction,
+} from '../../../store/user-slice';
+import { AppRoute, AuthorizationStatus } from '../../../app.constants';
 
 export function ModalCoachProfile() {
   const { close } = useContext(ModalContext);
   const form = useForm<CoachProfileFormValues>(coachProfileFormOptions);
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { handleSubmit } = form;
 
+  const authStatus = useAppSelector(getAuthStatus);
+
   const onSubmit: SubmitHandler<CoachProfileFormValues> = (data) => {
-    console.log(data);
-    close();
+    dispatch(saveCoachProfileAction(data));
   };
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Coach) {
+      close();
+      navigate(AppRoute.Coach);
+    }
+  }, [close, authStatus, navigate]);
+
   return (
     <div className="popup-form popup-form--questionnaire-coach">
       <div className="popup-form__wrapper">
         <div className="popup-form__content">
           <div className="popup-form__form">
-            <form onSubmit={handleSubmit(onSubmit, (d) => console.log(d))}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="questionnaire-coach">
                 <h1 className="visually-hidden">Опросник</h1>
                 <div className="questionnaire-coach__wrapper">
