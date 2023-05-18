@@ -8,7 +8,6 @@ import { AuthorizationStatus } from '../../app.constants';
 export function WelcomeScreen(): JSX.Element {
   const { open } = useContext(ModalContext);
   const authStatus = useAppSelector(getAuthStatus);
-  console.log('welcome-screen.tsx', authStatus);
   const dispatch = useAppDispatch();
 
   const loginClickHandler = () => {

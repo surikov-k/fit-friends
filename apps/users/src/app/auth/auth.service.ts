@@ -144,13 +144,14 @@ export class AuthService {
     return tokens;
   }
 
-  getJwtPayload({ _id, email, name, role }: UserInterface): JwtPayload {
+  getJwtPayload({ _id, email, name, role, avatar }: UserInterface): JwtPayload {
     return {
       // sub: _id.toString(),
       sub: _id,
       email,
       name,
       role,
+      avatar,
     };
   }
 

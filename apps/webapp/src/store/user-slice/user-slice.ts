@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthorizationStatus, NameSpace } from '../../app.constants';
-import { UserRole } from '@fit-friends/shared-types';
+import { AuthorizationStatus, StateSlice } from '../../app.constants';
+import { JwtPayload, UserInterface, UserRole } from '@fit-friends/shared-types';
 import {
-  checkAuthAction,
+  checkAuth,
+  fetchUserInfo,
   loginAction,
   logoutAction,
   registerUserAction,
   saveClientProfileAction,
   saveCoachProfileAction,
-  uploadAvatarAction,
+  updateUserProfileAction,
 } from './user.api-actions';
+import { getAccessToken } from '../../services/tokens';
+import jwtDecode from 'jwt-decode';
 
 type LoggedUser = {
   email: string;
@@ -24,6 +27,8 @@ const initialState: {
   regStatus: UserRole | null;
   user: LoggedUser;
   error: string;
+  userInfo: UserInterface | null;
+  isLoading: boolean;
 } = {
   authStatus: AuthorizationStatus.Unknown,
   regStatus: null,
@@ -34,11 +39,13 @@ const initialState: {
     role: null,
     id: '',
   },
+  userInfo: null,
   error: '',
+  isLoading: false,
 };
 
 export const userSlice = createSlice({
-  name: NameSpace.User,
+  name: StateSlice.User,
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -46,8 +53,8 @@ export const userSlice = createSlice({
       .addCase(registerUserAction.fulfilled, (state, action) => {
         state.error = '';
 
-        const { email, name, role, sub: id } = action.payload;
-        state.user = { email, name, role, id };
+        const { avatar, email, name, role, sub: id } = action.payload;
+        state.user = { avatar, email, name, role, id };
         state.regStatus = role;
       })
       .addCase(registerUserAction.rejected, (state, action) => {
@@ -64,6 +71,17 @@ export const userSlice = createSlice({
       });
 
     builder
+      .addCase(updateUserProfileAction.pending, (state) => {
+        state.error = '';
+        state.isLoading = true;
+      })
+      .addCase(updateUserProfileAction.fulfilled, (state, action) => {
+        state.error = '';
+        state.userInfo = action.payload;
+        state.isLoading = false;
+      });
+
+    builder
       .addCase(saveClientProfileAction.fulfilled, (state) => {
         state.error = '';
         state.authStatus = AuthorizationStatus.Client;
@@ -76,8 +94,8 @@ export const userSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.error = '';
 
-        const { email, name, role, sub: id } = action.payload;
-        state.user = { email, name, role, id };
+        const { avatar, email, name, role, sub: id } = action.payload;
+        state.user = { avatar, email, name, role, id };
         if (role === UserRole.Coach) {
           state.authStatus = AuthorizationStatus.Coach;
         }
@@ -93,12 +111,31 @@ export const userSlice = createSlice({
       state.authStatus = AuthorizationStatus.NoAuth;
     });
 
-    builder.addCase(uploadAvatarAction.fulfilled, (state, action) => {
-      state.user.avatar = action.payload;
-    });
+    builder
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        const {
+          email,
+          name,
+          role,
+          sub: id,
+        } = jwtDecode<JwtPayload>(getAccessToken());
+        state.user = { email, name, role, id };
+        state.authStatus = action.payload;
+      })
+      .addCase(checkAuth.rejected, (state) => {
+        state.authStatus = AuthorizationStatus.NoAuth;
+      });
 
-    builder.addCase(checkAuthAction.fulfilled, (state, action) => {
-      state.authStatus = action.payload;
-    });
+    builder
+      .addCase(fetchUserInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUserInfo.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchUserInfo.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });

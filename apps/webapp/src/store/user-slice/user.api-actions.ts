@@ -11,6 +11,8 @@ import {
   JwtPayload,
   LoginInterface,
   RegisterInterface,
+  UpdateProfileInterface,
+  UserInterface,
 } from '@fit-friends/shared-types';
 
 import { AppDispatch, Extra, State } from '../index';
@@ -121,6 +123,30 @@ export const saveCoachProfileAction = createAsyncThunk<
   }
 );
 
+export const updateUserProfileAction = createAsyncThunk<
+  CoachInterface,
+  UpdateProfileInterface,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: Extra;
+    rejectValue: ApiError;
+  }
+>(
+  'user/updateCoachProfile',
+  async (data, { extra: { api }, rejectWithValue }) => {
+    let response;
+    try {
+      response = await api.patch(APIRoute.Profile, data);
+    } catch (e) {
+      const error = e as AxiosError<ApiError>;
+      const response = error.response as AxiosResponse<ApiError>;
+      return rejectWithValue(response.data);
+    }
+    return response.data;
+  }
+);
+
 export const saveClientProfileAction = createAsyncThunk<
   ClientInterface,
   ClientProfileInterface,
@@ -145,25 +171,7 @@ export const saveClientProfileAction = createAsyncThunk<
   }
 );
 
-export const uploadAvatarAction = createAsyncThunk<
-  string,
-  unknown,
-  {
-    dispatch: AppDispatch;
-    state: State;
-    extra: Extra;
-    rejectValue: ApiError;
-  }
->('user/uploadAvatar', async (formData, { extra: { apiUpload } }) => {
-  const response = await apiUpload.post(APIRoute.UploadAvatar, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  return response.data.filename;
-});
-
-export const checkAuthAction = createAsyncThunk<
+export const checkAuth = createAsyncThunk<
   AuthorizationStatus,
   undefined,
   {
@@ -174,4 +182,25 @@ export const checkAuthAction = createAsyncThunk<
 >('user/checkAuth', async (_, { extra: { api } }) => {
   const { data } = await api.get(APIRoute.CheckAuth);
   return data;
+});
+
+export const fetchUserInfo = createAsyncThunk<
+  UserInterface,
+  UserInterface['_id'],
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: Extra;
+  }
+>('user/getUserInfo', async (userId, { extra: { api }, rejectWithValue }) => {
+  if (!userId) return;
+
+  try {
+    const { data } = await api.get(APIRoute.User.replace(':id', userId));
+    return data;
+  } catch (e) {
+    const error = e as AxiosError<ApiError>;
+    const response = error.response as AxiosResponse<ApiError>;
+    return rejectWithValue(response.data);
+  }
 });

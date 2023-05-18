@@ -7,37 +7,35 @@ type SelectOption = {
   value: string;
 };
 
-type SelectProps = {
+type CustomSelectProps = {
+  styleClass?: string;
   options: SelectOption[];
   onChange: (value: string) => void;
-  value?: SelectOption;
+  value?: string;
   label?: string;
   errors: FieldErrors;
 };
 
-export function Select({
+export function CustomSelect({
+  styleClass = '',
   label,
   options,
   value,
   onChange,
   errors,
-}: SelectProps) {
+}: CustomSelectProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const [selected, setSelected] = useState<SelectOption>(
-    value || {
-      key: '',
-      value: '',
-    }
-  );
+  const [selected, setSelected] = useState<string>(value || '');
   return (
     <div
-      className={cn('custom-select custom-select--not-selected ', {
-        'not-empty': selected.value,
+      className={cn(`custom-select ${styleClass}`, {
+        // 'not-empty': !!selected,
         'is-open': isOpened,
         'custom-input--error': errors?.location,
       })}
     >
       <span className="custom-select__label">{label}</span>
+      <div className="custom-select__placeholder">{selected}</div>
       <button
         onClick={() => setIsOpened(!isOpened)}
         className="custom-select__button"
@@ -45,7 +43,7 @@ export function Select({
         aria-label="Выберите одну из опций"
       >
         <span className="custom-select__text" style={{ fontSize: 'inherit' }}>
-          {selected.value}
+          {selected}
         </span>
         <span className="custom-select__icon">
           <svg width="15" height="6" aria-hidden="true">
@@ -63,12 +61,12 @@ export function Select({
             key={option.key}
             className="custom-select__item"
             onClick={() => {
-              setSelected(option);
+              setSelected(option.value);
               setIsOpened(false);
               onChange(option.value);
             }}
           >
-            {option.key}
+            {option.value}
           </li>
         ))}
       </ul>

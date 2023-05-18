@@ -7,7 +7,7 @@ import {
   CoachProfileFormValues,
 } from './coach-profile-form-options';
 import { ModalContext } from '../../../contexts';
-import { Info, SkillButtons, WorkoutsButtons } from '../../forms';
+import { Info, SkillButtons, WorkoutsField } from '../../forms';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getAuthStatus,
@@ -44,7 +44,7 @@ export function ModalCoachProfile() {
               <div className="questionnaire-coach">
                 <h1 className="visually-hidden">Опросник</h1>
                 <div className="questionnaire-coach__wrapper">
-                  <WorkoutsButtons form={form} />
+                  <WorkoutsField form={form} />
 
                   <SkillButtons form={form} />
 

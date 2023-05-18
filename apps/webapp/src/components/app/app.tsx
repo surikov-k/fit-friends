@@ -11,7 +11,6 @@ import { Profile } from '../profile';
 
 export function App() {
   const authStatus = useAppSelector(getAuthStatus);
-  console.log('app.tsx', authStatus);
   if (authStatus === AuthorizationStatus.Unknown) {
     return <p>Loading</p>;
   }

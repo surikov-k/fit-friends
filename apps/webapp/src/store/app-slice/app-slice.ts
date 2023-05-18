@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../app.constants';
+import { StateSlice } from '../../app.constants';
 
 const initialState = {
   user: null,
 };
 
 export const appSlice = createSlice({
-  name: NameSpace.App,
+  name: StateSlice.App,
   initialState,
   reducers: {},
 });

@@ -43,7 +43,7 @@ export class CoachDetailsDto {
     description: 'Ready for personal training',
     example: true,
   })
-  @IsBoolean()
+  @IsBoolean({ groups: [UserRole.Coach] })
   hasPersonalTrainings: boolean;
 
   @ApiProperty({

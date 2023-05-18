@@ -48,9 +48,9 @@ export function ModalRegister() {
     }
   }, [registrationStatus, close, open]);
 
-  const locationOptions = Object.keys(Location).map((key) => ({
-    label: key,
-    value: key,
+  const locationOptions = Object.entries(Location).map(([key, value]) => ({
+    key,
+    value,
   }));
 
   return (

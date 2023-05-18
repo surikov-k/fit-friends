@@ -1,19 +1,17 @@
 import cn from 'classnames';
 import { UseFormReturn } from 'react-hook-form';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { FormValues } from '../../modals/modal-register/register-form-options';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getUserAvatar, uploadAvatarAction } from '../../../store/user-slice';
-import { FILES_URL } from '../../../app.constants';
+import { APIRoute, FILES_URL } from '../../../app.constants';
+import { apiUpload } from '../../../store';
 
 type UploadAvatarProps = {
   form: UseFormReturn<FormValues>;
 };
 
 export function UploadAvatar({ form }: UploadAvatarProps) {
-  const dispatch = useAppDispatch();
-  const avatar = useAppSelector(getUserAvatar);
+  const [avatar, setAvatar] = useState('');
 
   const {
     register,
@@ -22,15 +20,26 @@ export function UploadAvatar({ form }: UploadAvatarProps) {
   } = form;
 
   useEffect(() => {
-    setValue('avatar', avatar ? avatar : '', { shouldValidate: true });
+    setValue('avatar', avatar ? avatar : '');
   }, [avatar, setValue]);
 
-  const avatarInputChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (!evt.target.files) return;
+  const onAvatarInputChange = async (evt: ChangeEvent<HTMLInputElement>) => {
+    if (!evt.target.files) {
+      return;
+    }
 
     const formData = new FormData();
     formData.append('avatar', evt.target.files[0]);
-    dispatch(uploadAvatarAction(formData));
+    const { data: newAvatar } = await apiUpload.post(
+      APIRoute.UploadAvatar,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    setAvatar(newAvatar.filename);
   };
 
   return (
@@ -42,7 +51,7 @@ export function UploadAvatar({ form }: UploadAvatarProps) {
             type="file"
             accept="image/png, image/jpeg"
             {...register('upload', {
-              onChange: avatarInputChangeHandler,
+              onChange: onAvatarInputChange,
             })}
           />
           <span
@@ -63,17 +72,14 @@ export function UploadAvatar({ form }: UploadAvatarProps) {
       <input type="hidden" {...register('avatar')} />
       <div
         className={cn('sign-up__description', {
-          'custom-input--error': errors?.upload || errors?.avatar,
+          'custom-input--error': errors?.upload,
         })}
       >
         <h2 className="sign-up__legend">Загрузите фото профиля</h2>
         <span className="sign-up__text">
           JPG, PNG, оптимальный размер 100&times;100&nbsp;px
         </span>
-        <span className="custom-input__error">
-          {errors.upload?.message}
-          {errors.avatar?.message}
-        </span>
+        <span className="custom-input__error">{errors.upload?.message}</span>
       </div>
     </div>
   );

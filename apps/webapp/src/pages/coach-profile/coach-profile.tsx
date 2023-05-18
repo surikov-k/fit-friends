@@ -1,244 +1,305 @@
+import { ChangeEvent, useEffect, useState } from 'react';
+import { SubmitHandler, useController, useForm } from 'react-hook-form';
+import cn from 'classnames';
+
+import {
+  CoachInterface,
+  Gender,
+  Location,
+  Skill,
+  UpdateProfileInterface,
+} from '@fit-friends/shared-types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentUserId } from '../../store/user-slice';
+import {
+  fetchUserInfo,
+  getCurrentUserId,
+  getIsUserLoading,
+  getUserInfo,
+  updateUserProfileAction,
+} from '../../store/user-slice';
+import { CustomSelect, WorkoutsButtons } from '../../components/forms';
+import {
+  FormValues,
+  updateCoachProfileFormOptions,
+} from './update-coach-profile-form-options';
+import { APIRoute, FILES_URL } from '../../app.constants';
+import { apiUpload } from '../../store';
+import { Loading } from '../../components';
+import { dirtyValues } from '../../utils';
 
 export function CoachProfile() {
   const dispatch = useAppDispatch();
-  const currentUserid = useAppSelector(getCurrentUserId);
+  const currentUserId = useAppSelector(getCurrentUserId);
+  const userInfo = useAppSelector(getUserInfo);
+  const isLoading = useAppSelector(getIsUserLoading);
+
+  const form = useForm(updateCoachProfileFormOptions);
+  const [currentAvatar, setCurrentAvatar] = useState('');
+
+  const {
+    register,
+    formState: { errors, isDirty, dirtyFields },
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+  } = form;
+
+  const {
+    field: { onChange: onLocationChange },
+  } = useController({ name: 'location', control });
+  const {
+    field: { onChange: onGenderChange },
+  } = useController({ name: 'gender', control });
+  const {
+    field: { onChange: onSkillChange },
+  } = useController({ name: 'skill', control });
+
+  useEffect(() => {
+    dispatch(fetchUserInfo(currentUserId));
+  }, [currentUserId, dispatch]);
+
+  useEffect(() => {
+    if (userInfo) {
+      const {
+        avatar,
+        name,
+        hasPersonalTrainings,
+        location,
+        skill,
+        trainings,
+        gender,
+        achievements,
+      } = userInfo as unknown as CoachInterface;
+
+      reset({
+        avatar,
+        name,
+        hasPersonalTrainings,
+        location,
+        skill,
+        trainings,
+        gender,
+        achievements,
+      });
+    }
+    setCurrentAvatar(userInfo?.avatar ? userInfo.avatar : '');
+  }, [reset, userInfo]);
+
+  useEffect(() => {
+    setValue('avatar', currentAvatar, { shouldDirty: true });
+  }, [setValue, currentAvatar]);
+
+  if (!userInfo) return null;
+
+  const { location, gender, skill } = userInfo;
+
+  const locationSelectOptions = Object.entries(Location).map(
+    ([key, value]) => ({ key, value })
+  );
+  const genderSelectOptions = Object.entries(Gender).map(([key, value]) => ({
+    key,
+    value,
+  }));
+  const skillSelectOptions = Object.entries(Skill).map(([key, value]) => ({
+    key,
+    value,
+  }));
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    if (isDirty) {
+      dispatch(
+        updateUserProfileAction(
+          dirtyValues(dirtyFields, data) as UpdateProfileInterface
+        )
+      );
+    }
+  };
+
+  const onAvatarInputChange = async (evt: ChangeEvent<HTMLInputElement>) => {
+    if (!evt.target.files) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('avatar', evt.target.files[0]);
+
+    const { data: newAvatar } = await apiUpload.post(
+      APIRoute.UploadAvatar,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    setCurrentAvatar(newAvatar.filename);
+  };
+
   return (
     <main>
       <section className="inner-page">
         <div className="container">
           <div className="inner-page__wrapper">
             <h1 className="visually-hidden">Личный кабинет</h1>
+
             <section className="user-info-edit">
-              <div className="user-info-edit__header">
-                <div className="input-load-avatar">
-                  <label>
-                    <input
-                      className="visually-hidden"
-                      type="file"
-                      name="user-photo-1"
-                      accept="image/png, image/jpeg"
-                    />
-                    <span className="input-load-avatar__avatar" />
-                    <img
-                      src="../../assets/img/content/user-photo-1.png"
-                      srcSet="../../assets/img/content/user-photo-1@2x.png 2x"
-                      width="98"
-                      height="98"
-                      alt="user photo"
-                    />
-                  </label>
-                </div>
-                <div className="user-info-edit__controls">
-                  <button
-                    className="user-info-edit__control-btn"
-                    aria-label="обновить"
-                  >
-                    <svg width="16" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-change"></use>
-                    </svg>
-                  </button>
-                  <button
-                    className="user-info-edit__control-btn"
-                    aria-label="удалить"
-                  >
-                    <svg width="14" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-trash"></use>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <form className="user-info-edit__form" action="#" method="post">
-                <button
-                  className="btn-flat btn-flat--underlined user-info-edit__save-button"
-                  type="submit"
-                  aria-label="Сохранить"
-                >
-                  <svg width="12" height="12" aria-hidden="true">
-                    <use xlinkHref="#icon-edit"></use>
-                  </svg>
-                  <span>Сохранить</span>
-                </button>
-                <div className="user-info-edit__section">
-                  <h2 className="user-info-edit__title">Обо мне</h2>
-                  <div className="custom-input user-info-edit__input">
-                    <label>
-                      <span className="custom-input__label">Имя</span>
-                      <span className="custom-input__wrapper">
-                        <input type="text" name="name" />
-                      </span>
-                    </label>
-                  </div>
-                  <div className="custom-textarea user-info-edit__textarea">
-                    <label>
-                      <span className="custom-textarea__label">Описание</span>
-                      <textarea
-                        name="description"
-                        defaultValue="'Персональный тренер и инструктор групповых программ с опытом более 4х лет. Специализация: коррекция фигуры и осанки, снижение веса, восстановление после травм,пилатес'"
-                      ></textarea>
-                    </label>
-                  </div>
-                </div>
-                <div className="user-info-edit__section user-info-edit__section--status">
-                  <h2 className="user-info-edit__title user-info-edit__title--status">
-                    Статус
-                  </h2>
-                  <div className="custom-toggle custom-toggle--switch user-info-edit__toggle">
-                    <label>
-                      <input type="checkbox" name="ready-for-training" />
-                      <span className="custom-toggle__icon">
-                        <svg width="9" height="6" aria-hidden="true">
-                          <use xlinkHref="#arrow-check"></use>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  <div className="user-info-edit__header">
+                    <div className="input-load-avatar">
+                      <label>
+                        <input
+                          className="visually-hidden"
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          onChange={onAvatarInputChange}
+                        />
+                        <span className="input-load-avatar__avatar" />
+                        <img
+                          src={`${FILES_URL}${currentAvatar}`}
+                          srcSet={`${FILES_URL}${currentAvatar} 2x`}
+                          width="98"
+                          height="98"
+                          alt={userInfo.name}
+                        />
+                      </label>
+                    </div>
+                    <div className="user-info-edit__controls">
+                      <button
+                        className="user-info-edit__control-btn"
+                        aria-label="обновить"
+                        onClick={() => dispatch(fetchUserInfo(currentUserId))}
+                      >
+                        <svg width="16" height="16" aria-hidden="true">
+                          <use xlinkHref="#icon-change"></use>
                         </svg>
-                      </span>
-                      <span className="custom-toggle__label">
-                        Готов тренировать
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <div className="user-info-edit__section">
-                  <h2 className="user-info-edit__title user-info-edit__title--specialization">
-                    Специализация
-                  </h2>
-                  <div className="specialization-checkbox user-info-edit__specialization">
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Йога</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Бег</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Аэробика</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Бокс</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Силовые</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Пилатес</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Стрейчинг</span>
-                      </label>
-                    </div>
-                    <div className="btn-checkbox">
-                      <label>
-                        <input
-                          className="visually-hidden"
-                          type="checkbox"
-                          name="specialization"
-                        />
-                        <span className="btn-checkbox__btn">Кроссфит</span>
-                      </label>
+                      </button>
+                      <button
+                        className="user-info-edit__control-btn"
+                        aria-label="удалить"
+                      >
+                        <svg width="14" height="16" aria-hidden="true">
+                          <use xlinkHref="#icon-trash"></use>
+                        </svg>
+                      </button>
                     </div>
                   </div>
-                </div>
-                <div className="custom-select user-info-edit__select">
-                  <span className="custom-select__label">Локация</span>
-                  <div className="custom-select__placeholder">
-                    ст. м. Адмиралтейская
-                  </div>
-                  <button
-                    className="custom-select__button"
-                    type="button"
-                    aria-label="Выберите одну из опций"
+                  <form
+                    className="user-info-edit__form"
+                    onSubmit={handleSubmit(onSubmit)}
                   >
-                    <span className="custom-select__text"></span>
-                    <span className="custom-select__icon">
-                      <svg width="15" height="6" aria-hidden="true">
-                        <use xlinkHref="#arrow-down"></use>
+                    <input type="hidden" {...register('avatar')} />
+                    <button
+                      className="btn-flat btn-flat--underlined user-info-edit__save-button"
+                      type="submit"
+                      aria-label="Сохранить"
+                    >
+                      <svg width="12" height="12" aria-hidden="true">
+                        <use xlinkHref="#icon-edit"></use>
                       </svg>
-                    </span>
-                  </button>
-                  <ul className="custom-select__list" role="listbox"></ul>
-                </div>
-                <div className="custom-select user-info-edit__select">
-                  <span className="custom-select__label">Пол</span>
-                  <div className="custom-select__placeholder">Женский</div>
-                  <button
-                    className="custom-select__button"
-                    type="button"
-                    aria-label="Выберите одну из опций"
-                  >
-                    <span className="custom-select__text"></span>
-                    <span className="custom-select__icon">
-                      <svg width="15" height="6" aria-hidden="true">
-                        <use xlinkHref="#arrow-down"></use>
-                      </svg>
-                    </span>
-                  </button>
-                  <ul className="custom-select__list" role="listbox"></ul>
-                </div>
-                <div className="custom-select user-info-edit__select">
-                  <span className="custom-select__label">Уровень</span>
-                  <div className="custom-select__placeholder">Профессионал</div>
-                  <button
-                    className="custom-select__button"
-                    type="button"
-                    aria-label="Выберите одну из опций"
-                  >
-                    <span className="custom-select__text"></span>
-                    <span className="custom-select__icon">
-                      <svg width="15" height="6" aria-hidden="true">
-                        <use xlinkHref="#arrow-down"></use>
-                      </svg>
-                    </span>
-                  </button>
-                  <ul className="custom-select__list" role="listbox"></ul>
-                </div>
-              </form>
+                      <span>Сохранить</span>
+                    </button>
+                    <div className="user-info-edit__section">
+                      <h2 className="user-info-edit__title">Обо мне</h2>
+                      <div
+                        className={cn({
+                          'custom-input--error': errors?.name,
+                        })}
+                      >
+                        <div className="custom-input user-info-edit__input">
+                          <label>
+                            <span className="custom-input__label">Имя</span>
+                            <span className="custom-input__wrapper">
+                              <input type="text" {...register('name')} />
+                            </span>
+                          </label>
+                        </div>
+                        <div className="custom-input__error">
+                          {errors.name?.message as string}
+                        </div>
+                      </div>
+                      <div
+                        className={cn({
+                          'custom-input--error': errors?.achievements,
+                        })}
+                      >
+                        <div className="custom-textarea user-info-edit__textarea">
+                          <label>
+                            <span className="custom-textarea__label">
+                              Описание
+                            </span>
+                            <textarea {...register('achievements')}></textarea>
+                          </label>
+                        </div>
+                        <div className="custom-input__error">
+                          {errors.achievements?.message as string}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="user-info-edit__section user-info-edit__section--status">
+                      <h2 className="user-info-edit__title user-info-edit__title--status">
+                        Статус
+                      </h2>
+                      <div className="custom-toggle custom-toggle--switch user-info-edit__toggle">
+                        <label>
+                          <input
+                            type="checkbox"
+                            {...register('hasPersonalTrainings')}
+                          />
+                          <span className="custom-toggle__icon">
+                            <svg width="9" height="6" aria-hidden="true">
+                              <use xlinkHref="#arrow-check"></use>
+                            </svg>
+                          </span>
+                          <span className="custom-toggle__label">
+                            Готов тренировать
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="user-info-edit__section">
+                      <h2 className="user-info-edit__title user-info-edit__title--specialization">
+                        Специализация
+                      </h2>
+                      <WorkoutsButtons
+                        styleName={'user-info-edit__specialization'}
+                        form={form}
+                        selected={[]}
+                      />
+                    </div>
+                    <CustomSelect
+                      styleClass="user-info-edit__select"
+                      options={locationSelectOptions}
+                      onChange={onLocationChange}
+                      value={location}
+                      label="Локация"
+                      errors={errors}
+                    />
+
+                    <CustomSelect
+                      styleClass="user-info-edit__select"
+                      options={genderSelectOptions}
+                      onChange={onGenderChange}
+                      value={gender}
+                      label="Пол"
+                      errors={errors}
+                    />
+
+                    <CustomSelect
+                      styleClass="user-info-edit__select"
+                      options={skillSelectOptions}
+                      onChange={onSkillChange}
+                      value={skill}
+                      label="Уровень"
+                      errors={errors}
+                    />
+                  </form>
+                </>
+              )}
             </section>
             <div className="inner-page__content">
               <div className="personal-account-coach">

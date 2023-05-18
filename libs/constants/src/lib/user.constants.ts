@@ -22,6 +22,8 @@ export enum ClientInfo {
   MIN = 10,
   MAX = 350,
 }
+export const WORKOUT_MIN = 1;
+export const WORKOUT_MAX = 3;
 
 export enum UserError {
   CALORIES_TARGET_TOO_SMALL = 'Calories target is too small',
@@ -32,5 +34,7 @@ export enum UserError {
   ACHIEVEMENTS_TOO_BIG = 'Coach achievements length is too big',
   CLIENT_INGO_TOO_SMALL = 'Client info length is too small',
   CLIENT_INGO_TOO_BIG = 'Client info length is too big',
+  WORKOUTS_TOO_MANY = 'Too many workouts',
+  WORKOUTS_REQUIRED = 'At least one workout',
   INCORRECT_MONGOID = 'The MongoDB ID is not valid',
 }

@@ -9,7 +9,7 @@ import {
 
 import { CaloriesTargetsInputs } from './calories-targets-inputs';
 import { ModalContext } from '../../../contexts';
-import { DurationButtons, SkillButtons, WorkoutsButtons } from '../../forms';
+import { DurationButtons, SkillButtons, WorkoutsField } from '../../forms';
 import { AppRoute, AuthorizationStatus } from '../../../app.constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
@@ -46,7 +46,7 @@ export function ModalClientProfile() {
               <div className="questionnaire-user">
                 <h1 className="visually-hidden">Опросник</h1>
                 <div className="questionnaire-user__wrapper">
-                  <WorkoutsButtons form={form} />
+                  <WorkoutsField form={form} />
 
                   <DurationButtons form={form} />
 

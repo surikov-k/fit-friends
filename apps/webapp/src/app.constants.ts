@@ -18,7 +18,7 @@ export enum AuthorizationStatus {
   Unknown = 'Unknown',
 }
 
-export enum NameSpace {
+export enum StateSlice {
   App = 'APP',
   User = 'USER',
 }
@@ -29,6 +29,8 @@ export enum APIRoute {
   Coach = 'user/coach',
   Login = 'auth/login',
   Logout = 'auth/logout',
+  Profile = '/user/profile',
   Register = 'auth/register',
   UploadAvatar = 'upload/avatar',
+  User = '/user/:id',
 }

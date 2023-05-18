@@ -1,6 +1,6 @@
 ### Get a detailed user unformation
 GET http://localhost:4000/api/user/643fec3360e2b4daf9925d5b HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEzMWYzMjVkNmNiZTc2OWRjNDZlYmQiLCJlbWFpbCI6ImxpZGlhLmNhc2hAZXhhbXBsZS5jb20iLCJuYW1lIjoi0JDQu9C40L3QsCIsInJvbGUiOiJDbGllbnQiLCJpYXQiOjE2Nzg5NzQ3NzAsImV4cCI6MTY3ODk3NTY3MH0.r52jhVYl0atKAmOp-sorZZT9egMyb7qmRGYJJ79MyIU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQ0ZGNkOThlYWU5ZjQ4OWQ5YzYwNDIiLCJlbWFpbCI6Imxlb25vcmEua2lsYmFja0Bob3RtYWlsLmNvbSIsIm5hbWUiOiLQldC70LjQt9Cw0LLQtdGC0LAiLCJyb2xlIjoiQ2xpZW50IiwiaWF0IjoxNjg0MjY1ODM3LCJleHAiOjE2ODQyNjY3Mzd9.DpSZHWe4EpEFxfSh98n6DWLSCLg_drMXfrCrLR_g1gw
 
 ### Get all users
 GET http://localhost:4000/api/user HTTP/1.1
@@ -53,10 +53,6 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQ0ZGNlMDhlYWU5ZjQ4OWQ5YzYwNDYiLCJlbWFpbCI6ImNhc3Blcl93YWx0ZXJAaG90bWFpbC5jb20iLCJuYW1lIjoi0J3QuNC60LjRgtCwIiwicm9sZSI6IkNvYWNoIiwiaWF0IjoxNjgyMjM0OTUxLCJleHAiOjE2ODIyMzU4NTF9.olTy_-Eiam4bYpbHx4Ts4fj95y0PNn_wNT-JJ0qNU9w
 
 {
-  "avatar": "1679060336551.avatar.png",
-  "name": "Игнатий",
-  "skill":  "Professional",
-  "trainings": ["Yoga", "Crossfit", "Aerobics"],
   "hasPersonalTrainings": true
 }
 
