@@ -24,8 +24,8 @@ export function App() {
             <Route element={<PrivateRoute role={AuthorizationStatus.Client} />}>
               <Route path={AppRoute.Root} element={<Main />} />
             </Route>
+            <Route path={AppRoute.NotFound} element={<NotFound />} />
           </Route>
-          <Route path={AppRoute.NotFound} element={<NotFound />} />
         </Routes>
       </ModalProvider>
     </BrowserRouter>

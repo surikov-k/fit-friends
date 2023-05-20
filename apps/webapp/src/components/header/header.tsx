@@ -1,3 +1,6 @@
+import { NavLink } from 'react-router-dom';
+import { AppRoute } from '../../app.constants';
+
 export function Header() {
   return (
     <header className="header">
@@ -10,33 +13,43 @@ export function Header() {
         <nav className="main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
-              <a
-                className="main-nav__link is-active"
-                href="#"
+              <NavLink
+                className={({ isActive }) =>
+                  `main-nav__link ${isActive ? 'is-active' : ''}`
+                }
+                to={AppRoute.Main}
                 aria-label="На главную"
               >
                 <svg width="18" height="18" aria-hidden="true">
                   <use xlinkHref="#icon-home"></use>
                 </svg>
-              </a>
+              </NavLink>
             </li>
             <li className="main-nav__item">
-              <a
-                className="main-nav__link"
-                href="#"
+              <NavLink
+                className={({ isActive }) =>
+                  `main-nav__link ${isActive ? 'is-active' : ''}`
+                }
+                to={AppRoute.Profile}
                 aria-label="Личный кабинет"
               >
                 <svg width="16" height="18" aria-hidden="true">
                   <use xlinkHref="#icon-user"></use>
                 </svg>
-              </a>
+              </NavLink>
             </li>
             <li className="main-nav__item">
-              <a className="main-nav__link" href="#" aria-label="Друзья">
+              <NavLink
+                className={({ isActive }) =>
+                  `main-nav__link ${isActive ? 'is-active' : ''}`
+                }
+                to={AppRoute.Friends}
+                aria-label="Друзья"
+              >
                 <svg width="22" height="16" aria-hidden="true">
                   <use xlinkHref="#icon-friends"></use>
                 </svg>
-              </a>
+              </NavLink>
             </li>
             <li className="main-nav__item main-nav__item--notifications">
               <a className="main-nav__link" href="#" aria-label="Уведомления">

@@ -3,11 +3,14 @@ export const UPLOAD_URL = 'http://localhost:3331/api/';
 export const FILES_URL = 'http://localhost:3331/uploads/';
 
 export enum AppRoute {
+  Friends = '/friends',
   Main = '/main',
   NotFound = '*',
+  Orders = '/orders',
   Profile = '/profile',
   Root = '/',
   Welcome = '/welcome',
+  Workouts = '/workouts',
 }
 
 export enum AuthorizationStatus {

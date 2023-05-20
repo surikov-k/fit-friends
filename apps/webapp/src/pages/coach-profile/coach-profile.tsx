@@ -88,7 +88,7 @@ export function CoachProfile() {
         achievements,
       });
 
-      setCurrentAvatar(avatar ? avatar : '');
+      setCurrentAvatar(avatar);
     }
   }, [reset, userInfo]);
 
