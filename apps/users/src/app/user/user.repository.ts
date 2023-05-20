@@ -13,7 +13,7 @@ export class UserRepository
 {
   constructor(
     @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>
-  ) { }
+  ) {}
 
   public async create(entity: UserEntity): Promise<UserInterface> {
     const user = new this.userModel(entity);
@@ -25,7 +25,7 @@ export class UserRepository
   }
 
   public async findById(id: string): Promise<UserInterface | null> {
-    return this.userModel.findOne({ _id: id }).exec();
+    return this.userModel.findOne({ _id: id }).lean();
   }
 
   public async findByEmail(email: string): Promise<UserInterface | null> {
@@ -51,6 +51,9 @@ export class UserRepository
   }
 
   public async upsert(entity: UserEntity) {
-    return this.userModel.findOneAndUpdate({ _id: entity._id }, entity, { upsert: true, new: true })
+    return this.userModel.findOneAndUpdate({ _id: entity._id }, entity, {
+      upsert: true,
+      new: true,
+    });
   }
 }

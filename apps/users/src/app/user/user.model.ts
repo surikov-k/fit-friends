@@ -67,7 +67,7 @@ export class UserModel extends Document implements UserInterface {
   public refreshTokenHash: string;
 
   @Prop()
-  public certificate: string;
+  public certificates: string[];
 
   @Prop()
   public hasPersonalTrainings: boolean;

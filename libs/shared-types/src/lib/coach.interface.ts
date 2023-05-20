@@ -1,7 +1,7 @@
 import { UserInterface } from './user.interface';
 
 export interface CoachInterface extends UserInterface {
-  certificate: string;
+  certificates: string[];
   hasPersonalTrainings: boolean;
   achievements: string;
   info: string;

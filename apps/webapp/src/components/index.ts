@@ -1,4 +1,7 @@
 export * from './app';
+export * from './certificate-card';
+export * from './coach-certificates';
+export * from './coach-profile-navigation';
 export * from './header';
 export * from './layout';
 export * from './loading';

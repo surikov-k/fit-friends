@@ -1,6 +1,7 @@
 import {
   ArrayMaxSize,
   ArrayUnique,
+  IsArray,
   IsBoolean,
   IsEnum,
   IsString,
@@ -59,4 +60,11 @@ export class CoachDetailsDto {
     message: UserError.ACHIEVEMENTS_TOO_BIG,
   })
   achievements: string;
+
+  @ApiProperty({
+    description: 'Coach certificate',
+    example: 'certificate.jpg',
+  })
+  @IsArray({ groups: [UserRole.Coach] })
+  certificates: string[];
 }

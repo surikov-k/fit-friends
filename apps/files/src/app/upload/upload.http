@@ -9,5 +9,16 @@ Content-Type: image/jpeg
 < /Users/sk/Desktop/tmp/avatar.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
+### Upload a certificate
+POST http://localhost:3331/api/upload/certificate HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="certificate"; filename="certificate-1.jpg"
+Content-Type: image/jpeg
+
+< /Users/sk/Desktop/tmp/certificate-1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 ### Get a file
 GET http://localhost:3331/uploads/1679060336551.avatar.png

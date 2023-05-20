@@ -1,3 +1,14 @@
 export function Loading() {
-  return <p>Loading...</p>;
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100%',
+      }}
+    >
+      <p>Loading...</p>
+    </div>
+  );
 }

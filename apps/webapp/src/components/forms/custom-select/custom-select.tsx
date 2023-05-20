@@ -14,6 +14,7 @@ type CustomSelectProps = {
   value?: string;
   label?: string;
   errors: FieldErrors;
+  disabled?: boolean;
 };
 
 export function CustomSelect({
@@ -23,6 +24,7 @@ export function CustomSelect({
   value,
   onChange,
   errors,
+  disabled = false,
 }: CustomSelectProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(value || '');
@@ -37,7 +39,11 @@ export function CustomSelect({
       <span className="custom-select__label">{label}</span>
       <div className="custom-select__placeholder">{selected}</div>
       <button
-        onClick={() => setIsOpened(!isOpened)}
+        onClick={() => {
+          if (!disabled) {
+            setIsOpened(!isOpened);
+          }
+        }}
         className="custom-select__button"
         type="button"
         aria-label="Выберите одну из опций"
@@ -61,9 +67,11 @@ export function CustomSelect({
             key={option.key}
             className="custom-select__item"
             onClick={() => {
-              setSelected(option.value);
-              setIsOpened(false);
-              onChange(option.value);
+              if (disabled === false) {
+                setSelected(option.value);
+                setIsOpened(false);
+                onChange(option.value);
+              }
             }}
           >
             {option.value}

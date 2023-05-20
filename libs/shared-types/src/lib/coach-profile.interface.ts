@@ -2,7 +2,7 @@ import { WorkoutType } from './workout-type.type';
 import { Skill } from './skill.type';
 
 export interface CoachProfileInterface {
-  certificate?: string;
+  certificates?: string[];
   hasPersonalTrainings?: boolean;
   skill: Skill;
   trainings: WorkoutType[];

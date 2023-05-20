@@ -38,6 +38,7 @@ export class UserEntity
   info: string;
   refreshTokenHash: string;
   friends?: string[] = [];
+  certificates: string[] = [];
 
   constructor(user: UserInterface) {
     this.fillEntity(user);
@@ -120,7 +121,10 @@ export class UserEntity
     this.achievements = user.achievements;
     this.info = user.info;
     this.refreshTokenHash = user.refreshTokenHash;
-    this.friends = user.friends ? user.friends : [];
+    // this.friends = user.friends ? user.friends : [];
+    // this.certificates = user.certificates ? user.certificates : [];
+    this.friends = user.friends;
+    this.certificates = user.certificates;
   }
 
   toObject(): UserInterface {

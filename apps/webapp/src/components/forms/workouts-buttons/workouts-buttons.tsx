@@ -6,12 +6,14 @@ type WorkoutsButtonsProps = {
   styleName: string;
   form: UseFormReturn<Record<string, unknown>>;
   selected?: string[];
+  disabled?: boolean;
 };
 
 export function WorkoutsButtons({
   styleName,
   form,
   selected = [],
+  disabled = false,
 }: WorkoutsButtonsProps) {
   const workouts = Object.entries(WorkoutType);
   const {
@@ -35,6 +37,7 @@ export function WorkoutsButtons({
                   className="visually-hidden"
                   type="checkbox"
                   value={key}
+                  disabled={disabled}
                   defaultChecked={!!selected.find((v) => v === value)}
                   {...register(`trainings`)}
                 />

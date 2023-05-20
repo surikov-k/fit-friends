@@ -11,4 +11,5 @@ export interface RegisterInterface {
   birthday?: Date;
   role: UserRole;
   location: Location;
+  certificates?: string[];
 }

@@ -47,7 +47,10 @@ export class UserService {
 
   async updateProfile(userId, dto: UpdateProfileInterface) {
     const user = await this.userRepository.findById(userId);
-    const entity = new UserEntity({ ...user, ...dto });
+    const entity = new UserEntity({
+      ...user,
+      ...dto,
+    });
     return this.userRepository.update(userId, entity);
   }
 

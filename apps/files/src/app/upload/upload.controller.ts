@@ -16,6 +16,19 @@ import { SaveFileRdo } from './rdo';
 
 @Controller('upload')
 export class UploadController {
+  private static parseAvatarPipeOptions = {
+    validators: [
+      new FileTypeValidator({ fileType: UploadFile.AVATAR_TYPE }),
+      new MaxFileSizeValidator({ maxSize: UploadFile.AVATAR_MAX_SIZE }),
+    ],
+  };
+  private static parseCertificatePipeOptions = {
+    validators: [
+      new FileTypeValidator({ fileType: UploadFile.CERTIFICATE_TYPE }),
+      new MaxFileSizeValidator({ maxSize: UploadFile.CERTIFICATE_MAX_SIZE }),
+    ],
+  };
+
   constructor(private readonly uploadService: UploadService) {}
 
   @Post('avatar')
@@ -28,10 +41,15 @@ export class UploadController {
     return fillObject(SaveFileRdo, file);
   }
 
-  private static parseAvatarPipeOptions = {
-    validators: [
-      new FileTypeValidator({ fileType: UploadFile.AVATAR_TYPE }),
-      new MaxFileSizeValidator({ maxSize: UploadFile.AVATAR_MAX_SIZE }),
-    ],
-  };
+  @Post('certificate')
+  @UseInterceptors(FileInterceptor('certificate'))
+  public async saveCertificateFile(
+    @UploadedFile(
+      new ParseFilePipe(UploadController.parseCertificatePipeOptions)
+    )
+    { filename }: Express.Multer.File
+  ) {
+    const file = await this.uploadService.save({ filename });
+    return fillObject(SaveFileRdo, file);
+  }
 }

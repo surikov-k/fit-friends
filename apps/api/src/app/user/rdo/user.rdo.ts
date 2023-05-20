@@ -122,11 +122,11 @@ export class UserRdo {
   public readiness: boolean;
 
   @ApiProperty({
-    description: 'Coach certificate',
+    description: 'Coach certificates',
     example: 'merits.pdf',
   })
   @Expose()
-  public certificate: string;
+  public certificates: string[];
 
   @ApiProperty({
     description: 'Ready for personal training',
