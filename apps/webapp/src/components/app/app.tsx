@@ -2,12 +2,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../app.constants';
 import { Main, NotFound, WelcomeScreen } from '../../pages';
-import { ModalProvider } from '../../contexts';
 import { Layout } from '../layout';
 import { useAppSelector } from '../../hooks';
 import { getAuthStatus } from '../../store/user-slice';
 import { PrivateRoute } from '../routs';
 import { Profile } from '../profile';
+import { ModalProvider } from '../../contexts';
 
 export function App() {
   const authStatus = useAppSelector(getAuthStatus);

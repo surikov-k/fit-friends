@@ -13,6 +13,7 @@ type CustomSelectProps = {
   onChange: (value: string) => void;
   value?: string;
   label?: string;
+  name?: string;
   errors: FieldErrors;
   disabled?: boolean;
 };
@@ -25,6 +26,7 @@ export function CustomSelect({
   onChange,
   errors,
   disabled = false,
+  name = '',
 }: CustomSelectProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(value || '');
@@ -33,7 +35,7 @@ export function CustomSelect({
       className={cn(`custom-select ${styleClass}`, {
         // 'not-empty': !!selected,
         'is-open': isOpened,
-        'custom-input--error': errors?.location,
+        'custom-input--error': errors?.[name],
       })}
     >
       <span className="custom-select__label">{label}</span>
@@ -79,7 +81,7 @@ export function CustomSelect({
         ))}
       </ul>
       <div className="custom-input__error">
-        {errors?.location?.message as string}
+        {errors?.[name]?.message as string}
       </div>
     </div>
   );

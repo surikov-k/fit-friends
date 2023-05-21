@@ -1,7 +1,16 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+
 import { AppRoute } from '../../app.constants';
+import { ModalContext } from '../../contexts';
+import { ModalCreateWorkout } from '../modals';
 
 export function CoachProfileNavigation() {
+  const { open } = useContext(ModalContext);
+  const onCreateWorkoutClick = () => {
+    open(<ModalCreateWorkout />);
+  };
+
   return (
     <div className="personal-account-coach__navigation">
       <Link
@@ -15,9 +24,9 @@ export function CoachProfileNavigation() {
         </div>
         <span className="thumbnail-link__text">Мои тренировки</span>
       </Link>
-      <Link
+      <div
         className="thumbnail-link thumbnail-link--theme-light"
-        to={AppRoute.Workouts}
+        onClick={onCreateWorkoutClick}
       >
         <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
           <svg width="30" height="26" aria-hidden="true">
@@ -25,7 +34,7 @@ export function CoachProfileNavigation() {
           </svg>
         </div>
         <span className="thumbnail-link__text">Создать тренировку</span>
-      </Link>
+      </div>
       <Link
         className="thumbnail-link thumbnail-link--theme-light"
         to={AppRoute.Friends}

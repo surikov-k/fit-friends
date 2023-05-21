@@ -9,7 +9,26 @@ export function useScrollLock() {
     bodyStyle.overflowY = isLocked ? 'hidden' : 'auto';
   }, [isLocked, bodyStyle]);
 
-  // const lockScroll = (value: boolean) => setIsLocked(value)
-
   return setIsLocked;
+}
+
+export function useEsc(close: () => void) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (evt: KeyboardEvent) => {
+      if (evt.code === 'Escape') {
+        setIsOpen(false);
+        close();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [close, isOpen]);
+
+  return setIsOpen;
 }

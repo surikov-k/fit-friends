@@ -36,5 +36,6 @@ export enum APIRoute {
   Register = 'auth/register',
   UploadAvatar = 'upload/avatar',
   UploadCertificate = 'upload/certificate',
+  UploadVideo = 'upload/video',
   User = '/user/:id',
 }

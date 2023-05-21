@@ -20,5 +20,16 @@ Content-Type: image/jpeg
 < /Users/sk/Desktop/tmp/certificate-1.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
+### Upload a video
+POST http://localhost:3331/api/upload/video HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="videofile"; filename="Video_html_Academy.mov"
+Content-Type: video/mp4
+
+< /Users/sk/Desktop/tmp/Video_html_Academy.mov
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 ### Get a file
 GET http://localhost:3331/uploads/1679060336551.avatar.png

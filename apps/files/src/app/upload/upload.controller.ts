@@ -29,6 +29,13 @@ export class UploadController {
     ],
   };
 
+  private static parseVideoPipeOptions = {
+    validators: [
+      new FileTypeValidator({ fileType: UploadFile.VIDEO_TYPE }),
+      new MaxFileSizeValidator({ maxSize: UploadFile.VIDEO_MAX_SIZE }),
+    ],
+  };
+
   constructor(private readonly uploadService: UploadService) {}
 
   @Post('avatar')
@@ -47,6 +54,16 @@ export class UploadController {
     @UploadedFile(
       new ParseFilePipe(UploadController.parseCertificatePipeOptions)
     )
+    { filename }: Express.Multer.File
+  ) {
+    const file = await this.uploadService.save({ filename });
+    return fillObject(SaveFileRdo, file);
+  }
+
+  @Post('video')
+  @UseInterceptors(FileInterceptor('videofile'))
+  public async saveVideoFile(
+    @UploadedFile(new ParseFilePipe(UploadController.parseVideoPipeOptions))
     { filename }: Express.Multer.File
   ) {
     const file = await this.uploadService.save({ filename });
