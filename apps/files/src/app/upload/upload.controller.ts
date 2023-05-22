@@ -61,7 +61,7 @@ export class UploadController {
   }
 
   @Post('video')
-  @UseInterceptors(FileInterceptor('videofile'))
+  @UseInterceptors(FileInterceptor('video'))
   public async saveVideoFile(
     @UploadedFile(new ParseFilePipe(UploadController.parseVideoPipeOptions))
     { filename }: Express.Multer.File

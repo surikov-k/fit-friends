@@ -13,6 +13,7 @@ type SelectProps = {
   value?: SelectOption;
   label?: string;
   errors: FieldErrors;
+  name: string;
 };
 
 export function Select({
@@ -21,6 +22,7 @@ export function Select({
   value,
   onChange,
   errors,
+  name,
 }: SelectProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [selected, setSelected] = useState<SelectOption>(
@@ -34,7 +36,7 @@ export function Select({
       className={cn('custom-select custom-select--not-selected ', {
         'not-empty': selected.value,
         'is-open': isOpened,
-        'custom-input--error': errors?.location,
+        'custom-input--error': errors?.[name],
       })}
     >
       <span className="custom-select__label">{label}</span>
@@ -73,7 +75,7 @@ export function Select({
         ))}
       </ul>
       <div className="custom-input__error">
-        {errors?.location?.message as string}
+        {errors?.[name]?.message as string}
       </div>
     </div>
   );

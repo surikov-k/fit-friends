@@ -17,7 +17,7 @@ export function Header() {
                 className={({ isActive }) =>
                   `main-nav__link ${isActive ? 'is-active' : ''}`
                 }
-                to={AppRoute.Main}
+                to={AppRoute.Root}
                 aria-label="На главную"
               >
                 <svg width="18" height="18" aria-hidden="true">

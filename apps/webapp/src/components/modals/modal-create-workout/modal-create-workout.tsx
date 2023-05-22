@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { Gender, TimeSpan, WorkoutType } from '@fit-friends/shared-types';
 import { ModalContext } from '../../../contexts';
-import { CustomSelect } from '../../forms';
+import { Select } from '../../forms';
 import {
   createWorkoutOptions,
   FormValues,
@@ -54,9 +54,8 @@ export function ModalCreateWorkout() {
     if (!evt.target.files) {
       return;
     }
-    console.log(evt.target.files[0]);
     const formData = new FormData();
-    formData.append('videofile', evt.target.files[0]);
+    formData.append('video', evt.target.files[0]);
     const { data: uploadedVideo } = await apiUpload.post(
       APIRoute.UploadVideo,
       formData,
@@ -107,8 +106,7 @@ export function ModalCreateWorkout() {
                       Характеристики тренировки
                     </h2>
                     <div className="create-training__info">
-                      <CustomSelect
-                        styleClass={'custom-select custom-select--not-selected'}
+                      <Select
                         label={'Выберите тип тренировки'}
                         options={workoutTypeOptions}
                         onChange={onWorkoutTypeChange}
@@ -138,8 +136,7 @@ export function ModalCreateWorkout() {
                         </label>
                       </div>
 
-                      <CustomSelect
-                        styleClass={'custom-select custom-select--not-selected'}
+                      <Select
                         label={'Сколько времени потратим'}
                         options={durationOptions}
                         onChange={onDurationChange}
@@ -150,7 +147,7 @@ export function ModalCreateWorkout() {
                         className={cn(
                           'custom-input custom-input--with-text-right',
                           {
-                            'custom-input--error': errors?.title,
+                            'custom-input--error': errors?.price,
                           }
                         )}
                       >
@@ -269,7 +266,6 @@ export function ModalCreateWorkout() {
                         </span>
                         <input
                           type="file"
-                          name={'videofile'}
                           tabIndex={-1}
                           accept=".mov, .avi, .mp4"
                           onChange={onVideoUploadChange}

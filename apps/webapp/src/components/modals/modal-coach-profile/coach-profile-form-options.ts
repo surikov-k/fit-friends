@@ -9,7 +9,7 @@ import { Skill, WorkoutType } from '@fit-friends/shared-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 const validationSchema = Yup.object().shape({
-  certificate: Yup.string(),
+  certificate: Yup.array(Yup.string()),
   hasPersonalTrainings: Yup.boolean(),
   skill: Yup.string()
     .required(REQUIRED_FILED_MESSAGE)

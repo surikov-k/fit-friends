@@ -4,6 +4,7 @@ import {
   IsArray,
   IsBoolean,
   IsEnum,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -66,5 +67,6 @@ export class CoachDetailsDto {
     example: 'certificate.jpg',
   })
   @IsArray({ groups: [UserRole.Coach] })
+  @IsOptional()
   certificates: string[];
 }

@@ -29,7 +29,7 @@ export function ModalClientProfile() {
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Client) {
       close();
-      navigate(AppRoute.Main);
+      navigate(AppRoute.Root);
     }
   }, [close, authStatus, navigate]);
 

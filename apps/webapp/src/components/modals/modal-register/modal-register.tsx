@@ -115,6 +115,7 @@ export function ModalRegister() {
                     options={locationOptions}
                     onChange={onLocationChange}
                     errors={errors}
+                    name="location"
                   />
                   <div
                     className={cn('custom-input', {
