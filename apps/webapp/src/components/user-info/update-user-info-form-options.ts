@@ -38,6 +38,6 @@ const validationSchema = Yup.object().shape({
 });
 
 export type FormValues = InferType<typeof validationSchema>;
-export const updateCoachProfileFormOptions = {
+export const updateUserInfoFormOptions = {
   resolver: yupResolver(validationSchema),
 };

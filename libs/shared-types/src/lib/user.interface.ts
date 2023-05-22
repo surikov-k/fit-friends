@@ -11,4 +11,6 @@ export interface UserInterface extends Omit<RegisterInterface, 'password'> {
   skill?: Skill;
   trainings?: WorkoutType[];
   friends?: string[];
+  caloriesPerDay?: number
+  caloriesTarget?: number
 }

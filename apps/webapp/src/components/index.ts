@@ -1,5 +1,7 @@
 export * from './app';
+export * from './calories-targets';
 export * from './certificate-card';
+export * from './client-progress';
 export * from './coach-certificates';
 export * from './coach-profile-navigation';
 export * from './header';
@@ -8,3 +10,4 @@ export * from './loading';
 export * from './modals';
 export * from './profile';
 export * from './routs';
+export * from './user-info';
