@@ -19,7 +19,7 @@ export function ClientProfile() {
   }, [currentUserId, dispatch]);
   if (!userInfo) return null;
 
-  const { caloriesPerDay = 0 } = userInfo;
+
   return (
     <main>
       <section className="inner-page">
@@ -29,7 +29,7 @@ export function ClientProfile() {
             <UserInfo userInfo={userInfo} />
             <div className="inner-page__content">
               <div className="personal-account-user">
-                <CaloriesTargets caloriesPerDay={caloriesPerDay} />
+                <CaloriesTargets />
                 <div className="personal-account-user__info">
                   <Link
                     className="thumbnail-link thumbnail-link--theme-dark"

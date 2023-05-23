@@ -1,23 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   FormValues,
   caloriesTargetFormOptions,
 } from './calories-target-form-options';
-import { updateUserProfileAction } from '../../store/user-slice';
+import { getUserInfo, updateUserProfileAction } from '../../store/user-slice';
 
-type CaloriesTargetsProps = {
-  caloriesPerDay: number;
-};
-
-export function CaloriesTargets({ caloriesPerDay = 0 }: CaloriesTargetsProps) {
+export function CaloriesTargets() {
   const dispatch = useAppDispatch();
-  const [weeklyTarget, setWeeklyTarget] = useState<number | undefined>(
-    undefined
-  );
+  const userInfo = useAppSelector(getUserInfo);
+  const weeklyInputRef = useRef<HTMLInputElement>(null);
+
   const form = useForm<FormValues>(caloriesTargetFormOptions);
   const {
     register,
@@ -27,23 +23,37 @@ export function CaloriesTargets({ caloriesPerDay = 0 }: CaloriesTargetsProps) {
   } = form;
 
   useEffect(() => {
-    const onSubmit: SubmitHandler<FormValues> = ({ caloriesPerDay }) => {
+      if (weeklyInputRef.current && userInfo && userInfo.caloriesPerDay) {
+        weeklyInputRef.current.value = `${userInfo.caloriesPerDay * 7}`;
+      }
+  }, [userInfo])
+
+  useEffect(() => {
+    const onSubmit: SubmitHandler<FormValues> = ({ caloriesPerDay = 0 }) => {
+      if (weeklyInputRef.current) {
+        weeklyInputRef.current.value = `${caloriesPerDay * 7}`;
+      }
       dispatch(updateUserProfileAction({ caloriesPerDay }));
     };
 
-    const calories = watch('caloriesPerDay');
-
-    if (calories) {
-      setWeeklyTarget(calories * 7);
-    }
-
     const subscription = watch(() => {
-      handleSubmit(onSubmit)();
+      handleSubmit(onSubmit, () => {
+        console.log('error');
+
+        if (weeklyInputRef.current) {
+          console.log('error2');
+          weeklyInputRef.current.value = '';
+        }
+      })();
     });
     return () => {
       subscription.unsubscribe();
     };
   }, [dispatch, handleSubmit, watch]);
+
+  if (!userInfo) return null;
+
+  const { caloriesPerDay } = userInfo;
 
   return (
     <div className="personal-account-user__schedule">
@@ -73,7 +83,12 @@ export function CaloriesTargets({ caloriesPerDay = 0 }: CaloriesTargetsProps) {
               <span className="personal-account-user__label">
                 План на неделю, ккал
               </span>
-              <input type="number" readOnly={true} value={weeklyTarget} />
+              <input
+                ref={weeklyInputRef}
+                type="number"
+                readOnly={true}
+                // value={caloriesPerDay ? caloriesPerDay * 7 : undefined}
+              />
             </label>
           </div>
         </div>

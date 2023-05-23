@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../app.constants';
-import { NotFound, Root, WelcomeScreen } from '../../pages';
+import { Main, NotFound, Root, WelcomeScreen } from '../../pages';
 import { Layout } from '../layout';
 import { useAppSelector } from '../../hooks';
 import { getAuthStatus } from '../../store/user-slice';
@@ -20,6 +20,7 @@ export function App() {
         <Routes>
           <Route path={AppRoute.Welcome} element={<WelcomeScreen />} />
           <Route element={<Layout />}>
+            <Route path={AppRoute.Main} element={<Main />} />
             <Route path={AppRoute.Profile} element={<Profile />} />
             <Route path={AppRoute.Root} element={<Root />} />
             <Route path={AppRoute.NotFound} element={<NotFound />} />
