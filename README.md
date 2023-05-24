@@ -8,7 +8,9 @@ FitFriends — это онлайн площадка для поиска трен
 
 ---
 ## Памятка
-
+```bash
+nx run-many --target=serve --projects=api,users,files,workouts,nutrition,notification,orders,gyms,alert --maxParallel=12
+```
 ---
 
 <a href="https://htmlacademy.ru/profession/fullstack"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/nodejs/logo-for-github-2.png"></a>

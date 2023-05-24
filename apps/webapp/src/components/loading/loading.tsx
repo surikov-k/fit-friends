@@ -1,14 +1,16 @@
+import './loading.css';
+
 export function Loading() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100%',
-      }}
-    >
-      <p>Loading...</p>
+    <div className="loading">
+      <svg
+        className="loading-spinner"
+        width={60}
+        height={60}
+        aria-hidden="true"
+      >
+        <use xlinkHref="#icon-logotype" />
+      </svg>
     </div>
   );
 }

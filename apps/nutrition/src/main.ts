@@ -11,7 +11,8 @@ import { RmqService } from '@fit-friends/core';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Nutrition microservice');
+  const app = await NestFactory.create(AppModule, { logger });
   const rmqService = app.get<RmqService>(RmqService);
   const configService = app.get<ConfigService>(ConfigService);
   const queue = configService.get('RABBITMQ_NUTRITION_SERVICE_QUEUE');

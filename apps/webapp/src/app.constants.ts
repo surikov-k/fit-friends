@@ -4,17 +4,18 @@ export const FILES_URL = 'http://localhost:3331/uploads/';
 
 export enum AppRoute {
   Friends = '/profile/friends',
+  CoachOrders = '/profile/orders',
   Main = '/main',
   NotFound = '*',
   NutritionLog = '/profile/nutrition',
-  Orders = '/orders',
-  Profile = '/profile',
+  Orders = 'orders',
+  Profile = 'profile',
   Root = '/',
   UserGyms = '/profile/gyms',
   UserPurchases = '/profile/purchases',
   Welcome = '/welcome',
   Workouts = '/workouts',
-  WorkoutsLog = '/profile/workouts',
+  WorkoutsProfile = '/profile/workouts',
 }
 
 export enum AuthorizationStatus {

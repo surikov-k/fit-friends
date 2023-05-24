@@ -15,7 +15,7 @@ export function CoachProfileNavigation() {
     <div className="personal-account-coach__navigation">
       <Link
         className="thumbnail-link thumbnail-link--theme-light"
-        to={AppRoute.Workouts}
+        to={AppRoute.WorkoutsProfile}
       >
         <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
           <svg width="30" height="26" aria-hidden="true">
@@ -48,7 +48,7 @@ export function CoachProfileNavigation() {
       </Link>
       <Link
         className="thumbnail-link thumbnail-link--theme-light"
-        to={AppRoute.Orders}
+        to={AppRoute.CoachOrders}
       >
         <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
           <svg width="30" height="26" aria-hidden="true">

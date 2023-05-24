@@ -33,7 +33,7 @@ export function ClientProfile() {
                 <div className="personal-account-user__info">
                   <Link
                     className="thumbnail-link thumbnail-link--theme-dark"
-                    to={AppRoute.WorkoutsLog}
+                    to={AppRoute.WorkoutsProfile}
                   >
                     <div className="thumbnail-link__icon thumbnail-link__icon--theme-dark">
                       <svg width="30" height="26" aria-hidden="true">

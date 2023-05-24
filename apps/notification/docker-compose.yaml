@@ -29,7 +29,7 @@ services:
     image: mongo-express
     container_name: fit-friends.notification.mongo-express
     ports:
-      - "8083:8081"
+      - "8087:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: test

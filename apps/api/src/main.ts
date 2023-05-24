@@ -11,7 +11,8 @@ import { useContainer } from 'class-validator';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Api');
+  const app = await NestFactory.create(AppModule, { logger });
   app.enableCors();
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
