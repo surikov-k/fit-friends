@@ -8,12 +8,13 @@ export enum AppRoute {
   Main = '/main',
   NotFound = '*',
   NutritionLog = '/profile/nutrition',
-  Orders = 'orders',
+  Orders = '/profile/orders',
   Profile = 'profile',
   Root = '/',
   UserGyms = '/profile/gyms',
   UserPurchases = '/profile/purchases',
   Welcome = '/welcome',
+  Workout = '/workouts/:id',
   Workouts = '/workouts',
   WorkoutsProfile = '/profile/workouts',
 }
@@ -29,6 +30,7 @@ export enum AuthorizationStatus {
 export enum StateSlice {
   App = 'APP',
   User = 'USER',
+  Workouts = 'WORKOUTS',
 }
 
 export enum APIRoute {
@@ -43,4 +45,5 @@ export enum APIRoute {
   UploadCertificate = 'upload/certificate',
   UploadVideo = 'upload/video',
   User = '/user/:id',
+  Workouts = '/workout',
 }

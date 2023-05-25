@@ -1,3 +1,4 @@
+
 # Fit Friends
 
 FitFriends — это онлайн площадка для поиска тренировок и их заведения. Веб-приложение (сайт) функционирует как смесь соцсети и биржи объявлений. Тренеры создают тренировки, а пользователи могут покупать их и заниматься, а в личном кабинете отслеживать свой прогресс.
@@ -9,7 +10,19 @@ FitFriends — это онлайн площадка для поиска трен
 ---
 ## Памятка
 ```bash
-nx run-many --target=serve --projects=api,users,files,workouts,nutrition,notification,orders,gyms,alert --maxParallel=12
+nx run gyms:db-generate   
+nx run nutrition:db-generate
+nx run orders:db-generate
+nx run workouts:db-generate
+```
+```bash
+nx serve api
+```
+```bash
+nx run-many --target=serve --projects=users,files,workouts,nutrition,notification,orders,gyms,alert --maxParallel=12
+```
+```bash
+nx serve webpp
 ```
 ---
 

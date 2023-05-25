@@ -2,23 +2,22 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../app.constants';
 import {
+  CoachOrders,
+  Friends,
   Main,
   NotFound,
   NutritionLog,
   Root,
-  WelcomeScreen,
-  CoachOrders,
-  Friends,
   UserGyms,
   UserPurchases,
+  WelcomeScreen,
+  WorkoutDetails,
+  WorkoutsCatalog,
 } from '../../pages';
-import { Layout } from '../layout';
 import { useAppSelector } from '../../hooks';
 import { getAuthStatus } from '../../store/user-slice';
-import { Profile } from '../profile';
 import { ModalProvider } from '../../contexts';
-import { Loading } from '../loading';
-import { ProfileWorkouts } from '../profile-workouts/profile-workouts';
+import { Layout, Loading, Profile, ProfileWorkouts } from '../../components';
 
 export function App() {
   const authStatus = useAppSelector(getAuthStatus);
@@ -33,9 +32,8 @@ export function App() {
           <Route path={AppRoute.Root} element={<Layout />}>
             <Route index element={<Root />} />
             <Route path={AppRoute.Main} element={<Main />} />
-            <Route path={AppRoute.Profile} element={<Profile />}>
-              <Route path={AppRoute.Orders} element={<CoachOrders />} />
-            </Route>
+            <Route path={AppRoute.Profile} element={<Profile />} />
+            <Route path={AppRoute.Orders} element={<CoachOrders />} />
             <Route path={AppRoute.Friends} element={<Friends />} />
             <Route path={AppRoute.UserGyms} element={<UserGyms />} />
             <Route
@@ -44,6 +42,8 @@ export function App() {
             />
             <Route path={AppRoute.NutritionLog} element={<NutritionLog />} />
             <Route path={AppRoute.UserPurchases} element={<UserPurchases />} />
+            <Route path={AppRoute.Workouts} element={<WorkoutsCatalog />} />
+            <Route path={AppRoute.Workout} element={<WorkoutDetails />} />
 
             <Route path={AppRoute.NotFound} element={<NotFound />} />
           </Route>

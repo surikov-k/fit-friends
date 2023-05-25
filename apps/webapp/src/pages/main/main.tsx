@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../app.constants';
+
 export function Main() {
   return (
     <main>
@@ -326,7 +329,8 @@ export function Main() {
               <h2 className="popular-trainings__title">
                 Популярные тренировки
               </h2>
-              <button
+              <Link
+                to={AppRoute.Workouts}
                 className="btn-flat popular-trainings__button"
                 type="button"
               >
@@ -334,7 +338,7 @@ export function Main() {
                 <svg width="14" height="10" aria-hidden="true">
                   <use xlinkHref="#arrow-right"></use>
                 </svg>
-              </button>
+              </Link>
               <div className="popular-trainings__controls">
                 <button
                   className="btn-icon popular-trainings__control"

@@ -9,4 +9,6 @@ export * from './root';
 export * from './user-gyms';
 export * from './user-purchases';
 export * from './welcome-screen';
+export * from './workout-details';
 export * from './workout-log';
+export * from './workouts-catalog';
