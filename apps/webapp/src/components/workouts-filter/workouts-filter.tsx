@@ -1,4 +1,5 @@
-import { NavigateBackButton } from '../navigate-back-button';
+import { NavigateBackButton, RangeSliderWithInputs } from '../../components';
+import { Calories, Price } from '@fit-friends/constants';
 
 export function WorkoutsFilter() {
   return (
@@ -8,72 +9,13 @@ export function WorkoutsFilter() {
         <NavigateBackButton />
         <h3 className="gym-catalog-form__title">Фильтры</h3>
         <form className="gym-catalog-form__form">
-          <div className="gym-catalog-form__block gym-catalog-form__block--price">
-            <h4 className="gym-catalog-form__block-title">Цена, ₽</h4>
-            <div className="filter-price">
-              <div className="filter-price__input-text filter-price__input-text--min">
-                <input
-                  type="number"
-                  id="text-min"
-                  name="text-min"
-                  defaultValue={0}
-                />
-                <label htmlFor="text-min">от</label>
-              </div>
-              <div className="filter-price__input-text filter-price__input-text--max">
-                <input
-                  type="number"
-                  id="text-max"
-                  name="text-max"
-                  defaultValue={3200}
-                />
-                <label htmlFor="text-max">до</label>
-              </div>
-            </div>
-            <div className="filter-range">
-              <div className="filter-range__scale">
-                <div className="filter-range__bar">
-                  <span className="visually-hidden">Полоса прокрутки</span>
-                </div>
-              </div>
-              <div className="filter-range__control">
-                <button className="filter-range__min-toggle">
-                  <span className="visually-hidden">Минимальное значение</span>
-                </button>
-                <button className="filter-range__max-toggle">
-                  <span className="visually-hidden">Максимальное значение</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="gym-catalog-form__block gym-catalog-form__block--calories">
-            <h4 className="gym-catalog-form__block-title">Калории</h4>
-            <div className="filter-calories">
-              <div className="filter-calories__input-text filter-calories__input-text--min">
-                <input type="number" id="text-min-cal" name="text-min-cal" />
-                <label htmlFor="text-min-cal">от</label>
-              </div>
-              <div className="filter-calories__input-text filter-calories__input-text--max">
-                <input type="number" id="text-max-cal" name="text-max-cal" />
-                <label htmlFor="text-max-cal">до</label>
-              </div>
-            </div>
-            <div className="filter-range">
-              <div className="filter-range__scale">
-                <div className="filter-range__bar">
-                  <span className="visually-hidden">Полоса прокрутки</span>
-                </div>
-              </div>
-              <div className="filter-range__control">
-                <button className="filter-range__min-toggle">
-                  <span className="visually-hidden">Минимальное значение</span>
-                </button>
-                <button className="filter-range__max-toggle">
-                  <span className="visually-hidden">Максимальное значение</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <RangeSliderWithInputs min={Price.MIN} max={3200} title={'Цена, ₽'} />
+          <RangeSliderWithInputs
+            min={Calories.MIN}
+            max={Calories.MAX}
+            title={'Калории'}
+          />
+
           <div className="gym-catalog-form__block gym-catalog-form__block--rating">
             <h4 className="gym-catalog-form__block-title">Рейтинг</h4>
             <div className="filter-raiting">

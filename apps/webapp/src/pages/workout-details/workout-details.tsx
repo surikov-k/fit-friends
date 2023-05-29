@@ -34,6 +34,7 @@ export function WorkoutDetails() {
     price,
     rating,
     duration,
+    coachId,
   } = workout;
 
   return (
@@ -275,7 +276,7 @@ export function WorkoutDetails() {
                         </div>
                         <div className="training-info__coach-info">
                           <span className="training-info__label">Тренер</span>
-                          <span className="training-info__name">Валерия</span>
+                          <span className="training-info__name">{coachId}</span>
                         </div>
                       </div>
                     </div>

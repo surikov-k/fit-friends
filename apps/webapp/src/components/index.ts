@@ -11,6 +11,8 @@ export * from './modals';
 export * from './navigate-back-button';
 export * from './profile';
 export * from './profile-workouts';
+export * from './range-slider';
+export * from './range-slider-with-inputs';
 export * from './routs';
 export * from './user-info';
 export * from './workout-card';

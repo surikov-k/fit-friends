@@ -27,7 +27,9 @@ export function WorkoutsCatalog() {
               {isLoading && <Loading />}
               <ul className="training-catalog__list">
                 {workouts.length &&
-                  workouts.map((workout) => <WorkoutCard workout={workout} />)}
+                  workouts.map((workout) => (
+                    <WorkoutCard key={workout.id} workout={workout} />
+                  ))}
               </ul>
               <div className="show-more training-catalog__show-more">
                 <button

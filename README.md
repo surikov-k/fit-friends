@@ -16,7 +16,7 @@ nx run orders:db-generate
 nx run workouts:db-generate
 ```
 ```bash
-nx serve api
+nx serve api¡
 ```
 ```bash
 nx run-many --target=serve --projects=users,files,workouts,nutrition,notification,orders,gyms,alert --maxParallel=12
