@@ -10,6 +10,7 @@ export enum DescriptionLength {
 
 export enum Price {
   MIN = 0,
+  MAX = 3200,
 }
 
 export enum TitleLength {

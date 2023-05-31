@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import cn from 'classnames';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
-  FormValues,
   caloriesTargetFormOptions,
+  FormValues,
 } from './calories-target-form-options';
 import { getUserInfo, updateUserProfileAction } from '../../store/user-slice';
 
@@ -23,10 +23,10 @@ export function CaloriesTargets() {
   } = form;
 
   useEffect(() => {
-      if (weeklyInputRef.current && userInfo && userInfo.caloriesPerDay) {
-        weeklyInputRef.current.value = `${userInfo.caloriesPerDay * 7}`;
-      }
-  }, [userInfo])
+    if (weeklyInputRef.current && userInfo && userInfo.caloriesPerDay) {
+      weeklyInputRef.current.value = `${userInfo.caloriesPerDay * 7}`;
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     const onSubmit: SubmitHandler<FormValues> = ({ caloriesPerDay = 0 }) => {
@@ -38,10 +38,7 @@ export function CaloriesTargets() {
 
     const subscription = watch(() => {
       handleSubmit(onSubmit, () => {
-        console.log('error');
-
         if (weeklyInputRef.current) {
-          console.log('error2');
           weeklyInputRef.current.value = '';
         }
       })();

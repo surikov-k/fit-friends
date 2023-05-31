@@ -13,10 +13,16 @@ type RangeSliderProps = {
 
 export function RangeSlider({ min, max, values, onChange }: RangeSliderProps) {
   return (
-    <div className="filter-range__scale">
+    <div className="filter-rating">
+      <div className="filter-raiting__scale">
+        <div className="filter-raiting__bar">
+          <span className="visually-hidden">Полоса прокрутки</span>
+        </div>
+      </div>
       <ReactSlider
-        className="filter-range"
+        className="filter-raiting__control"
         thumbClassName="filter-range__min-toggle"
+        ariaLabel={['Lower thumb', 'Upper thumb']}
         value={[values.min, values.max]}
         min={min}
         max={max}

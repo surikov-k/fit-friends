@@ -1,4 +1,4 @@
-import { NavigateBackButton } from '../../components';
+import { NavigateBackButton } from "../../components";
 
 export function CoachWorkouts() {
   return (

@@ -9,7 +9,7 @@ import {
   UpdateProfileInterface,
   UserInterface,
 } from '@fit-friends/shared-types';
-import { Loading } from '../../components';
+import { Loading } from '../loading';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   fetchUserInfo,
@@ -18,7 +18,7 @@ import {
   updateUserProfileAction,
 } from '../../store/user-slice';
 import { APIRoute, FILES_URL } from '../../app.constants';
-import { WorkoutsButtons, CustomSelect } from '../forms';
+import { CustomSelect, WorkoutsButtons } from '../forms';
 import { apiUpload } from '../../store';
 import { dirtyValues } from '../../utils';
 import {
@@ -126,7 +126,7 @@ export function UserInfo({ userInfo }: UserInfoProps) {
     setCurrentAvatar(newAvatar.filename);
   };
 
-    const locationSelectOptions = Object.entries(Location).map(
+  const locationSelectOptions = Object.entries(Location).map(
     ([key, value]) => ({ key, value })
   );
   const genderSelectOptions = Object.entries(Gender).map(([key, value]) => ({

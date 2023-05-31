@@ -12,3 +12,4 @@ export * from './welcome-screen';
 export * from './workout-details';
 export * from './workout-log';
 export * from './workouts-catalog';
+export * from './client-profile';
